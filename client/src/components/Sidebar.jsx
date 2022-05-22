@@ -2,7 +2,6 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { MdOutlineCancel } from "react-icons/md";
 import Tooltip from "@mui/material/Tooltip";
-
 import { links } from "../data/dummy";
 import whiteLogo from "../data/logo-white.png";
 import logo from "../data/logo.png";
@@ -40,7 +39,7 @@ const Sidebar = () => {
               />
               <span>Ame Rez Tours</span>
             </Link>
-            <Tooltip content="Menu">
+            <Tooltip title="Menu" placeholder="bottom">
               <button
                 type="button"
                 onClick={() => setActiveMenu(!activeMenu)}

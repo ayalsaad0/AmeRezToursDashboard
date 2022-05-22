@@ -3,7 +3,7 @@ import { BsCurrencyDollar } from "react-icons/bs";
 import { GoPrimitiveDot } from "react-icons/go";
 import { IoIosMore } from "react-icons/io";
 
-import { Stacked, Pie, Button, LineChart, SparkLine } from "../components";
+import { Stacked, Pie, Button, LineChart } from "../components";
 import {
   earningData,
   medicalproBranding,
@@ -20,8 +20,8 @@ const Ecommerce = () => {
 
   return (
     <div className="mt-24">
-      <div className="flex flex-wrap lg:flex-nowrap justify-center ">
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
+      <div className="flex flex-wrap lg:flex-nowrap justify-center"  style={{border: "2px solid red"}}>
+      <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
           <div className="flex justify-between items-center">
             <div>
               <p className="font-bold text-gray-400">Earnings</p>
@@ -106,15 +106,6 @@ const Ecommerce = () => {
               </div>
 
               <div className="mt-5">
-                <SparkLine
-                  currentColor={currentColor}
-                  id="line-sparkLine"
-                  type="Line"
-                  height="80px"
-                  width="250px"
-                  data={SparklineAreaData}
-                  color={currentColor}
-                />
               </div>
               <div className="mt-10">
                 <Button
@@ -147,15 +138,7 @@ const Ecommerce = () => {
             </div>
 
             <div className="mt-4">
-              <SparkLine
-                currentColor={currentColor}
-                id="column-sparkLine"
-                height="100px"
-                type="Column"
-                data={SparklineAreaData}
-                width="320"
-                color="rgb(242, 252, 253)"
-              />
+              
             </div>
           </div>
 
@@ -264,15 +247,7 @@ const Ecommerce = () => {
               </div>
             ))}
             <div className="mt-4">
-              <SparkLine
-                currentColor={currentColor}
-                id="area-sparkLine"
-                height="160px"
-                type="Area"
-                data={SparklineAreaData}
-                width="320"
-                color="rgb(242, 252, 253)"
-              />
+              
             </div>
           </div>
         </div>

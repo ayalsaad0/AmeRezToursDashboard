@@ -2,7 +2,6 @@ import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { BsCheck } from "react-icons/bs";
 import Tooltip from "@mui/material/Tooltip";
-
 import { themeColors } from "../data/dummy";
 import { useStateContext } from "../contexts/ContextProvider";
 

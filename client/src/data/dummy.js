@@ -590,22 +590,6 @@ export const links = [
         name: "pie",
         icon: <FiPieChart />,
       },
-      {
-        name: "financial",
-        icon: <RiStockLine />,
-      },
-      {
-        name: "color-mapping",
-        icon: <BsBarChart />,
-      },
-      {
-        name: "pyramid",
-        icon: <GiLouvrePyramid />,
-      },
-      {
-        name: "stacked",
-        icon: <AiOutlineBarChart />,
-      },
     ],
   },
 ];
@@ -669,32 +653,13 @@ export const earningData = [
     pcColor: "red-600",
   },
   {
-    icon: <BsBoxSeam />,
-    amount: "4,396",
-    percentage: "+23%",
-    title: "Products",
-    iconColor: "rgb(255, 244, 229)",
-    iconBg: "rgb(254, 201, 15)",
-    pcColor: "green-600",
-  },
-  {
     icon: <FiBarChart />,
-    amount: "423,39",
+    amount: "42,339",
     percentage: "+38%",
     title: "Sales",
     iconColor: "rgb(228, 106, 118)",
     iconBg: "rgb(255, 244, 229)",
-
     pcColor: "green-600",
-  },
-  {
-    icon: <HiOutlineRefresh />,
-    amount: "39,354",
-    percentage: "-12%",
-    title: "Refunds",
-    iconColor: "rgb(0, 194, 146)",
-    iconBg: "rgb(235, 250, 242)",
-    pcColor: "red-600",
   },
 ];
 
@@ -1066,12 +1031,12 @@ export const themeColors = [
     color: "#1E4DB7",
   },
   {
-    color: "#FB9678",
     name: "orange-theme",
+    color: "#FB9678",
   },
   {
-    color: "#FB4E29",
     name: "dark-orange-theme",
+    color: "#FB4E29",
   },
 ];
 
