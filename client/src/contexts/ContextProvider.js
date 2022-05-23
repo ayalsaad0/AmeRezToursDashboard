@@ -16,6 +16,7 @@ export const ContextProvider = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
+  const [currentUser, setCurrentUser] = useState();
 
   const setMode = (e) => {
     setCurrentMode(e.target.value);
@@ -25,6 +26,11 @@ export const ContextProvider = ({ children }) => {
   const setColor = (color) => {
     setCurrentColor(color);
     localStorage.setItem("colorMode", color);
+  };
+
+  const setUser = (user) => {
+    setCurrentUser(user);
+    localStorage.setItem("currentUser", user);
   };
 
   const handleClick = (clicked) =>
@@ -50,6 +56,9 @@ export const ContextProvider = ({ children }) => {
         setColor,
         themeSettings,
         setThemeSettings,
+        currentUser,
+        setCurrentUser,
+        setUser,
       }}
     >
       {children}

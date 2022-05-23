@@ -6,6 +6,8 @@ import {
   ColumnDirective,
   Search,
   Page,
+  ExcelExport,
+  PdfExport,
 } from "@syncfusion/ej2-react-grids";
 
 import { employeesData, employeesGrid } from "../data/dummy";
@@ -24,6 +26,8 @@ const Employees = () => {
         width="auto"
         allowPaging
         allowSorting
+        allowExcelExport
+        allowPdfExport
         pageSettings={{ pageCount: 5 }}
         editSettings={editing}
         toolbar={toolbarOptions}
@@ -34,7 +38,7 @@ const Employees = () => {
             <ColumnDirective key={index} {...item} />
           ))}
         </ColumnsDirective>
-        <Inject services={[Search, Page]} />
+        <Inject services={[Search, Page, ExcelExport, PdfExport]} />
       </GridComponent>
     </div>
   );

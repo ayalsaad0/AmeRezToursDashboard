@@ -19,6 +19,9 @@ import {
   Editor,
   Vehicles,
   Activities,
+  Login,
+  Register,
+  ResetPassword,
 } from "./pages";
 import "./App.css";
 
@@ -33,6 +36,7 @@ const App = () => {
     currentColor,
     themeSettings,
     setThemeSettings,
+    currentUser,
   } = useStateContext();
 
   useEffect(() => {
@@ -81,25 +85,25 @@ const App = () => {
             </div>
             <div>
               {themeSettings && <ThemeSettings />}
-
               <Routes>
+                {/* login and register */}
+                <Route path="/" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 {/* dashboard  */}
-                <Route path="/" element={<Ecommerce />} />
                 <Route path="/ecommerce" element={<Ecommerce />} />
-
+                <Route path="/ecommerce" element={<Ecommerce />} />
                 {/* pages  */}
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/vehicles" element={<Vehicles />} />
                 <Route path="/activities" element={<Activities />} />
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/customers" element={<Customers />} />
-
                 {/* apps  */}
                 <Route path="/kanban" element={<Kanban />} />
                 <Route path="/editor" element={<Editor />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/color-picker" element={<ColorPicker />} />
-
                 {/* charts  */}
                 <Route path="/line" element={<Line />} />
                 <Route path="/area" element={<Area />} />
