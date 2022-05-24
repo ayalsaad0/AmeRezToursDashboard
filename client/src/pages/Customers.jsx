@@ -1,18 +1,19 @@
 import React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useStateContext } from "../contexts/ContextProvider";
-import { columns, rows } from "../data/dummy";
+import FetchCustomers, { customersGrid } from "../data/dummy";
 import { Header } from "../components";
 
 const Customers = () => {
   const { currentMode } = useStateContext();
+  const customers = FetchCustomers();
 
   return (
     <div className="bg-white dark:bg-secondary-dark-bg m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl">
       <Header category="Page" title="Customers" className="dark:text-white" />
       <DataGrid
-        rows={rows}
-        columns={columns}
+        rows={customers}
+        columns={customersGrid}
         pageSize={15}
         rowsPerPageOptions={[5]}
         checkboxSelection

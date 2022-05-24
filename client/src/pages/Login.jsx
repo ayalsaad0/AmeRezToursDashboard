@@ -21,7 +21,6 @@ const Login = () => {
           password: password,
         }).then((response) => {
           if (response.data) {
-            // handleLogIn();
             setUser(username);
             navigate("/ecommerce");
           } else {

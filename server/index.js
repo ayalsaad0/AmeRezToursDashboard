@@ -51,6 +51,19 @@ app.post("/login", (req, res) => {
   );
 });
 
+// Get images
+app.post("/images", (req, res) => {
+  const vehicle_id = req.body.vehicle_id;
+
+  db.query(
+    "SELECT link FROM images WHERE service_id = ?",
+    [vehicle_id],
+    (err, result) => {
+      res.send(result);
+    }
+  );
+});
+
 // Get users info
 app.get("/users", (req, res) => {
   db.query("SELECT * FROM users", (err, result) => {
@@ -65,9 +78,9 @@ app.get("/vehicles", (req, res) => {
   });
 });
 
-// Get images
-app.get("/images", (req, res) => {
-  db.query("SELECT * FROM images", (err, result) => {
+// Get activities info
+app.get("/activities", (req, res) => {
+  db.query("SELECT * FROM attraction", (err, result) => {
     res.send(result);
   });
 });
