@@ -12,11 +12,7 @@ import {
   Customers,
   Kanban,
   Line,
-  Area,
   Bar,
-  Pie,
-  ColorPicker,
-  Editor,
   Vehicles,
   Activities,
   Login,
@@ -66,11 +62,11 @@ const App = () => {
           </div>
           {activeMenu ? (
             <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
-              <Sidebar />
+              {currentUser !== null && <Sidebar />}
             </div>
           ) : (
             <div className="w-0 dark:bg-secondary-dark-bg">
-              <Sidebar />
+              {currentUser !== null && <Sidebar />}
             </div>
           )}
           <div
@@ -81,17 +77,16 @@ const App = () => {
             }
           >
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-              <Navbar />
+              {currentUser !== null && <Navbar />}
             </div>
             <div>
-              {themeSettings && <ThemeSettings />}
+              {currentUser !== null && themeSettings && <ThemeSettings />}
               <Routes>
                 {/* login and register */}
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 {/* dashboard  */}
-                <Route path="/ecommerce" element={<Ecommerce />} />
                 <Route path="/ecommerce" element={<Ecommerce />} />
                 {/* pages  */}
                 <Route path="/orders" element={<Orders />} />
@@ -100,18 +95,14 @@ const App = () => {
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/customers" element={<Customers />} />
                 {/* apps  */}
-                <Route path="/kanban" element={<Kanban />} />
-                <Route path="/editor" element={<Editor />} />
                 <Route path="/calendar" element={<Calendar />} />
-                <Route path="/color-picker" element={<ColorPicker />} />
+                <Route path="/kanban" element={<Kanban />} />
                 {/* charts  */}
                 <Route path="/line" element={<Line />} />
-                <Route path="/area" element={<Area />} />
                 <Route path="/bar" element={<Bar />} />
-                <Route path="/pie" element={<Pie />} />
               </Routes>
             </div>
-            <Footer />
+            {currentUser !== null && <Footer />}
           </div>
         </div>
       </BrowserRouter>

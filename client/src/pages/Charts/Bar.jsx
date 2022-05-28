@@ -67,12 +67,12 @@ function BarChart({ chartData }) {
       {
         label: "Vehicles",
         data: VehicleData.map((data) => data.orders),
-        backgroundColor: currentColor,
+        backgroundColor: "#1A97F5",
       },
       {
         label: "Attractions",
         data: ActivityData.map((data) => data.orders),
-        backgroundColor: currentColor,
+        backgroundColor: "#03C9D7",
       },
     ],
   });

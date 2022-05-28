@@ -6,12 +6,23 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { Dialog } from "@mui/material";
+import EditVehicle from "../components/EditVehicle";
 import Axios from "axios";
 
 const Vehicles = () => {
   const [vehicles, setVehiles] = useState([]);
+  const [openEditPage, setOpenEditPage] = useState(false);
   const [images, setImages] = useState([]);
   const [img, setImg] = useState();
+
+  const handleClickOpenUpdate = () => {
+    setOpenEditPage(true);
+  };
+
+  const handleCloseUpdate = () => {
+    setOpenEditPage(false);
+  };
 
   // function getImageById(id) {
   //  images.map((item) => {
@@ -20,7 +31,7 @@ const Vehicles = () => {
   //     if(item.service_id === id) {
   //       setImg(item.link);
   //     }
-  //   }) 
+  //   })
   // }
 
   // useEffect(() => {
@@ -41,13 +52,14 @@ const Vehicles = () => {
 
   useEffect(() => {
     let isMounted = true;
-     async function getVehicles() {
-       await fetch(`http://localhost:3001/vehicles`)
+    async function getVehicles() {
+      await fetch(`http://localhost:3001/vehicles`)
         .then((response) => response.json())
         .then((actualData) => {
-          if(isMounted) {
-            console.log(actualData)
-            setVehiles(actualData);}
+          if (isMounted) {
+            console.log(actualData);
+            setVehiles(actualData);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -59,13 +71,15 @@ const Vehicles = () => {
 
   return (
     <div className="flex flex-wrap justify-center">
-      
-     {vehicles.map((item) => {
-       return (
-         <div
+      {vehicles.map((item) => {
+        return (
+          <div
             key={item.title}
             className="ml-auto mr-auto flex flex-col align-middle justify-center text-center min-w-fit bg-white dark:bg-secondary-dark-bg m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl"
           >
+            <Dialog open={openEditPage} onClose={handleCloseUpdate}>
+              <EditVehicle vehicle={item} />
+            </Dialog>
             <Header
               category=""
               title={item.title}
@@ -74,7 +88,11 @@ const Vehicles = () => {
             <div>
               <Card
                 className="dark:bg-secondary-dark-bg ml-auto mr-auto"
-                sx={{ maxWidth: 345, minWidth: 345, borderRadius: "1.25rem" }}
+                sx={{
+                  maxWidth: 345,
+                  minWidth: 345,
+                  borderRadius: "1.25rem",
+                }}
               >
                 <CardMedia
                   component="img"
@@ -95,7 +113,9 @@ const Vehicles = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">EDIT</Button>
+                  <Button size="small" onClick={handleClickOpenUpdate}>
+                    EDIT
+                  </Button>
                   <Button color="error" size="small">
                     DELETE
                   </Button>
