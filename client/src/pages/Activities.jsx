@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Axios from "axios";
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
@@ -14,22 +15,24 @@ const Activities = () => {
   useEffect(() => {
     let isMounted = true;
     async function getImages() {
-      await fetch(`http://localhost:3001/images`)
-        .then((response) => response.json())
-        .then((actualData) => {
-          if (isMounted) setImages(actualData);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    getImages();
-    return () => (isMounted = false);
-  }, []);
+   await Axios.post(`http://localhost:3001/images`)
+          .then((response) => {
+            console.log(response.data);
+            
+            if (isMounted) setImages(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
+        getImages();
+        return () => (isMounted = false)
+
+  }, [])
 
   useEffect(() => {
     let isMounted = true;
-    async function getVehicles() {
+    async function getActivities() {
       await fetch(`http://localhost:3001/activities`)
         .then((response) => response.json())
         .then((actualData) => {
@@ -39,7 +42,7 @@ const Activities = () => {
           console.log(error);
         });
     }
-    getVehicles();
+    getActivities();
     return () => (isMounted = false);
   }, []);
 

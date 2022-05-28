@@ -11,15 +11,43 @@ import Axios from "axios";
 const Vehicles = () => {
   const [vehicles, setVehiles] = useState([]);
   const [images, setImages] = useState([]);
-  var images2 = [];
+  const [img, setImg] = useState();
+
+  // function getImageById(id) {
+  //  images.map((item) => {
+  //     console.log(item.service_id)
+  //     console.log(id)
+  //     if(item.service_id === id) {
+  //       setImg(item.link);
+  //     }
+  //   }) 
+  // }
+
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   async function getImages() {
+  //  await Axios.post(`http://localhost:3001/images`)
+  //         .then((response) => {
+  //           if (isMounted) setImages(response.data);
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //         });
+  //       }
+  //       getImages();
+  //       return () => (isMounted = false)
+
+  // }, [])
 
   useEffect(() => {
     let isMounted = true;
-    async function getVehicles() {
-      await fetch(`http://localhost:3001/vehicles`)
+     async function getVehicles() {
+       await fetch(`http://localhost:3001/vehicles`)
         .then((response) => response.json())
         .then((actualData) => {
-          if (isMounted) setVehiles(actualData);
+          if(isMounted) {
+            console.log(actualData)
+            setVehiles(actualData);}
         })
         .catch((error) => {
           console.log(error);
@@ -31,20 +59,10 @@ const Vehicles = () => {
 
   return (
     <div className="flex flex-wrap justify-center">
-      {vehicles.map((item) => {
-        Axios.post(`http://localhost:3001/images`, {
-          vehicle_id: item.id,
-        })
-          .then((response) => {
-            console.log(response.data);
-            setImages(response.data);
-            images2 = response.data;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        return (
-          <div
+      
+     {vehicles.map((item) => {
+       return (
+         <div
             key={item.title}
             className="ml-auto mr-auto flex flex-col align-middle justify-center text-center min-w-fit bg-white dark:bg-secondary-dark-bg m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl"
           >
@@ -61,8 +79,8 @@ const Vehicles = () => {
                 <CardMedia
                   component="img"
                   height="140"
-                  image={images2[0].link}
-                  alt="green iguana"
+                  image={item.image}
+                  alt={item.title}
                 />
                 <CardContent>
                   <Typography
