@@ -87,19 +87,39 @@ const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 {/* dashboard  */}
-                <Route path="/ecommerce" element={<Ecommerce />} />
+                {currentUser !== null && (
+                  <Route path="/ecommerce" element={<Ecommerce />} />
+                )}
                 {/* pages  */}
-                <Route path="/orders" element={<Orders />} />
-                <Route path="/vehicles" element={<Vehicles />} />
-                <Route path="/activities" element={<Activities />} />
-                <Route path="/employees" element={<Employees />} />
-                <Route path="/customers" element={<Customers />} />
+                {currentUser !== null && (
+                  <Route path="/orders" element={<Orders />} />
+                )}
+                {currentUser !== null && (
+                  <Route path="/vehicles" element={<Vehicles />} />
+                )}
+                {currentUser !== null && (
+                  <Route path="/activities" element={<Activities />} />
+                )}
+                {currentUser !== null && (
+                  <Route path="/employees" element={<Employees />} />
+                )}
+                {currentUser !== null && (
+                  <Route path="/customers" element={<Customers />} />
+                )}
                 {/* apps  */}
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/kanban" element={<Kanban />} />
+                {currentUser !== null && (
+                  <Route path="/calendar" element={<Calendar />} />
+                )}
+                {currentUser !== null && (
+                  <Route path="/kanban" element={<Kanban />} />
+                )}
                 {/* charts  */}
-                <Route path="/line" element={<Line />} />
-                <Route path="/bar" element={<Bar />} />
+                {currentUser !== null && (
+                  <Route path="/line" element={<Line />} />
+                )}
+                {currentUser !== null && (
+                  <Route path="/bar" element={<Bar />} />
+                )}
               </Routes>
             </div>
             {currentUser !== null && <Footer />}

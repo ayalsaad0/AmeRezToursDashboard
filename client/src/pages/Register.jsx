@@ -33,13 +33,13 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col text-sm shadow-2xl rounded-2xl justify-center pt-10 pb-10 ml-auto mr-auto mt-40 align-middle w-96 border-slate-600">
+    <div className="flex flex-col text-sm shadow-2xl rounded-2xl justify-center pt-10 pb-10 ml-auto mr-auto mt-40 align-middle w-96 dark:text-white border-slate-600">
       <h5 className="ml-auto mr-auto">REGISTER</h5>
       <form className="ml-auto mr-auto w-4/5" onSubmit={handleSubmit}>
         <div className="ml-auto mr-auto flex flex-col">
           <label className="w-full mt-5">Username</label>
           <input
-            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md"
+            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
             required
             placeholder="Username"
             type="text"
@@ -47,7 +47,7 @@ const Register = () => {
           ></input>
           <label className="w-full mt-5">Email</label>
           <input
-            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md"
+            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
             required
             placeholder="Email"
             type="email"
@@ -55,7 +55,7 @@ const Register = () => {
           ></input>
           <label className="w-full mt-5">Password</label>
           <input
-            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md"
+            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
             required
             placeholder="password"
             type="password"
@@ -63,7 +63,7 @@ const Register = () => {
           ></input>
           <label className="w-full mt-5">Confirm password</label>
           <input
-            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md"
+            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
             required
             placeholder="Confirm password"
             type="password"

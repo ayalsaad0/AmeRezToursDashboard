@@ -49,13 +49,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col text-sm shadow-2xl rounded-2xl justify-center pt-10 pb-10 ml-auto mr-auto mt-40 align-middle w-96 border-slate-600">
+    <div className="flex flex-col text-sm shadow-2xl rounded-2xl justify-center pt-10 pb-10 ml-auto mr-auto mt-40 align-middle w-96 border-slate-600 dark:text-white">
       <h5 className="ml-auto mr-auto">LOGIN</h5>
       <form className="ml-auto mr-auto w-4/5" onSubmit={handleSubmit}>
         <div className="ml-auto mr-auto flex flex-col">
           <label className="w-full mt-5">Email / username</label>
           <input
-            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md"
+            className="dark:text-black border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md"
             required
             placeholder="Email / username"
             type="text"
@@ -64,7 +64,7 @@ const Login = () => {
           ></input>
           <label className="w-full mt-5">Password</label>
           <input
-            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md"
+            className="dark:text-black border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md"
             required
             placeholder="password"
             type="password"

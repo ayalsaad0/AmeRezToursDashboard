@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -20,13 +21,15 @@ app.post("/register", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  db.query(
-    "INSERT INTO admins (username, email, password) VALUES (?, ?, ?)",
-    [username, email, password],
-    (err, result) => {
-      console.log(err);
-    }
-  );
+  bcrypt.hash(password, 10, (err, passwordHash) => {
+    db.query(
+      "INSERT INTO admins (username, email, password) VALUES (?, ?, ?)",
+      [username, email, passwordHash],
+      (err, result) => {
+        console.log(err);
+      }
+    );
+  });
 });
 
 // Get user by username or email to login
@@ -34,21 +37,29 @@ app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
+  var user = "";
+
   db.query(
-    "SELECT * FROM admins WHERE username = ? AND password = ?",
-    [username, password],
+    "SELECT * FROM admins WHERE username = ?",
+    [username],
     (err, result) => {
-      if (err) {
-        res.send({ err: err });
-      } else {
-        if (result.length > 0) {
-          res.send(true);
-        } else {
-          res.send(false);
-        }
+      if (err) res.send({ err: err });
+      else {
+        user = result[0].password;
+        console.log(user);
       }
     }
   );
+
+  bcrypt.compare(password, user, (err, result) => {
+    console.log(user);
+    if (err) {
+      res.send({ err: err });
+    } else {
+      console.log(result);
+      res.send(result);
+    }
+  });
 });
 
 // Get images

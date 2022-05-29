@@ -8,7 +8,7 @@ import avatar from "../data/avatar.jpg";
 
 const UserProfile = () => {
   const navigate = useNavigate();
-  const { currentColor, setUser } = useStateContext();
+  const { currentColor, setUser, currentUser, handleClick } = useStateContext();
   const handleLogout = () => {
     setUser(null);
     localStorage.setItem("currentUser", null);
@@ -25,6 +25,7 @@ const UserProfile = () => {
           bgHoverColor="light-gray"
           size="2xl"
           borderRadius="50%"
+          onClick={handleClick}
         />
       </div>
       <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
@@ -36,7 +37,7 @@ const UserProfile = () => {
         <div>
           <p className="font-semibold text-xl dark:text-gray-200">
             {" "}
-            Michael Roberts{" "}
+            {currentUser}
           </p>
           <p className="text-gray-500 text-sm dark:text-gray-400">
             {" "}
