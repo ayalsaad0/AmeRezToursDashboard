@@ -9,19 +9,24 @@ import Typography from "@mui/material/Typography";
 import { Dialog } from "@mui/material";
 import EditVehicle from "../components/EditVehicle";
 import Axios from "axios";
+import FetchVehicles from "../data/Vehicles";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const Vehicles = () => {
-  const [vehicles, setVehiles] = useState([]);
-  const [openEditPage, setOpenEditPage] = useState(false);
+  const { activePopup, setActivePopup } = useStateContext();
+  const [currentVehicle, setCurrentVehicle] = useState([]);
   const [images, setImages] = useState([]);
   const [img, setImg] = useState();
 
-  const handleClickOpenUpdate = () => {
-    setOpenEditPage(true);
+  const vehicles = FetchVehicles();
+
+  const handleClickOpenUpdate = ({ item }) => {
+    setCurrentVehicle(item);
+    setActivePopup(true);
   };
 
   const handleCloseUpdate = () => {
-    setOpenEditPage(false);
+    setActivePopup(false);
   };
 
   // function getImageById(id) {
@@ -50,36 +55,17 @@ const Vehicles = () => {
 
   // }, [])
 
-  useEffect(() => {
-    let isMounted = true;
-    async function getVehicles() {
-      await fetch(`http://localhost:3001/vehicles`)
-        .then((response) => response.json())
-        .then((actualData) => {
-          if (isMounted) {
-            console.log(actualData);
-            setVehiles(actualData);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    getVehicles();
-    return () => (isMounted = false);
-  }, []);
-
   return (
     <div className="flex flex-wrap justify-center">
+      <Dialog open={activePopup} onClose={handleCloseUpdate}>
+        {activePopup && <EditVehicle vehicle={currentVehicle} />}
+      </Dialog>
       {vehicles.map((item) => {
         return (
           <div
             key={item.title}
             className="ml-auto mr-auto flex flex-col align-middle justify-center text-center min-w-fit bg-white dark:bg-secondary-dark-bg m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl"
           >
-            <Dialog open={openEditPage} onClose={handleCloseUpdate}>
-              <EditVehicle vehicle={item} />
-            </Dialog>
             <Header
               category=""
               title={item.title}
@@ -113,7 +99,12 @@ const Vehicles = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={handleClickOpenUpdate}>
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      handleClickOpenUpdate({ item });
+                    }}
+                  >
                     EDIT
                   </Button>
                   <Button color="error" size="small">

@@ -8,9 +8,11 @@ import avatar from "../data/avatar.jpg";
 
 const UserProfile = () => {
   const navigate = useNavigate();
-  const { currentColor, setUser, currentUser, handleClick } = useStateContext();
+  const { currentColor, setUser, currentUser, handleClick, setActiveMenu } =
+    useStateContext();
   const handleLogout = () => {
     setUser(null);
+    setActiveMenu(false);
     localStorage.setItem("currentUser", null);
     navigate("/");
   };
@@ -37,15 +39,15 @@ const UserProfile = () => {
         <div>
           <p className="font-semibold text-xl dark:text-gray-200">
             {" "}
-            {currentUser}
+            {currentUser[3]}
           </p>
           <p className="text-gray-500 text-sm dark:text-gray-400">
             {" "}
-            Administrator{" "}
+            {currentUser[2]}
           </p>
           <p className="text-gray-500 text-sm font-semibold dark:text-gray-400">
             {" "}
-            info@shop.com{" "}
+            {currentUser[4]}
           </p>
         </div>
       </div>

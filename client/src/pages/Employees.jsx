@@ -1,45 +1,31 @@
 import React from "react";
-import {
-  GridComponent,
-  Inject,
-  ColumnsDirective,
-  ColumnDirective,
-  Search,
-  Page,
-  ExcelExport,
-  PdfExport,
-} from "@syncfusion/ej2-react-grids";
-
-import { employeesData, employeesGrid } from "../data/dummy";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useStateContext } from "../contexts/ContextProvider";
+import FetchEmployees, { employeesGrid } from "../data/Employees";
 import { Header } from "../components";
 
 const Employees = () => {
-  const toolbarOptions = ["Search"];
-
-  const editing = { allowDeleting: true, allowEditing: true };
+  const { currentMode } = useStateContext();
+  const employees = FetchEmployees();
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Employees" />
-      <GridComponent
-        dataSource={employeesData}
-        width="auto"
-        allowPaging
-        allowSorting
-        allowExcelExport
-        allowPdfExport
-        pageSettings={{ pageCount: 5 }}
-        editSettings={editing}
-        toolbar={toolbarOptions}
-      >
-        <ColumnsDirective>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          {employeesGrid.map((item, index) => (
-            <ColumnDirective key={index} {...item} />
-          ))}
-        </ColumnsDirective>
-        <Inject services={[Search, Page, ExcelExport, PdfExport]} />
-      </GridComponent>
+    <div className="bg-white dark:bg-secondary-dark-bg m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl">
+      <Header category="Page" title="Employees" className="dark:text-white" />
+      <DataGrid
+        rows={employees}
+        columns={employeesGrid}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        disableSelectionOnClick
+        autoHeight
+        style={{
+          backgroundColor: currentMode === "Dark" ? "#33373E" : "#fff",
+          color: currentMode === "Dark" ? "#fff" : "",
+        }}
+        density="comfortable"
+        components={{ Toolbar: GridToolbar }}
+      />
     </div>
   );
 };

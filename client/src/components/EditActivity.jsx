@@ -1,60 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import PropTypes from "prop-types";
-import NumberFormat from "react-number-format";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Axios from "axios";
+import { useStateContext } from "../contexts/ContextProvider";
 
-function EditActivity() {
+function EditActivity({ activity }) {
+  const [title, setTitle] = useState(activity.title);
+  const [description, setDesciption] = useState(activity.description);
+  const [price, setPrice] = useState(activity.price);
+
+  const { setActivePopup } = useStateContext();
+
   const Input = styled("input")({
     display: "none",
   });
 
-  const [values, setValues] = React.useState({
-    amount: "",
-    password: "",
-    weight: "",
-    weightRange: "",
-    showPassword: false,
-  });
-
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(
-    props,
-    ref
-  ) {
-    const { onChange, ...other } = props;
-
-    return (
-      <NumberFormat
-        {...other}
-        getInputRef={ref}
-        onValueChange={(values) => {
-          onChange({
-            target: {
-              name: props.name,
-              value: values.value,
-            },
-          });
-        }}
-        thousandSeparator
-        isNumericString
-        prefix="$"
-      />
-    );
-  });
-
-  NumberFormatCustom.propTypes = {
-    name: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
+  const handleClick = async () => {
+    await Axios.post("http://localhost:3001/update-activity", {
+      title: title,
+      description: description,
+      price: price,
+      id: activity.id,
+    }).then((response) => {
+      console.log(response);
+    });
+    setActivePopup(false);
   };
 
   return (
@@ -70,20 +46,21 @@ function EditActivity() {
       <div className="m-4">
         <TextField
           id="filled-search"
-          label="Title"
+          label={activity.title}
           type="search"
           variant="filled"
+          onChange={(e) => setTitle(e.target.value)}
         />
         <TextField
-          label="Cost"
-          value={values.numberformat}
-          onChange={handleChange}
-          name="numberformat"
-          id="formatted-numberformat-input"
-          InputProps={{
-            inputComponent: NumberFormatCustom,
+          id="filled-number"
+          label="Price"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
           }}
-          variant="standard"
+          variant="filled"
+          placeholder={activity.price}
+          onChange={(e) => setPrice(e.target.value)}
         />
       </div>
       <div className="m-4">
@@ -110,15 +87,20 @@ function EditActivity() {
         <TextareaAutosize
           className="border border-black rounded-lg p-4"
           aria-label="empty textarea"
-          placeholder="Description"
+          placeholder={activity.description}
           style={{ width: "100%", minHeight: "5rem" }}
+          onChange={(e) => setDesciption(e.target.value)}
         />
       </div>
       <div className="m-4 ml-auto p-4 flex">
         <Button variant="contained" style={{ margin: "0.5rem" }}>
           Discard Changes
         </Button>
-        <Button style={{ margin: "0.5rem" }} variant="contained">
+        <Button
+          onClick={handleClick}
+          style={{ margin: "0.5rem" }}
+          variant="contained"
+        >
           Save & Exit
         </Button>
       </div>

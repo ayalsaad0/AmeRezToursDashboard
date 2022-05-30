@@ -1,7 +1,7 @@
 import React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useStateContext } from "../contexts/ContextProvider";
-import FetchCustomers, { customersGrid } from "../data/dummy";
+import FetchCustomers, { customersGrid } from "../data/Customers";
 import { Header } from "../components";
 
 const Customers = () => {
@@ -14,7 +14,7 @@ const Customers = () => {
       <DataGrid
         rows={customers}
         columns={customersGrid}
-        pageSize={15}
+        pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
         disableSelectionOnClick

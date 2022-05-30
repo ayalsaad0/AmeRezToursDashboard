@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FiSettings } from "react-icons/fi";
 import Tooltip from "@mui/material/Tooltip";
@@ -48,18 +48,20 @@ const App = () => {
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
-          <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
-            <Tooltip title="Settings" placement="top">
-              <button
-                type="button"
-                onClick={() => setThemeSettings(true)}
-                style={{ background: currentColor, borderRadius: "50%" }}
-                className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
-              >
-                <FiSettings />
-              </button>
-            </Tooltip>
-          </div>
+          {currentUser !== null && (
+            <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
+              <Tooltip title="Settings" placement="top">
+                <button
+                  type="button"
+                  onClick={() => setThemeSettings(true)}
+                  style={{ background: currentColor, borderRadius: "50%" }}
+                  className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+                >
+                  <FiSettings />
+                </button>
+              </Tooltip>
+            </div>
+          )}
           {activeMenu ? (
             <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
               {currentUser !== null && <Sidebar />}

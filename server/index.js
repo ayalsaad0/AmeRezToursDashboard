@@ -1,14 +1,14 @@
-const express = require("express");
-const mysql = require("mysql");
-const cors = require("cors");
-const bcrypt = require("bcrypt");
+import express, { json } from "express";
+import { createConnection } from "mysql";
+import cors from "cors";
+import bcrypt from "bcrypt";
 
 const app = express();
 
-app.use(express.json());
+app.use(json());
 app.use(cors());
 
-const db = mysql.createConnection({
+const db = createConnection({
   host: "localhost",
   user: "root",
   password: "",
@@ -20,11 +20,14 @@ app.post("/register", (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
+  const full_name = req.body.full_name;
+  const phone = req.body.phone;
+  const role = req.body.role;
 
   bcrypt.hash(password, 10, (err, passwordHash) => {
     db.query(
-      "INSERT INTO admins (username, email, password) VALUES (?, ?, ?)",
-      [username, email, passwordHash],
+      "INSERT INTO admins (username, role, full_name, email, phone, password) VALUES (?, ?, ?, ?, ?, ?)",
+      [username, role, full_name, email, phone, passwordHash],
       (err, result) => {
         console.log(err);
       }
@@ -32,10 +35,39 @@ app.post("/register", (req, res) => {
   });
 });
 
+app.post("/update-vehicle", (req, res) => {
+  const title = req.body.title;
+  const places = req.body.places;
+  const suitcases = req.body.suitcases;
+  const price = req.body.price;
+  const id = req.body.id;
+  db.query(
+    "UPDATE vehicles SET title=?,places=?,suitcases=?,price=? WHERE id=?",
+    [title, places, suitcases, price, id],
+    (err, result) => {
+      console.log(result);
+    }
+  );
+});
+
+app.post("/update-activity", (req, res) => {
+  const title = req.body.title;
+  const description = req.body.description;
+  const price = req.body.price;
+  const id = req.body.id;
+  db.query(
+    "UPDATE attraction SET title=?,price=?,description=? WHERE id=?",
+    [title, price, description, id],
+    (err, result) => {
+      console.log(result);
+    }
+  );
+});
+
 // Get user by username or email to login
 app.post("/login", (req, res) => {
   const username = req.body.username;
-  const password = req.body.password;
+  const actual_password = req.body.password;
 
   var user = "";
 
@@ -45,21 +77,22 @@ app.post("/login", (req, res) => {
     (err, result) => {
       if (err) res.send({ err: err });
       else {
-        user = result[0].password;
-        console.log(user);
+        user = result[0];
+        console.log(user.password);
+        bcrypt.compare(actual_password, user.password, (err, cmpRes) => {
+          console.log(user);
+          if (err) {
+            res.send({ err: err });
+          } else {
+            const resArray = Object.values(
+              JSON.parse(JSON.stringify(result[0]))
+            );
+            res.send(resArray);
+          }
+        });
       }
     }
   );
-
-  bcrypt.compare(password, user, (err, result) => {
-    console.log(user);
-    if (err) {
-      res.send({ err: err });
-    } else {
-      console.log(result);
-      res.send(result);
-    }
-  });
 });
 
 // Get images
@@ -84,6 +117,13 @@ app.post("/images", (req, res) => {
 // Get users info
 app.get("/users", (req, res) => {
   db.query("SELECT * FROM users", (err, result) => {
+    res.send(result);
+  });
+});
+
+// Get employees info
+app.get("/admins", (req, res) => {
+  db.query("SELECT * FROM admins", (err, result) => {
     res.send(result);
   });
 });

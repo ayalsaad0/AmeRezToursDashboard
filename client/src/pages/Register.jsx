@@ -7,6 +7,9 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,8 +23,11 @@ const Register = () => {
       if (password !== passwordConfirmation) {
         alert("Your passwords don't match, try again");
       } else {
-        Axios.post("http://localhost:3001/register", {
+        await Axios.post("http://localhost:3001/register", {
           username: username,
+          full_name: fullName,
+          phone: phone,
+          role: role,
           email: email,
           password: password,
         }).then((response) => {
@@ -45,6 +51,14 @@ const Register = () => {
             type="text"
             onChange={(e) => setUsername(e.target.value)}
           ></input>
+          <label className="w-full mt-5">Full Name</label>
+          <input
+            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
+            required
+            placeholder="Full Name"
+            type="text"
+            onChange={(e) => setFullName(e.target.value)}
+          ></input>
           <label className="w-full mt-5">Email</label>
           <input
             className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
@@ -53,11 +67,27 @@ const Register = () => {
             type="email"
             onChange={(e) => setEmail(e.target.value)}
           ></input>
+          <label className="w-full mt-5">Phone</label>
+          <input
+            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
+            required
+            placeholder="Phone number"
+            type="text"
+            onChange={(e) => setPhone(e.target.value)}
+          ></input>
+          <label className="w-full mt-5">Role</label>
+          <input
+            className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
+            required
+            placeholder="Role"
+            type="text"
+            onChange={(e) => setRole(e.target.value)}
+          ></input>
           <label className="w-full mt-5">Password</label>
           <input
             className="border ml-auto mr-auto border-slate-400 w-full p-2 rounded-md dark:text-black"
             required
-            placeholder="password"
+            placeholder="Password"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           ></input>

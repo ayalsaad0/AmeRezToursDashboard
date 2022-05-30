@@ -9,18 +9,23 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditActivity from "../components/EditActivity";
 import { Dialog } from "@mui/material";
+import FetchActivities from "../data/Activities";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const Activities = () => {
-  const [activities, setActivities] = useState([]);
   const [images, setImages] = useState([]);
-  const [openEditPage, setOpenEditPage] = useState(false);
+  const { activePopup, setActivePopup } = useStateContext();
+  const [currentActivity, setCurrentActivity] = useState([]);
 
-  const handleClickOpenUpdate = () => {
-    setOpenEditPage(true);
+  const activities = FetchActivities();
+
+  const handleClickOpenUpdate = ({ item }) => {
+    setCurrentActivity(item);
+    setActivePopup(true);
   };
 
   const handleCloseUpdate = () => {
-    setOpenEditPage(false);
+    setActivePopup(false);
   };
 
   // useEffect(() => {
@@ -40,26 +45,10 @@ const Activities = () => {
   //   return () => (isMounted = false);
   // }, []);
 
-  useEffect(() => {
-    let isMounted = true;
-    async function getActivities() {
-      await fetch(`http://localhost:3001/activities`)
-        .then((response) => response.json())
-        .then((actualData) => {
-          if (isMounted) setActivities(actualData);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    getActivities();
-    return () => (isMounted = false);
-  }, []);
-
   return (
     <div className="flex flex-wrap justify-center">
-      <Dialog open={openEditPage} onClose={handleCloseUpdate}>
-        <EditActivity />
+      <Dialog open={activePopup} onClose={handleCloseUpdate}>
+        {activePopup && <EditActivity activity={currentActivity} />}
       </Dialog>
       {activities.map((item) => (
         <div
@@ -90,12 +79,14 @@ const Activities = () => {
                 variant="body2"
                 color="text.secondary"
               >
-                <pre style={{ whiteSpace: "pre-line" }}>{item.desc}</pre>
+                <pre style={{ whiteSpace: "pre-line" }}>{item.description}</pre>
               </Typography>
               <Button
                 style={{ margin: "1rem" }}
                 size="small"
-                onClick={handleClickOpenUpdate}
+                onClick={() => {
+                  handleClickOpenUpdate({ item });
+                }}
               >
                 EDIT
               </Button>
