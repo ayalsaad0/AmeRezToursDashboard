@@ -45,7 +45,29 @@ app.post("/update-vehicle", (req, res) => {
     "UPDATE vehicles SET title=?,places=?,suitcases=?,price=? WHERE id=?",
     [title, places, suitcases, price, id],
     (err, result) => {
-      console.log(result);
+      console.log(err);
+    }
+  );
+});
+
+app.post("/delete-vehicle", (req, res) => {
+  const id = req.body.id;
+  db.query("DELETE FROM vehicles WHERE id=?", [id], (err, result) => {
+    console.log(result);
+  });
+});
+
+app.post("/add-vehicle", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const places = req.body.places;
+  const suitcases = req.body.suitcases;
+  const price = req.body.price;
+  db.query(
+    "INSERT INTO vehicles (id, title, places, suitcases, price) VALUES (?,?,?,?,?)",
+    [id, title, places, suitcases, price],
+    (err, result) => {
+      console.log(err);
     }
   );
 });
@@ -62,6 +84,13 @@ app.post("/update-activity", (req, res) => {
       console.log(result);
     }
   );
+});
+
+app.post("/delete-activity", (req, res) => {
+  const id = req.body.id;
+  db.query("DELETE FROM activities WHERE id=?", [id], (err, result) => {
+    console.log(result);
+  });
 });
 
 // Get user by username or email to login

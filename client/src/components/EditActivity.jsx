@@ -15,7 +15,7 @@ function EditActivity({ activity }) {
   const [description, setDesciption] = useState(activity.description);
   const [price, setPrice] = useState(activity.price);
 
-  const { setActivePopup } = useStateContext();
+  const { setActiveEditPopup } = useStateContext();
 
   const Input = styled("input")({
     display: "none",
@@ -30,7 +30,7 @@ function EditActivity({ activity }) {
     }).then((response) => {
       console.log(response);
     });
-    setActivePopup(false);
+    setActiveEditPopup(false);
   };
 
   return (

@@ -8,57 +8,67 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Dialog } from "@mui/material";
 import EditVehicle from "../components/EditVehicle";
+import { DeleteVehicle } from "../data/Vehicles";
+import { AddVehicleFunc } from "../data/Vehicles";
+import AddVehicle from "../components/AddVehicle";
 import Axios from "axios";
 import FetchVehicles from "../data/Vehicles";
 import { useStateContext } from "../contexts/ContextProvider";
+import {AiOutlinePlusCircle} from "react-icons/ai";
 
 const Vehicles = () => {
-  const { activePopup, setActivePopup } = useStateContext();
+
+  const { currentColor, activeEditPopup, setActiveEditPopup,activeAddPopup,
+    setActiveAddPopup, } = useStateContext();
   const [currentVehicle, setCurrentVehicle] = useState([]);
   const [images, setImages] = useState([]);
   const [img, setImg] = useState();
+  const [id, setId] = useState("")
 
   const vehicles = FetchVehicles();
+  const length =vehicles.length + 1;
+  
+  const addVehicle = () => {
+    
+  }
+  
+  const handleClick = (id) => {
+    DeleteVehicle(id);
+  }
+  
+  const handleClickOpenAdd = () => {
+    setId("v_" + length);
+    setActiveAddPopup(true);
+  }
+
+  const handleCloseAdd = () => {
+    setActiveAddPopup(false);
+  }
 
   const handleClickOpenUpdate = ({ item }) => {
     setCurrentVehicle(item);
-    setActivePopup(true);
+    setActiveEditPopup(true);
   };
 
   const handleCloseUpdate = () => {
-    setActivePopup(false);
+    setActiveEditPopup(false);
   };
-
-  // function getImageById(id) {
-  //  images.map((item) => {
-  //     console.log(item.service_id)
-  //     console.log(id)
-  //     if(item.service_id === id) {
-  //       setImg(item.link);
-  //     }
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   async function getImages() {
-  //  await Axios.post(`http://localhost:3001/images`)
-  //         .then((response) => {
-  //           if (isMounted) setImages(response.data);
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
-  //       }
-  //       getImages();
-  //       return () => (isMounted = false)
-
-  // }, [])
 
   return (
     <div className="flex flex-wrap justify-center">
-      <Dialog open={activePopup} onClose={handleCloseUpdate}>
-        {activePopup && <EditVehicle vehicle={currentVehicle} />}
+      <button
+                  type="button"
+                  onClick={handleClickOpenAdd}
+                  style={{ background: currentColor, borderRadius: "50%" }}
+                  className="text-3xl fixed right-4 bottom-20 text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+                >
+                  <AiOutlinePlusCircle />
+                </button>
+      <Dialog open={activeEditPopup} onClose={handleCloseUpdate}>
+        {activeEditPopup && <EditVehicle vehicle={currentVehicle} />}
+      </Dialog>
+      <Dialog open={activeAddPopup} onClose={handleCloseAdd}>
+        {activeAddPopup && <AddVehicle vehicle_id={id} />}
       </Dialog>
       {vehicles.map((item) => {
         return (
@@ -107,7 +117,7 @@ const Vehicles = () => {
                   >
                     EDIT
                   </Button>
-                  <Button color="error" size="small">
+                  <Button color="error" size="small" onClick={() => { handleClick(item.id)}}>
                     DELETE
                   </Button>
                 </CardActions>

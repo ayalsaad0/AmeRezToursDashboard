@@ -11,6 +11,7 @@ import EditActivity from "../components/EditActivity";
 import { Dialog } from "@mui/material";
 import FetchActivities from "../data/Activities";
 import { useStateContext } from "../contexts/ContextProvider";
+import { DeleteActivity } from "../data/Activities";
 
 const Activities = () => {
   const [images, setImages] = useState([]);
@@ -18,6 +19,10 @@ const Activities = () => {
   const [currentActivity, setCurrentActivity] = useState([]);
 
   const activities = FetchActivities();
+
+  const handleClick = (id) => {
+    DeleteActivity(id);
+  }
 
   const handleClickOpenUpdate = ({ item }) => {
     setCurrentActivity(item);
@@ -90,7 +95,7 @@ const Activities = () => {
               >
                 EDIT
               </Button>
-              <Button color="error" size="small">
+              <Button color="error" size="small" onClick={() => { handleClick(item.id)}}>
                 DELETE
               </Button>
             </AccordionDetails>

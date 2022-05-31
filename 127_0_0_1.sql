@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2022 at 11:11 PM
+-- Generation Time: May 31, 2022 at 02:49 PM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- PHP Version: 8.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,8 +44,9 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `username`, `role`, `full_name`, `email`, `phone`, `password`) VALUES
-(2, 'admin', 'Administrator', 'Admin', 'admin@admin.com', '1234567890', '$2b$10$2Bn8WTrc5fCWhUhj3..fpeXOrHT6WtAb9ptJ/xeeMaChVSeQD6r2W'),
-(3, 'mahmoud', 'Driver', 'Mahmoud Zoabi', 'mahmoud123@gmail.com', '0526747955', '$2b$10$PxdksXGpzC1Elcf3t4RIbOnwwNIMq/ichg2BcKFGYy7jBN73gd6SO');
+(1, 'admin', 'Administrator', 'Admin', 'admin@admin.com', '1234567890', '$2b$10$2Bn8WTrc5fCWhUhj3..fpeXOrHT6WtAb9ptJ/xeeMaChVSeQD6r2W'),
+(2, 'mahmoud', 'Driver', 'Mahmoud Zoabi', 'mahmoud123@gmail.com', '0526747955', '$2b$10$PxdksXGpzC1Elcf3t4RIbOnwwNIMq/ichg2BcKFGYy7jBN73gd6SO'),
+(4, 'ayal', 'Administrator', 'Ayal Saad', 'ayalsaad0@gmail.com', '0538277108', '$2b$10$yr2d5ScWnhn.yNxjVmTez.a3BoQ8sqGdDEpAxW4NMWsehlEaYH1L2');
 
 -- --------------------------------------------------------
 
@@ -172,7 +173,7 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`id`, `title`, `places`, `avg_rating`, `suitcases`, `price`, `available`, `driver`, `image`) VALUES
-('v_1', 'MERCEDES CLASS E', 3, 3, 3, 1750, 1, 1, './images_public/mercedes-class-e.png'),
+('v_1', 'MERCEDES CLASS E', 3, 0, 3, 1350, 0, 0, './images_public/mercedes-class-e.png'),
 ('v_2', '4X4 TOYOTA TX', 6, 4, 6, 1300, 1, 0, './images_public/toyota-tx.jpg'),
 ('v_3', '4X4 TOYOTA FORTUNER', 6, 4, 6, 1400, 1, 0, './images_public/toyota-fortuner.png'),
 ('v_4', 'MERCEDES VITO', 7, 5, 7, 1700, 1, 1, './images_public/mercedes-vito.png'),
@@ -232,7 +233,7 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `images`

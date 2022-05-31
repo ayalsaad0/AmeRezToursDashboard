@@ -16,10 +16,10 @@ export const ContextProvider = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(false);
   const [isClicked, setIsClicked] = useState(initialState);
-  const [currentUser, setCurrentUser] = useState(
-    localStorage.getItem("currentUser")
-  );
+  const [currentUser, setCurrentUser] = useState(null);
   const [activePopup, setActivePopup] = useState(false);
+  const [activeEditPopup, setActiveEditPopup] = useState(false);
+  const [activeAddPopup, setActiveAddPopup] = useState(false);
 
   const setMode = (e) => {
     setCurrentMode(e.target.value);
@@ -64,6 +64,10 @@ export const ContextProvider = ({ children }) => {
         setUser,
         activePopup,
         setActivePopup,
+        activeAddPopup,
+        setActiveAddPopup,
+        activeEditPopup,
+        setActiveEditPopup,
       }}
     >
       {children}
