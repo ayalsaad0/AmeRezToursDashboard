@@ -8,10 +8,19 @@ import avatar from "../data/avatar.jpg";
 
 const UserProfile = () => {
   const navigate = useNavigate();
-  const { currentColor, setUser, currentUser, handleClick, setActiveMenu } =
-    useStateContext();
-  const handleLogout = () => {
+  const {
+    currentColor,
+    setUser,
+    currentUser,
+    handleClick,
+    setCurrentMode,
+    setActiveMenu,
+  } = useStateContext();
+  const handleLogout = (e) => {
+    handleClick(e.target);
     setUser(null);
+    setCurrentMode("Light");
+    localStorage.setItem("currentMode", "Light");
     setActiveMenu(false);
     localStorage.setItem("currentUser", null);
     navigate("/");

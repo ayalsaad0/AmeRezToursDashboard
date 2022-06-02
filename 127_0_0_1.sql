@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2022 at 02:49 PM
+-- Generation Time: Jun 02, 2022 at 10:49 AM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.0
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -81,6 +81,29 @@ INSERT INTO `attraction` (`id`, `title`, `location`, `price`, `availability`, `a
 ('a_7', 'OURIKA VALLEY', '', 0, 0, 0, 'LOCATED 60 kilometers south of Marrakech, the ourika Valley is\r\na valley in the Moroccan High Atlas which is one of the most visited High\r\nAtlas sites.The Ourika valley is the most accessible from Marrakech,\r\nTourists flock there precisely for its unspoiled nature and mountain way\r\noflife, as well as for the many small Berber villages that are scattered\r\nthroughout the valley. The road takes around 45 Min.The departure from\r\nthe Hotel/Riad for a visit of the Berber villages of the OURIKA valley. Visit\r\nthe Typical Berber House, 2:00 PM Lunch at OURIKA, admire the waterfalls\r\nof Setti Fatma, Trekking preferable with a mountain guide. Back time at\r\n5:00 PM.What we offer is a provision Of professional driver during the trip,\r\nAir-Conditioned and comfortable vehicle, Wireless, Local guide.', './images_public/ourika-valley-1.jpeg'),
 ('a_8', 'OUZOUD WATERFALLS', '', 0, 0, 0, 'Located 150 kilometers northeast of Marrakech, admire one of\nthe best morocco\'s natural wonders on a day trip to Ouzoud, waterfall-like\nthe Atlas Mountains and see the magnificent waterfalls of over 110 meters\nplunging into the cliffs, take photos from different angles. Our program\ndetails is a departer time at 9:00 A.M, you\'ll discover the magnificent\nOuzoud Region and its pristine nature, see the most spectacular waterfalls\nin North Africa, admire The Monkeys and Birds that inhabit the area, taste\na beautiful Berber tajine in front of the waterfalls, the Back Time around\n6:00 P.M. What we offer is a provision of professional drivers during the\nday, Air-conditioned and comfortable vehicle, 4x4 Or Minibus, Wireless,\nLocalguide.\n', './images_public/ouzoud-waterfalls.jpg'),
 ('a_9', 'MARRAKECH OUARZAZATE 1 DAYS', '', 0, 0, 0, 'This tour start in the morning from the riad or the hotel in Marrakech\r\nat 8 a.m. and cross the Atlas Mountains. The winding roads, changing\r\nscenery, colourful valleys, shepherds with their flocks, Berber villages high\r\nup on the hillsides, make this a picturesque drive. And when we get to\r\nTizi’n Tichka Pass, we’ll be at the highest point in the Atlas Mountains. Of\r\ncourse, we stop for photos and to breathe in some fresh mountain air.we’ll\r\nhead to the 11th century kasbah of Ait Ben Haddou, now a recognized\r\nUNESCO World Heritage Site. The architecture and the history are sure\r\nto impress you. Not to mention the views of the surrounding: the flowing\r\nriver, the palm trees. Heading further to the quiet town of Ouarzazate\r\nwe’ll have a traditional lunch before visiting the Taourirt Kasbah. This\r\nbuilding provided the backdrop for the Hollywood hit Star Wars and it\r\nhas been restored with financial assistance from UNESCO.', './images_public/marrakech-ouarzazate-1-days.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `subject` varchar(100) NOT NULL,
+  `location` varchar(100) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `category_color` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `subject`, `location`, `start_time`, `end_time`, `category_color`) VALUES
+(1, 'Explosion of Betelgeuse Star', 'Space Center USA', '2022-06-01 15:41:33', '2022-06-02 16:41:33', '#1aaa55'),
+(2, 'Thule Air Crash Report', 'Newyork City', '2022-06-22 17:19:52', '2022-06-22 21:19:52', '#357cd2');
 
 -- --------------------------------------------------------
 
@@ -202,6 +225,12 @@ ALTER TABLE `attraction`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
@@ -234,6 +263,12 @@ ALTER TABLE `vehicles`
 --
 ALTER TABLE `admins`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `images`

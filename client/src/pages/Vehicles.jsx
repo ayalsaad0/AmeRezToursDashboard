@@ -14,36 +14,38 @@ import AddVehicle from "../components/AddVehicle";
 import Axios from "axios";
 import FetchVehicles from "../data/Vehicles";
 import { useStateContext } from "../contexts/ContextProvider";
-import {AiOutlinePlusCircle} from "react-icons/ai";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 const Vehicles = () => {
-
-  const { currentColor, activeEditPopup, setActiveEditPopup,activeAddPopup,
-    setActiveAddPopup, } = useStateContext();
+  const {
+    currentColor,
+    activeEditPopup,
+    setActiveEditPopup,
+    activeAddPopup,
+    setActiveAddPopup,
+  } = useStateContext();
   const [currentVehicle, setCurrentVehicle] = useState([]);
   const [images, setImages] = useState([]);
   const [img, setImg] = useState();
-  const [id, setId] = useState("")
+  const [id, setId] = useState("");
 
   const vehicles = FetchVehicles();
-  const length =vehicles.length + 1;
-  
-  const addVehicle = () => {
-    
-  }
-  
+  const length = vehicles.length + 1;
+
+  const addVehicle = () => {};
+
   const handleClick = (id) => {
     DeleteVehicle(id);
-  }
-  
+  };
+
   const handleClickOpenAdd = () => {
     setId("v_" + length);
     setActiveAddPopup(true);
-  }
+  };
 
   const handleCloseAdd = () => {
     setActiveAddPopup(false);
-  }
+  };
 
   const handleClickOpenUpdate = ({ item }) => {
     setCurrentVehicle(item);
@@ -57,13 +59,13 @@ const Vehicles = () => {
   return (
     <div className="flex flex-wrap justify-center">
       <button
-                  type="button"
-                  onClick={handleClickOpenAdd}
-                  style={{ background: currentColor, borderRadius: "50%" }}
-                  className="text-3xl fixed right-4 bottom-20 text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
-                >
-                  <AiOutlinePlusCircle />
-                </button>
+        type="button"
+        onClick={handleClickOpenAdd}
+        style={{ background: currentColor, borderRadius: "50%" }}
+        className="text-3xl fixed right-4 bottom-20 text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+      >
+        <AiOutlinePlusCircle />
+      </button>
       <Dialog open={activeEditPopup} onClose={handleCloseUpdate}>
         {activeEditPopup && <EditVehicle vehicle={currentVehicle} />}
       </Dialog>
@@ -117,7 +119,13 @@ const Vehicles = () => {
                   >
                     EDIT
                   </Button>
-                  <Button color="error" size="small" onClick={() => { handleClick(item.id)}}>
+                  <Button
+                    color="error"
+                    size="small"
+                    onClick={() => {
+                      handleClick(item.id);
+                    }}
+                  >
                     DELETE
                   </Button>
                 </CardActions>

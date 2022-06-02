@@ -93,6 +93,20 @@ app.post("/delete-activity", (req, res) => {
   });
 });
 
+app.post("/add-activity", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const price = req.body.price;
+  const description = req.body.description;
+  db.query(
+    "INSERT INTO attraction (id, title, price, description) VALUES (?,?,?,?)",
+    [id, title, price, description],
+    (err, result) => {
+      console.log(err);
+    }
+  );
+});
+
 // Get user by username or email to login
 app.post("/login", (req, res) => {
   const username = req.body.username;
@@ -167,6 +181,12 @@ app.get("/vehicles", (req, res) => {
 // Get activities info
 app.get("/activities", (req, res) => {
   db.query("SELECT * FROM attraction", (err, result) => {
+    res.send(result);
+  });
+});
+
+app.get("/events", (req, res) => {
+  db.query("SELECT * FROM events", (err, result) => {
     res.send(result);
   });
 });

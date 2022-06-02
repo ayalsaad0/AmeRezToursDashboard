@@ -6,25 +6,25 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Axios from "axios";
 import { useStateContext } from "../contexts/ContextProvider";
 
-const AddVehicle = ({ vehicle_id }) => {
+function AddActivity({ activity_id }) {
   const [title, setTitle] = useState("");
-  const [places, setPlaces] = useState("");
-  const [suitcases, setSuitcases] = useState("");
+  const [description, setDesciption] = useState("");
   const [price, setPrice] = useState("");
-  const [id, setId] = useState(vehicle_id);
+  const [id, setId] = useState(activity_id);
 
   const { setActiveAddPopup } = useStateContext();
 
   const handleClick = async () => {
-    await Axios.post("http://localhost:3001/add-vehicle", {
-      id: id,
+    console.log(activity_id);
+    await Axios.post("http://localhost:3001/add-activity", {
       title: title,
-      places: places,
-      suitcases: suitcases,
+      description: description,
       price: price,
+      id: id,
     }).then((response) => {
       console.log(response);
     });
@@ -48,30 +48,10 @@ const AddVehicle = ({ vehicle_id }) => {
       <div className="m-4">
         <TextField
           id="filled-search"
-          label="Title/Model"
+          label="Title"
           type="search"
           variant="filled"
           onChange={(e) => setTitle(e.target.value)}
-        />
-        <TextField
-          id="filled-number"
-          label="Number Of Passengers"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="filled"
-          onChange={(e) => setPlaces(e.target.value)}
-        />
-        <TextField
-          id="filled-number"
-          label="Number Of Suitcases"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="filled"
-          onChange={(e) => setSuitcases(e.target.value)}
         />
         <TextField
           id="filled-number"
@@ -81,6 +61,7 @@ const AddVehicle = ({ vehicle_id }) => {
             shrink: true,
           }}
           variant="filled"
+          placeholder="Price"
           onChange={(e) => setPrice(e.target.value)}
         />
       </div>
@@ -88,10 +69,6 @@ const AddVehicle = ({ vehicle_id }) => {
         <FormControlLabel
           control={<Checkbox defaultChecked />}
           label="Available"
-        />
-        <FormControlLabel
-          control={<Checkbox defaultChecked />}
-          label="Driver"
         />
       </div>
       <div className="m-4">
@@ -108,8 +85,17 @@ const AddVehicle = ({ vehicle_id }) => {
           </Button>
         </label>
       </div>
+      <div className="m-4">
+        <TextareaAutosize
+          className="border border-black rounded-lg p-4"
+          aria-label="empty textarea"
+          placeholder="Description"
+          style={{ width: "100%", minHeight: "5rem" }}
+          onChange={(e) => setDesciption(e.target.value)}
+        />
+      </div>
       <div className="m-4 ml-auto p-4 flex">
-        <Button style={{ margin: "0.5rem" }} variant="contained">
+        <Button variant="contained" style={{ margin: "0.5rem" }}>
           Discard Changes
         </Button>
         <Button
@@ -122,5 +108,6 @@ const AddVehicle = ({ vehicle_id }) => {
       </div>
     </Box>
   );
-};
-export default AddVehicle;
+}
+
+export default AddActivity;

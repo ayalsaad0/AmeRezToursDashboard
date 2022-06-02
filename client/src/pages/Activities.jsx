@@ -12,25 +12,44 @@ import { Dialog } from "@mui/material";
 import FetchActivities from "../data/Activities";
 import { useStateContext } from "../contexts/ContextProvider";
 import { DeleteActivity } from "../data/Activities";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import AddActivity from "../components/AddActivity";
 
 const Activities = () => {
   const [images, setImages] = useState([]);
-  const { activePopup, setActivePopup } = useStateContext();
+  const {
+    currentColor,
+    activeEditPopup,
+    setActiveEditPopup,
+    activeAddPopup,
+    setActiveAddPopup,
+  } = useStateContext();
   const [currentActivity, setCurrentActivity] = useState([]);
+  const [id, setId] = useState("");
 
   const activities = FetchActivities();
+  const length = activities.length + 1;
 
   const handleClick = (id) => {
     DeleteActivity(id);
-  }
+  };
+
+  const handleClickOpenAdd = () => {
+    setId("a_" + length);
+    setActiveAddPopup(true);
+  };
+
+  const handleCloseAdd = () => {
+    setActiveAddPopup(false);
+  };
 
   const handleClickOpenUpdate = ({ item }) => {
     setCurrentActivity(item);
-    setActivePopup(true);
+    setActiveEditPopup(true);
   };
 
   const handleCloseUpdate = () => {
-    setActivePopup(false);
+    setActiveEditPopup(false);
   };
 
   // useEffect(() => {
@@ -52,8 +71,19 @@ const Activities = () => {
 
   return (
     <div className="flex flex-wrap justify-center">
-      <Dialog open={activePopup} onClose={handleCloseUpdate}>
-        {activePopup && <EditActivity activity={currentActivity} />}
+      <button
+        type="button"
+        onClick={handleClickOpenAdd}
+        style={{ background: currentColor, borderRadius: "50%" }}
+        className="text-3xl fixed right-4 bottom-20 text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+      >
+        <AiOutlinePlusCircle />
+      </button>
+      <Dialog open={activeEditPopup} onClose={handleCloseUpdate}>
+        {activeEditPopup && <EditActivity activity={currentActivity} />}
+      </Dialog>
+      <Dialog open={activeAddPopup} onClose={handleCloseAdd}>
+        {activeAddPopup && <AddActivity activity_id={id} />}
       </Dialog>
       {activities.map((item) => (
         <div
@@ -95,7 +125,13 @@ const Activities = () => {
               >
                 EDIT
               </Button>
-              <Button color="error" size="small" onClick={() => { handleClick(item.id)}}>
+              <Button
+                color="error"
+                size="small"
+                onClick={() => {
+                  handleClick(item.id);
+                }}
+              >
                 DELETE
               </Button>
             </AccordionDetails>
