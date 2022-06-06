@@ -6,13 +6,6 @@ import {
   AiOutlineStock,
   AiOutlineCar,
 } from "react-icons/ai";
-import toyota_tx from "../images/toyota-tx.jpg";
-import toyota_fortuner from "../images/toyota-fortuner.png";
-import ford_custom from "../images/ford-custom.png";
-import marrakech_1 from "../images/marrakech-1.jpg";
-import mercedes_class_e from "../images/mercedes-class-e.png";
-import ourika_valley_1 from "../images/ourika-valley-1.jpeg";
-import mercedes_vito from "../images/mercedes-vito.png";
 import {
   FiShoppingBag,
   FiBarChart,
@@ -42,37 +35,10 @@ import product5 from "./product5.jpg";
 import product6 from "./product6.jpg";
 import product7 from "./product7.jpg";
 
-export const gridOrderImage = (props) => (
-  <div>
-    <img
-      className="rounded-xl h-20 md:ml-3"
-      src={props.ProductImage}
-      alt="order-item"
-    />
-  </div>
-);
-
-export const gridOrderStatus = (props) => (
-  <button
-    type="button"
-    style={{ background: props.StatusBg }}
-    className="text-white py-1 px-2 capitalize rounded-2xl text-md"
-  >
-    {props.Status}
-  </button>
-);
-
 export const kanbanGrid = [
   { headerText: "To Do", keyField: "Open", allowToggle: true },
 
   { headerText: "In Progress", keyField: "InProgress", allowToggle: true },
-
-  {
-    headerText: "Testing",
-    keyField: "Testing",
-    allowToggle: true,
-    isExpanded: false,
-  },
 
   { headerText: "Done", keyField: "Close", allowToggle: true },
 ];
@@ -860,129 +826,6 @@ export const userProfileData = [
   },
 ];
 
-export const ordersGrid = [
-  {
-    headerText: "Image",
-    template: gridOrderImage,
-    textAlign: "Center",
-    width: "120",
-  },
-  {
-    field: "OrderItems",
-    headerText: "Item",
-    width: "150",
-    editType: "dropdownedit",
-    textAlign: "Center",
-  },
-  {
-    field: "CustomerName",
-    headerText: "Customer Name",
-    width: "150",
-    textAlign: "Center",
-  },
-  {
-    field: "TotalAmount",
-    headerText: "Total Amount",
-    format: "C2",
-    textAlign: "Center",
-    editType: "numericedit",
-    width: "150",
-  },
-  {
-    headerText: "Status",
-    template: gridOrderStatus,
-    field: "OrderItems",
-    textAlign: "Center",
-    width: "120",
-  },
-  {
-    field: "OrderID",
-    headerText: "Order ID",
-    width: "120",
-    textAlign: "Center",
-  },
-
-  {
-    field: "Location",
-    headerText: "Location",
-    width: "150",
-    textAlign: "Center",
-  },
-];
-
-export const ordersData = [
-  {
-    OrderID: 10248,
-    CustomerName: "Ayal Saad",
-    TotalAmount: 32.38,
-    OrderItems: "4X4 TOYOTA TX",
-    Location: "USA",
-    Status: "pending",
-    StatusBg: "#FB9678",
-    ProductImage: toyota_tx,
-  },
-  {
-    OrderID: 345653,
-    CustomerName: "Yaniv Cohen",
-    TotalAmount: 56.34,
-    OrderItems: "4X4 TOYOTA FORTUNER",
-    Location: "Delhi",
-    Status: "complete",
-    StatusBg: "#8BE78B",
-    ProductImage: toyota_fortuner,
-  },
-  {
-    OrderID: 390457,
-    CustomerName: "Mahmoud Zoabi",
-    TotalAmount: 93.31,
-    OrderItems: "MERCEDES VITO",
-    Location: "New York",
-    Status: "active",
-    StatusBg: "#03C9D7",
-    ProductImage: mercedes_vito,
-  },
-  {
-    OrderID: 893486,
-    CustomerName: "John Marston",
-    TotalAmount: 93.31,
-    OrderItems: "FORD CUSTOM",
-    Location: "Germany",
-    Status: "canceled",
-    StatusBg: "#FF5C8E",
-    ProductImage: ford_custom,
-  },
-  {
-    OrderID: 748975,
-    CustomerName: "Rami Saad",
-    TotalAmount: 23.99,
-    OrderItems: "MERCEDES CLASS E",
-    Location: "Spain",
-    Status: "rejected",
-    StatusBg: "red",
-    ProductImage: mercedes_class_e,
-  },
-  {
-    OrderID: 94757,
-    CustomerName: "Ayal Saad",
-    TotalAmount: 95.99,
-    OrderItems: "MARRAKECH OUARZAZATE 1 DAYS",
-    Location: "USA",
-    Status: "canceled",
-    StatusBg: "#FF5C8E",
-    ProductImage: marrakech_1,
-  },
-  {
-    OrderID: 944895,
-    CustomerName: "Kuku Muku",
-    TotalAmount: 17.99,
-    OrderItems: "OURIKA VALLEY",
-    Location: "USA",
-    Status: "active",
-    StatusBg: "#03C9D7",
-    ProductImage: ourika_valley_1,
-  },
-];
-
 export const lineChartData = [
   [
     { x: new Date(2005, 0, 1), y: 21 },
@@ -1225,48 +1068,6 @@ export const kanbanData = [
     ClassName: "e-bug, e-release, e-janet-leverling",
   },
   {
-    Id: "Task 5",
-    Title: "Task - 29005",
-    Status: "Review",
-    Summary: "Fix the issues reported by the customer.",
-    Type: "Bug",
-    Priority: "Low",
-    Tags: "Customer",
-    Estimate: "3.5",
-    Assignee: "Steven walker",
-    RankId: 1,
-    Color: "#E64A19",
-    ClassName: "e-bug, e-low, e-steven-walker",
-  },
-  {
-    Id: "Task 6",
-    Title: "Task - 29007",
-    Status: "Validate",
-    Summary: "Validate new requirements",
-    Type: "Improvement",
-    Priority: "Low",
-    Tags: "Validation",
-    Estimate: 1.5,
-    Assignee: "Robert King",
-    RankId: 1,
-    Color: "#673AB8",
-    ClassName: "e-improvement, e-low, e-robert-king",
-  },
-  {
-    Id: "Task 7",
-    Title: "Task - 29009",
-    Status: "Review",
-    Summary: "Fix the issues reported in Safari browser.",
-    Type: "Bug",
-    Priority: "Critical",
-    Tags: "Fix,Safari",
-    Estimate: 1.5,
-    Assignee: "Nancy Davloio",
-    RankId: 2,
-    Color: "#E64A19",
-    ClassName: "e-bug, e-release, e-nancy-davloio",
-  },
-  {
     Id: "Task 8",
     Title: "Task - 29010",
     Status: "Close",
@@ -1279,20 +1080,6 @@ export const kanbanData = [
     RankId: 3,
     Color: "#02897B",
     ClassName: "e-story, e-low, e-margaret-hamilt",
-  },
-  {
-    Id: "Task 9",
-    Title: "Task - 29011",
-    Status: "Validate",
-    Summary: "Validate the issues reported by the customer.",
-    Type: "Story",
-    Priority: "High",
-    Tags: "Validation,Fix",
-    Estimate: 1,
-    Assignee: "Steven walker",
-    RankId: 1,
-    Color: "#02897B",
-    ClassName: "e-story, e-high, e-steven-walker",
   },
   {
     Id: "Task 10",

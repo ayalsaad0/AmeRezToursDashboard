@@ -3,31 +3,31 @@ import { useState, useEffect } from "react";
 export const employeesGrid = [
   {
     field: "id",
-    headerText: "Employee ID",
+    headerName: "Employee ID",
     width: "125",
     textAlign: "Center",
   },
   {
     field: "full_name",
-    headerText: "Employee",
+    headerName: "Employee",
     width: "150",
     textAlign: "Center",
   },
   {
     field: "email",
-    headerText: "Email",
+    headerName: "Email",
     width: "200",
     textAlign: "Center",
   },
   {
     field: "phone",
-    headerText: "Phone",
+    headerName: "Phone",
     width: "150",
     textAlign: "Center",
   },
   {
     field: "role",
-    headerText: "Role",
+    headerName: "Role",
     width: "170",
     textAlign: "Center",
   },

@@ -85,6 +85,10 @@ const EditorWindowTemplate = (props) => {
             />
           </td>
         </tr>
+        <tr>
+          <button>Save</button>
+          <button>Delete</button>
+        </tr>
       </tbody>
     </table>
   ) : (

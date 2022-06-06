@@ -5,7 +5,6 @@ import FetchCustomers, { customersGrid } from "../data/Customers";
 import { Header } from "../components";
 
 const Customers = () => {
-  const { currentMode } = useStateContext();
   const customers = FetchCustomers();
 
   return (
@@ -20,8 +19,9 @@ const Customers = () => {
         disableSelectionOnClick
         autoHeight
         style={{
-          backgroundColor: currentMode === "Dark" ? "#33373E" : "#fff",
-          color: currentMode === "Dark" ? "#fff" : "",
+          backgroundColor: "#fff",
+          padding: 20,
+          borderRadius: 30,
         }}
         density="comfortable"
         components={{ Toolbar: GridToolbar }}

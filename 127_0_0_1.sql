@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2022 at 10:49 AM
+-- Generation Time: Jun 06, 2022 at 10:47 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -91,19 +91,23 @@ INSERT INTO `attraction` (`id`, `title`, `location`, `price`, `availability`, `a
 CREATE TABLE `events` (
   `id` int(10) UNSIGNED NOT NULL,
   `subject` varchar(100) NOT NULL,
-  `location` varchar(100) NOT NULL,
+  `status` varchar(20) NOT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
-  `category_color` varchar(10) NOT NULL
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`id`, `subject`, `location`, `start_time`, `end_time`, `category_color`) VALUES
-(1, 'Explosion of Betelgeuse Star', 'Space Center USA', '2022-06-01 15:41:33', '2022-06-02 16:41:33', '#1aaa55'),
-(2, 'Thule Air Crash Report', 'Newyork City', '2022-06-22 17:19:52', '2022-06-22 21:19:52', '#357cd2');
+INSERT INTO `events` (`id`, `subject`, `status`, `start_time`, `end_time`, `description`) VALUES
+(10, 'Ame Rez Tours', 'New', '2022-05-31 15:00:00', '2022-05-31 15:30:00', 'Ame Rez Tours'),
+(11, 'Ame Rez Tours', 'New', '2022-05-31 12:00:00', '2022-05-31 12:30:00', 'Ame Rez Tours'),
+(12, 'Ame Rez Tours', 'New', '2022-05-31 09:00:00', '2022-05-31 09:30:00', 'Ame Rez Tours'),
+(13, 'dwdw', 'Requested', '2022-06-02 07:00:00', '2022-06-02 10:30:00', 'ghfg'),
+(14, 'Rami', 'New', '2022-06-03 08:30:00', '2022-06-03 13:00:00', 'Rami'),
+(15, 'Ame Rez Tours', 'New', '2022-05-31 09:00:00', '2022-05-31 09:30:00', 'Ame Rez Tours');
 
 -- --------------------------------------------------------
 
@@ -268,7 +272,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `images`

@@ -22,14 +22,26 @@ export function getEvents() {
     const eventAsAnObject = {
       Id: item.id,
       Subject: item.subject,
-      Location: item.location,
+      EventType: item.status,
       StartTime: item.start_time,
       EndTime: item.end_time,
-      CategoryColor: item.category_color,
       Description: item.description,
     };
     eventsAsAnArrayOfObjects.push(eventAsAnObject);
   });
 
   return eventsAsAnArrayOfObjects;
+}
+
+export async function addEvent(data) {
+  await Axios.post("http://localhost:3001/add-event", {
+    Id: data.data.Id,
+    Subject: data.data.Subject,
+    EventType: data.data.EventType,
+    Description: data.data.Description,
+    StartTime: data.data.StartTime,
+    EndTime: data.data.EndTime,
+  }).then((response) => {
+    console.log(response);
+  });
 }

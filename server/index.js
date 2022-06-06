@@ -121,9 +121,7 @@ app.post("/login", (req, res) => {
       if (err) res.send({ err: err });
       else {
         user = result[0];
-        console.log(user.password);
         bcrypt.compare(actual_password, user.password, (err, cmpRes) => {
-          console.log(user);
           if (err) {
             res.send({ err: err });
           } else {
@@ -189,6 +187,23 @@ app.get("/events", (req, res) => {
   db.query("SELECT * FROM events", (err, result) => {
     res.send(result);
   });
+});
+
+app.post("/add-event", (req, res) => {
+  const id = req.body.Id;
+  const subject = req.body.Subject;
+  const status = req.body.EventType;
+  const description = req.body.Description;
+  const start_time = req.body.StartTime;
+  const end_time = req.body.EndTime;
+
+  db.query(
+    "INSERT INTO events (id, subject, status, start_time, end_time, description) VALUES (?,?,?,?,?,?)",
+    [id, subject, status, start_time, end_time, description],
+    (err, result) => {
+      console.log(err);
+    }
+  );
 });
 
 app.listen(3001, () => {

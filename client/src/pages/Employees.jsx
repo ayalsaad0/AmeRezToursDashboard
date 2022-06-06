@@ -1,11 +1,9 @@
 import React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useStateContext } from "../contexts/ContextProvider";
 import FetchEmployees, { employeesGrid } from "../data/Employees";
 import { Header } from "../components";
 
 const Employees = () => {
-  const { currentMode } = useStateContext();
   const employees = FetchEmployees();
 
   return (
@@ -20,8 +18,9 @@ const Employees = () => {
         disableSelectionOnClick
         autoHeight
         style={{
-          backgroundColor: currentMode === "Dark" ? "#33373E" : "#fff",
-          color: currentMode === "Dark" ? "#fff" : "",
+          backgroundColor: "#fff",
+          padding: 20,
+          borderRadius: 30,
         }}
         density="comfortable"
         components={{ Toolbar: GridToolbar }}
