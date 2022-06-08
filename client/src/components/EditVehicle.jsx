@@ -8,6 +8,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Axios from "axios";
 import { useStateContext } from "../contexts/ContextProvider";
+import VehiclesImageList from "./VehiclesImageList";
 
 function EditVehicle({ vehicle }) {
   const [title, setTitle] = useState(vehicle.title);
@@ -97,7 +98,7 @@ function EditVehicle({ vehicle }) {
         />
       </div>
       <div className="m-4">
-        <label htmlFor="contained-button-file">
+        {/* <label htmlFor="contained-button-file">
           <Input
             accept="image/*"
             id="contained-button-file"
@@ -108,7 +109,8 @@ function EditVehicle({ vehicle }) {
             Upload Images
             <PhotoCamera />
           </Button>
-        </label>
+        </label> */}
+        <VehiclesImageList service_id={vehicle.id} />
       </div>
       <div className="m-4 ml-auto p-4 flex">
         <Button style={{ margin: "0.5rem" }} variant="contained">

@@ -137,23 +137,32 @@ app.post("/login", (req, res) => {
 });
 
 // Get images
-// app.post("/images", (req, res) => {
-//   const service_id = req.body.service_id;
+app.get("/images-by-id", (req, res) => {
+  // console.log(req);
+  const service_id = req.data;
+  console.log(req.data);
 
-//   db.query(
-//     "SELECT link FROM images WHERE service_id = ?",
-//     [service_id],
-//     (err, result) => {
-//       res.send(result);
-//     }
-//   );
-// });
+  db.query(
+    "SELECT link FROM images WHERE service_id = ?",
+    [service_id],
+    (err, result) => {
+      res.send(result);
+    }
+  );
+});
 
-app.post("/images", (req, res) => {
-  db.query("SELECT * FROM images", (err, result) => {
+// Get Vehicles images
+app.get("/vehicles-images", (req, res) => {
+  db.query("SELECT * FROM images WHERE service_id LIKE 'v%'", (err, result) => {
     res.send(result);
   });
 });
+
+// app.get("/images", (req, res) => {
+//   db.query("SELECT * FROM images", (err, result) => {
+//     res.send(result);
+//   });
+// });
 
 // Get users info
 app.get("/users", (req, res) => {
