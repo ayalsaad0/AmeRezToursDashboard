@@ -137,10 +137,9 @@ app.post("/login", (req, res) => {
 });
 
 // Get images
-app.get("/images-by-id", (req, res) => {
-  // console.log(req);
-  const service_id = req.data;
-  console.log(req.data);
+app.post("/images-by-id", (req, res) => {
+  const service_id = req.body.service_id;
+  console.log(req.body.service_id);
 
   db.query(
     "SELECT link FROM images WHERE service_id = ?",

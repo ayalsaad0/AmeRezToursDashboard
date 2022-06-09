@@ -8,11 +8,11 @@ export default function VehiclesImageList({ service_id }) {
   return (
     <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
       {vehicles_images.map((item) => (
-        <ImageListItem key={item.img}>
+        <ImageListItem key={item.link}>
           <img
             src={`${item.link}?w=164&h=164&fit=crop&auto=format`}
-            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
+            srcSet={`${item.link}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+            alt={item.link}
             className=""
           />
         </ImageListItem>
