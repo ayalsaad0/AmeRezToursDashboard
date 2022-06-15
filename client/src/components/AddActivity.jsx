@@ -15,6 +15,7 @@ function AddActivity({ activity_id }) {
   const [description, setDesciption] = useState("");
   const [price, setPrice] = useState("");
   const [id, setId] = useState(activity_id);
+  const [link, setLink] = useState("");
 
   const { setActiveAddPopup } = useStateContext();
 
@@ -29,6 +30,18 @@ function AddActivity({ activity_id }) {
       console.log(response);
     });
     setActiveAddPopup(false);
+  };
+
+  const addImage = async () => {
+    await Axios.post("http://localhost:3001/add-image", {
+      link: link,
+      service_id: id,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch();
+    setLink("");
   };
 
   const Input = styled("input")({
@@ -72,18 +85,21 @@ function AddActivity({ activity_id }) {
         />
       </div>
       <div className="m-4">
-        <label htmlFor="contained-button-file">
-          <Input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
-          />
-          <Button variant="contained" component="span">
-            Upload Images
-            <PhotoCamera />
-          </Button>
-        </label>
+        <TextField
+          id="filled-search"
+          label="Add new image link"
+          type="search"
+          variant="filled"
+          onChange={(e) => setLink(e.target.value)}
+        />
+        <Button
+          startIcon={<PhotoCamera />}
+          style={{ margin: "0.5rem" }}
+          variant="contained"
+          onClick={addImage}
+        >
+          Add
+        </Button>
       </div>
       <div className="m-4">
         <TextareaAutosize

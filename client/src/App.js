@@ -112,9 +112,6 @@ const App = () => {
                 {currentUser !== null && (
                   <Route path="/calendar" element={<Calendar />} />
                 )}
-                {currentUser !== null && (
-                  <Route path="/kanban" element={<Kanban />} />
-                )}
                 {/* charts  */}
                 {currentUser !== null && (
                   <Route path="/line" element={<Line />} />

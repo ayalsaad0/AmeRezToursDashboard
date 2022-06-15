@@ -1,19 +1,28 @@
 import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { FetchVehiclesImages } from "../data/Images";
+import { FetchServiceImages } from "../data/Images";
 
-export default function VehiclesImageList({ service_id }) {
-  const vehicles_images = FetchVehiclesImages(service_id);
+export default function ServiceImageList({ service_id }) {
+  const service_images = FetchServiceImages(service_id);
   return (
-    <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-      {vehicles_images.map((item) => (
+    <ImageList
+      sx={{
+        width: "100%",
+        height: "100%",
+        border: "1px solid",
+        boxShadow: "10px 10px 5px #aaaaaa",
+        marginBottom: "3rem",
+      }}
+      cols={3}
+      rowHeight={164}
+    >
+      {service_images.map((item) => (
         <ImageListItem key={item.link}>
           <img
             src={`${item.link}?w=164&h=164&fit=crop&auto=format`}
             srcSet={`${item.link}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
             alt={item.link}
-            className=""
           />
         </ImageListItem>
       ))}

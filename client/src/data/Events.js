@@ -45,3 +45,26 @@ export async function addEvent(data) {
     console.log(response);
   });
 }
+
+export async function updateEvent(data, id) {
+  console.log("id = " + id);
+  console.log(data);
+  await Axios.post("http://localhost:3001/update-event", {
+    Id: id,
+    Subject: data.data.Subject,
+    EventType: data.data.EventType,
+    Description: data.data.Description,
+    StartTime: data.data.StartTime,
+    EndTime: data.data.EndTime,
+  }).then((response) => {
+    console.log(response);
+  });
+}
+
+export async function deleteEvent(event_id) {
+  await Axios.post("http://localhost:3001/delete-event", {
+    Id: event_id,
+  }).then((response) => {
+    console.log(response);
+  });
+}

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import Axios from "axios";
 import toyota_tx from "../images/toyota-tx.jpg";
 import toyota_fortuner from "../images/toyota-fortuner.png";
 import ford_custom from "../images/ford-custom.png";
@@ -27,11 +29,12 @@ export const gridOrderStatus = (props) => (
 
 export const ordersGrid = [
   {
+    field: "Image",
     headerName: "Image",
     textAlign: "Center",
     width: "120",
     renderCell: (params) => (
-      <img src={params.ProductImage} alt={params.OrderItems} />
+      <img src={params.row.ProductImage} alt={params.OrderItems} />
     ),
   },
   {
@@ -140,3 +143,30 @@ export const ordersData = [
     ProductImage: ourika_valley_1,
   },
 ];
+
+export default function FetchOrders() {
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`http://localhost:3001/orders`)
+      .then((response) => response.json())
+      .then((actualData) => {
+        if (isMounted) setOrders(actualData);
+      })
+      .catch();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+  return orders;
+}
+
+export function getCustomerNameById(id) {
+  let name = "";
+  Axios.post("http://localhost:3001/user-name-by-id", {
+    id: id,
+  }).then((response) => {
+    name = response.data[0].first_name + " " + response.data[0].last_name;
+  });
+  return name;
+}

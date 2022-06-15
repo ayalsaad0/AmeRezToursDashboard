@@ -9,11 +9,13 @@ import Checkbox from "@mui/material/Checkbox";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Axios from "axios";
 import { useStateContext } from "../contexts/ContextProvider";
+import ServiceImageList from "./ServiceImageList";
 
 function EditActivity({ activity }) {
   const [title, setTitle] = useState(activity.title);
   const [description, setDesciption] = useState(activity.description);
   const [price, setPrice] = useState(activity.price);
+  const [link, setLink] = useState("");
 
   const { setActiveEditPopup } = useStateContext();
 
@@ -31,6 +33,18 @@ function EditActivity({ activity }) {
       console.log(response);
     });
     setActiveEditPopup(false);
+  };
+
+  const addImage = async () => {
+    await Axios.post("http://localhost:3001/add-image", {
+      link: link,
+      service_id: activity.id,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch();
+    setLink("");
   };
 
   return (
@@ -70,24 +84,28 @@ function EditActivity({ activity }) {
         />
       </div>
       <div className="m-4">
-        <label htmlFor="contained-button-file">
-          <Input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
-          />
-          <Button variant="contained" component="span">
-            Upload Images
-            <PhotoCamera />
-          </Button>
-        </label>
+        <ServiceImageList service_id={activity.id} />
+        <TextField
+          id="filled-search"
+          label="Add new image link"
+          type="search"
+          variant="filled"
+          onChange={(e) => setLink(e.target.value)}
+        />
+        <Button
+          startIcon={<PhotoCamera />}
+          style={{ margin: "0.5rem" }}
+          variant="contained"
+          onClick={addImage}
+        >
+          Add
+        </Button>
       </div>
       <div className="m-4">
         <TextareaAutosize
           className="border border-black rounded-lg p-4"
           aria-label="empty textarea"
-          placeholder={activity.description}
+          placeholder="Description"
           style={{ width: "100%", minHeight: "5rem" }}
           onChange={(e) => setDesciption(e.target.value)}
         />

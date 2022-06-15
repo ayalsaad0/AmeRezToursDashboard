@@ -8,13 +8,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Axios from "axios";
 import { useStateContext } from "../contexts/ContextProvider";
-import VehiclesImageList from "./VehiclesImageList";
+import ServiceImageList from "./ServiceImageList";
 
 function EditVehicle({ vehicle }) {
   const [title, setTitle] = useState(vehicle.title);
   const [places, setPlaces] = useState(vehicle.places);
   const [suitcases, setSuitcases] = useState(vehicle.suitcases);
   const [price, setPrice] = useState(vehicle.price);
+  const [link, setLink] = useState("");
 
   const { setActivePopup } = useStateContext();
 
@@ -29,6 +30,18 @@ function EditVehicle({ vehicle }) {
       console.log(response);
     });
     setActivePopup(false);
+  };
+
+  const addImage = async () => {
+    await Axios.post("http://localhost:3001/add-image", {
+      link: link,
+      service_id: vehicle.id,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch();
+    setLink("");
   };
 
   const Input = styled("input")({
@@ -98,19 +111,22 @@ function EditVehicle({ vehicle }) {
         />
       </div>
       <div className="m-4">
-        {/* <label htmlFor="contained-button-file">
-          <Input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
-          />
-          <Button variant="contained" component="span">
-            Upload Images
-            <PhotoCamera />
-          </Button>
-        </label> */}
-        <VehiclesImageList service_id={vehicle.id} />
+        <ServiceImageList service_id={vehicle.id} />
+        <TextField
+          id="filled-search"
+          label="Add new image link"
+          type="search"
+          variant="filled"
+          onChange={(e) => setLink(e.target.value)}
+        />
+        <Button
+          startIcon={<PhotoCamera />}
+          style={{ margin: "0.5rem" }}
+          variant="contained"
+          onClick={addImage}
+        >
+          Add
+        </Button>
       </div>
       <div className="m-4 ml-auto p-4 flex">
         <Button style={{ margin: "0.5rem" }} variant="contained">

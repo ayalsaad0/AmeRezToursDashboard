@@ -15,50 +15,47 @@ import {
 import { getEvents } from "../data/Events";
 import { Header } from "../components";
 import EditorWindowTemplate from "../components/EditorWindowTemplate";
-import { addEvent } from "../data/Events";
+import { addEvent, deleteEvent, updateEvent } from "../data/Events";
+
+let editor = false;
+let id = 0;
 
 const onPopupOpen = (args) => {
   if (args.scheduleObj.type === "Editor") {
-    // console.log(args.scheduleObj.element);
+    // const startTime = args.scheduleObj.data.StartTime;
+    // console.log(args.scheduleObj.data.StartTime);
+    // console.log(startTime.getDate());
+    if (typeof args.scheduleObj.data.Id !== "undefined") {
+      id = args.scheduleObj.data.Id;
+      editor = true;
+    }
     let statusElement = args.scheduleObj.element.querySelector("#EventType");
     statusElement.setAttribute("name", "EventType");
   }
 };
 
 const onPopupClose = (args) => {
-  console.log(args.scheduleObj.type);
   if (args.scheduleObj.type === "Editor") {
-    const firstKeyValue = args.scheduleObj.data;
-    if (typeof args.scheduleObj.data === "object") console.log(firstKeyValue);
-    else console.log("first");
-    // const list_of_buttons = args.scheduleObj.element.children[2];
-    // if(args.scheduleObj.data)
-    // if (
-    //   args.scheduleObj.data === null ||
-    //   args.scheduleObj.data.Subject === "Add title"
-    // ) {
-    //   console.log("Nothing to add");
-    // } else addEvent(args.scheduleObj);
-    // console.log(args.scheduleObj);
-    //   if (
-    //     ["Add", "Save", "EditSeries", "EditOccurrence"].indexOf(
-    //       args.scheduleObj.currentAction
-    //     ) > -1
-    //   ) {
-    //     console.log("first");
-    //   } else if (args.scheduleObj.currentAction === null) {
-    //     // Handle the code if "cancel" button is clicked.
-    //   }
-    // cancel -> target: undefined
-    // save -> target: div.e-appointment.e-lib.e-draggable
+    if (editor) {
+      if (args.scheduleObj.event.target.innerHTML === "Save")
+        updateEvent(args.scheduleObj, id);
+      editor = false;
+      id = 0;
+    } else {
+      console.log(args.scheduleObj);
+      if (args.scheduleObj.event.target.innerHTML === "Save")
+        addEvent(args.scheduleObj);
+    }
+    if (args.scheduleObj.event.target.innerHTML === "Cancel")
+      console.log("Cancel");
+    else if (args.scheduleObj.event.target.innerHTML === "Delete")
+      deleteEvent(args.scheduleObj.data.Id);
+  } else if (args.scheduleObj.type === "DeleteAlert") {
+    if (args.scheduleObj.event.target.ariaLabel === "Cancel")
+      console.log("Cancel");
+    else if (args.scheduleObj.event.target.ariaLabel === "Delete")
+      deleteEvent(args.scheduleObj.data.Id);
   }
-};
-
-// eslint-disable-next-line react/destructuring-assignment
-const PropertyPane = (props) => <div className="mt-5">{props.children}</div>;
-
-const handleClick = () => {
-  console.log("first");
 };
 
 // L10n.load({
@@ -82,10 +79,10 @@ const Scheduler = () => {
   //   const length = scheduleObj.eventsData.length;
   // };
 
-  const change = (args) => {
-    scheduleObj.selectedDate = args.value;
-    scheduleObj.dataBind();
-  };
+  // const change = (args) => {
+  //   scheduleObj.selectedDate = args.value;
+  //   scheduleObj.dataBind();
+  // };
 
   const onDragStart = (arg) => {
     // eslint-disable-next-line no-param-reassign
@@ -105,13 +102,11 @@ const Scheduler = () => {
         dragStart={onDragStart}
       >
         <ViewsDirective>
-          {["Day", "Week", "WorkWeek", "Month", "Agenda"].map((item) => (
+          {["Day", "Week", "Month", "Agenda"].map((item) => (
             <ViewDirective key={item} option={item} />
           ))}
         </ViewsDirective>
-        <Inject
-          services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]}
-        />
+        <Inject services={[Day, Week, Month, Agenda, Resize, DragAndDrop]} />
       </ScheduleComponent>
     </div>
   );

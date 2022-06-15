@@ -15,6 +15,7 @@ const db = createConnection({
   database: "amereztours",
 });
 
+//#region Authentication
 // Add new user's info to the database
 app.post("/register", (req, res) => {
   const username = req.body.username;
@@ -35,6 +36,41 @@ app.post("/register", (req, res) => {
   });
 });
 
+// Get user by username or email to login
+app.post("/login", (req, res) => {
+  const username = req.body.username;
+  const actual_password = req.body.password;
+
+  var user = "";
+
+  db.query(
+    "SELECT * FROM admins WHERE username = ?",
+    [username],
+    (err, result) => {
+      if (err) res.send({ err: err });
+      else {
+        user = result[0];
+        bcrypt.compare(actual_password, user.password, (err, cmpRes) => {
+          if (err) {
+            res.send({ err: err });
+          } else {
+            if (cmpRes) {
+              const resArray = Object.values(
+                JSON.parse(JSON.stringify(result[0]))
+              );
+              res.send(resArray);
+            } else {
+              res.send("Incorrect password!");
+            }
+          }
+        });
+      }
+    }
+  );
+});
+//#endregion
+
+//#region Vehicles
 app.post("/update-vehicle", (req, res) => {
   const title = req.body.title;
   const places = req.body.places;
@@ -72,6 +108,22 @@ app.post("/add-vehicle", (req, res) => {
   );
 });
 
+// Get vehicles info
+app.get("/vehicles", (req, res) => {
+  db.query("SELECT * FROM vehicles", (err, result) => {
+    res.send(result);
+  });
+});
+
+// Get Vehicles images
+app.get("/vehicles-images", (req, res) => {
+  db.query("SELECT * FROM images WHERE service_id LIKE 'v%'", (err, result) => {
+    res.send(result);
+  });
+});
+//#endregion
+
+//#region Activities
 app.post("/update-activity", (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
@@ -88,7 +140,7 @@ app.post("/update-activity", (req, res) => {
 
 app.post("/delete-activity", (req, res) => {
   const id = req.body.id;
-  db.query("DELETE FROM activities WHERE id=?", [id], (err, result) => {
+  db.query("DELETE FROM attraction WHERE id=?", [id], (err, result) => {
     console.log(result);
   });
 });
@@ -107,35 +159,15 @@ app.post("/add-activity", (req, res) => {
   );
 });
 
-// Get user by username or email to login
-app.post("/login", (req, res) => {
-  const username = req.body.username;
-  const actual_password = req.body.password;
-
-  var user = "";
-
-  db.query(
-    "SELECT * FROM admins WHERE username = ?",
-    [username],
-    (err, result) => {
-      if (err) res.send({ err: err });
-      else {
-        user = result[0];
-        bcrypt.compare(actual_password, user.password, (err, cmpRes) => {
-          if (err) {
-            res.send({ err: err });
-          } else {
-            const resArray = Object.values(
-              JSON.parse(JSON.stringify(result[0]))
-            );
-            res.send(resArray);
-          }
-        });
-      }
-    }
-  );
+// Get activities info
+app.get("/activities", (req, res) => {
+  db.query("SELECT * FROM attraction", (err, result) => {
+    res.send(result);
+  });
 });
+//#endregion
 
+//#region Images
 // Get images
 app.post("/images-by-id", (req, res) => {
   const service_id = req.body.service_id;
@@ -150,19 +182,26 @@ app.post("/images-by-id", (req, res) => {
   );
 });
 
-// Get Vehicles images
-app.get("/vehicles-images", (req, res) => {
-  db.query("SELECT * FROM images WHERE service_id LIKE 'v%'", (err, result) => {
-    res.send(result);
-  });
-});
+app.post("/add-image", (req, res) => {
+  const service_id = req.body.service_id;
+  const link = req.body.link;
 
+  db.query(
+    "INSERT INTO images (link, service_id) VALUES (?,?)",
+    [link, service_id],
+    (err, result) => {
+      console.log(err);
+    }
+  );
+});
 // app.get("/images", (req, res) => {
 //   db.query("SELECT * FROM images", (err, result) => {
 //     res.send(result);
 //   });
 // });
+//#endregion
 
+//#region Users
 // Get users info
 app.get("/users", (req, res) => {
   db.query("SELECT * FROM users", (err, result) => {
@@ -170,27 +209,29 @@ app.get("/users", (req, res) => {
   });
 });
 
+// Get user's name by id
+app.post("/user-name-by-id", (req, res) => {
+  const id = req.body.id;
+  db.query(
+    "SELECT first_name, last_name FROM users WHERE id=?",
+    [id],
+    (err, result) => {
+      res.send(result);
+    }
+  );
+});
+//#endregion
+
+//#region Admins
 // Get employees info
 app.get("/admins", (req, res) => {
   db.query("SELECT * FROM admins", (err, result) => {
     res.send(result);
   });
 });
+//#endregion
 
-// Get vehicles info
-app.get("/vehicles", (req, res) => {
-  db.query("SELECT * FROM vehicles", (err, result) => {
-    res.send(result);
-  });
-});
-
-// Get activities info
-app.get("/activities", (req, res) => {
-  db.query("SELECT * FROM attraction", (err, result) => {
-    res.send(result);
-  });
-});
-
+//#region Events
 app.get("/events", (req, res) => {
   db.query("SELECT * FROM events", (err, result) => {
     res.send(result);
@@ -213,6 +254,46 @@ app.post("/add-event", (req, res) => {
     }
   );
 });
+
+app.post("/update-event", (req, res) => {
+  const id = req.body.Id;
+  const subject = req.body.Subject;
+  const status = req.body.EventType;
+  const description = req.body.Description;
+  const start_time = req.body.StartTime;
+  const end_time = req.body.EndTime;
+  console.log("id = " + id);
+  console.log("subject = " + subject);
+  console.log("status = " + status);
+  console.log("description = " + description);
+  console.log("start_time = " + start_time);
+  console.log("end_time = " + end_time);
+
+  db.query(
+    "UPDATE events SET subject=?, status=?, start_time=?, end_time=?, description=? WHERE id=?",
+    [subject, status, start_time, end_time, description, id],
+    (err, result) => {
+      console.log(err);
+    }
+  );
+});
+
+app.post("/delete-event", (req, res) => {
+  const id = req.body.Id;
+
+  db.query("DELETE FROM events WHERE id = ?", [id], (err, result) => {
+    console.log(err);
+  });
+});
+//#endregion
+
+//#region Orders
+app.get("/orders", (req, res) => {
+  db.query("SELECT * FROM orders", (err, result) => {
+    res.send(result);
+  });
+});
+//#endregion
 
 app.listen(3001, () => {
   console.log("running on port 3001");

@@ -26,12 +26,12 @@ const Login = () => {
         username: username,
         password: password,
       }).then((response) => {
-        if (response) {
+        if (response.data !== "Incorrect password!") {
           setUser(response.data);
           localStorage.setItem("currentUser", response.data);
           navigate("/ecommerce");
         } else {
-          alert("No user found!");
+          alert("Incorrect password!");
         }
       });
     }
