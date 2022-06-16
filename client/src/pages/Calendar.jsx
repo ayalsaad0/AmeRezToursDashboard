@@ -5,12 +5,8 @@ import {
   ViewDirective,
   Day,
   Week,
-  WorkWeek,
   Month,
-  Agenda,
   Inject,
-  Resize,
-  DragAndDrop,
 } from "@syncfusion/ej2-react-schedule";
 import { getEvents } from "../data/Events";
 import { Header } from "../components";
@@ -58,6 +54,16 @@ const onPopupClose = (args) => {
   }
 };
 
+// const onRenderCell = (args) => {
+//   // if (
+//   //   args.scheduleObj.data.StartTime.getDate() <
+//   //   new Date(new Date().setHours(0, 0, 0, 0))
+//   // ) {
+//   //   args.element.classList.add("e-disableCell");
+//   // }
+//   console.log(args.scheduleObj.data.StartTime.getDate());
+// };
+
 // L10n.load({
 //   "en-US": {
 //     schedule: {
@@ -99,14 +105,13 @@ const Scheduler = () => {
         height="650px"
         ref={(schedule) => setScheduleObj(schedule)}
         eventSettings={{ dataSource: events }}
-        dragStart={onDragStart}
       >
         <ViewsDirective>
-          {["Day", "Week", "Month", "Agenda"].map((item) => (
+          {["Day", "Week", "Month"].map((item) => (
             <ViewDirective key={item} option={item} />
           ))}
         </ViewsDirective>
-        <Inject services={[Day, Week, Month, Agenda, Resize, DragAndDrop]} />
+        <Inject services={[Day, Week, Month]} />
       </ScheduleComponent>
     </div>
   );

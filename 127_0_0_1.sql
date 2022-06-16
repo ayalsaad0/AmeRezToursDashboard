@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2022 at 10:44 AM
+-- Generation Time: Jun 16, 2022 at 07:39 PM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- PHP Version: 8.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -97,6 +97,14 @@ CREATE TABLE `events` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `subject`, `status`, `start_time`, `end_time`, `description`) VALUES
+(47, 'ayal', 'New', '2022-06-13 03:30:00', '2022-06-13 04:00:00', 'ayal'),
+(48, 'Yaniv', 'New', '2022-06-13 23:00:00', '2022-06-14 06:30:00', 'yaniv');
+
 -- --------------------------------------------------------
 
 --
@@ -154,7 +162,10 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`order_id`, `cust_id`, `order_date`, `start_datetime`, `end_datetime`, `price`, `status`, `service_id`) VALUES
 (1, 1, '2022-06-11 10:20:12', '2022-06-12 11:20:12', '2022-06-13 11:20:12', 1310, 'Complete', 'v_1'),
-(2, 2, '2022-06-15 16:12:29', '2022-06-15 16:12:29', '2022-06-15 16:12:29', 3000, 'New', 'v_2');
+(2, 2, '2022-06-15 16:12:29', '2022-06-15 16:12:29', '2022-06-15 16:12:29', 3000, 'New', 'v_2'),
+(3, 3, '2022-04-20 18:47:17', '2022-06-16 17:47:17', '2022-06-16 17:47:17', 5200, 'Complete', 'v_3'),
+(4, 1, '2022-06-16 18:02:56', '2022-06-16 18:02:56', '2022-06-16 18:02:56', 37218, 'Complete', 'a_1'),
+(5, 1, '2022-06-16 18:09:45', '2022-06-16 18:09:45', '2022-06-16 18:09:45', 1333, 'Complete', 'v_3');
 
 -- --------------------------------------------------------
 
@@ -278,7 +289,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `images`
@@ -290,7 +301,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `order_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`

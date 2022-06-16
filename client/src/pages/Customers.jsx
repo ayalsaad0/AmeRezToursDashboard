@@ -15,7 +15,6 @@ const Customers = () => {
         columns={customersGrid}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        checkboxSelection
         disableSelectionOnClick
         autoHeight
         style={{

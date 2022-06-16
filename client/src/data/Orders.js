@@ -71,78 +71,22 @@ export const ordersGrid = [
   },
 ];
 
-export const ordersData = [
-  {
-    OrderID: 10248,
-    CustomerName: "Ayal Saad",
-    TotalAmount: 32.38,
-    OrderItems: "4X4 TOYOTA TX",
-    Location: "USA",
-    Status: "pending",
-    StatusBg: "#FB9678",
-    ProductImage: toyota_tx,
-  },
-  {
-    OrderID: 345653,
-    CustomerName: "Yaniv Cohen",
-    TotalAmount: 56.34,
-    OrderItems: "4X4 TOYOTA FORTUNER",
-    Location: "Delhi",
-    Status: "complete",
-    StatusBg: "#8BE78B",
-    ProductImage: toyota_fortuner,
-  },
-  {
-    OrderID: 390457,
-    CustomerName: "Mahmoud Zoabi",
-    TotalAmount: 93.31,
-    OrderItems: "MERCEDES VITO",
-    Location: "New York",
-    Status: "active",
-    StatusBg: "#03C9D7",
-    ProductImage: mercedes_vito,
-  },
-  {
-    OrderID: 893486,
-    CustomerName: "John Marston",
-    TotalAmount: 93.31,
-    OrderItems: "FORD CUSTOM",
-    Location: "Germany",
-    Status: "canceled",
-    StatusBg: "#FF5C8E",
-    ProductImage: ford_custom,
-  },
-  {
-    OrderID: 748975,
-    CustomerName: "Rami Saad",
-    TotalAmount: 23.99,
-    OrderItems: "MERCEDES CLASS E",
-    Location: "Spain",
-    Status: "rejected",
-    StatusBg: "red",
-    ProductImage: mercedes_class_e,
-  },
-  {
-    OrderID: 94757,
-    CustomerName: "Ayal Saad",
-    TotalAmount: 95.99,
-    OrderItems: "MARRAKECH OUARZAZATE 1 DAYS",
-    Location: "USA",
-    Status: "canceled",
-    StatusBg: "#FF5C8E",
-    ProductImage: marrakech_1,
-  },
-  {
-    OrderID: 944895,
-    CustomerName: "Kuku Muku",
-    TotalAmount: 17.99,
-    OrderItems: "OURIKA VALLEY",
-    Location: "USA",
-    Status: "active",
-    StatusBg: "#03C9D7",
-    ProductImage: ourika_valley_1,
-  },
-];
+export function FetchOrdersData() {
+  const orders = FetchOrders();
+  const ordersData = [];
+  orders.map((item) => {
+    const orderObj = {
+      OrderID: item.order_id,
+      CustomerName: getCustomerNameById(item.cust_id),
+      TotalAmount: item.price,
+      OrderItems: getItemById(item.service_id),
+      Status: item.status,
+      ProductImage: "toyota_tx",
+    };
+    ordersData.push(orderObj);
+  });
+  return ordersData;
+}
 
 export default function FetchOrders() {
   const [orders, setOrders] = useState([]);
@@ -161,35 +105,32 @@ export default function FetchOrders() {
   return orders;
 }
 
-export function getCustomerNameById(id) {
-  console.log("id: " + id);
+function getCustomerNameById(id) {
   let name = "";
   Axios.post("http://localhost:3001/user-name-by-id", {
     id: id,
   }).then((response) => {
     name = response.data[0].first_name + " " + response.data[0].last_name;
-    console.log(name);
   });
+  // console.log(name);
   return name;
 }
 
-export function getItemById(id) {
-  console.log("id: " + id);
+function getItemById(id) {
   var item = "";
   if (id[0] === "v") {
     Axios.post("http://localhost:3001/vehicle-by-id", {
       id: id,
     }).then((response) => {
       item = response.data;
-      console.log(response.data);
     });
   } else {
     Axios.post("http://localhost:3001/activity-by-id", {
       id: id,
     }).then((response) => {
       item = response.data;
-      console.log(response.data);
     });
   }
+  // console.log(item);
   return item;
 }

@@ -2,27 +2,12 @@ import React from "react";
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
-import FetchOrders, {
-  ordersGrid,
-  getCustomerNameById,
-  getItemById,
-} from "../data/Orders";
+import { ordersGrid, FetchOrdersData } from "../data/Orders";
 import { Header } from "../components";
 
 const Orders = () => {
-  const orders = FetchOrders();
-  const ordersData = [];
-  orders.map((item) => {
-    var orderObj = {
-      OrderID: item.order_id,
-      CustomerName: getCustomerNameById(item.cust_id),
-      TotalAmount: item.price,
-      OrderItems: getItemById(item.service_id),
-      Status: item.status,
-      ProductImage: "toyota_tx",
-    };
-    ordersData.push(orderObj);
-  });
+  const ordersData = FetchOrdersData();
+  console.log(ordersData);
 
   const [pageSize, setPageSize] = React.useState(10);
   return (

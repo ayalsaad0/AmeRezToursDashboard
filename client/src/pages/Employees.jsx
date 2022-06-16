@@ -14,7 +14,6 @@ const Employees = () => {
         columns={employeesGrid}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        checkboxSelection
         disableSelectionOnClick
         autoHeight
         style={{
