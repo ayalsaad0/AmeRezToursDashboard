@@ -162,11 +162,34 @@ export default function FetchOrders() {
 }
 
 export function getCustomerNameById(id) {
+  console.log("id: " + id);
   let name = "";
   Axios.post("http://localhost:3001/user-name-by-id", {
     id: id,
   }).then((response) => {
     name = response.data[0].first_name + " " + response.data[0].last_name;
+    console.log(name);
   });
   return name;
+}
+
+export function getItemById(id) {
+  console.log("id: " + id);
+  var item = "";
+  if (id[0] === "v") {
+    Axios.post("http://localhost:3001/vehicle-by-id", {
+      id: id,
+    }).then((response) => {
+      item = response.data;
+      console.log(response.data);
+    });
+  } else {
+    Axios.post("http://localhost:3001/activity-by-id", {
+      id: id,
+    }).then((response) => {
+      item = response.data;
+      console.log(response.data);
+    });
+  }
+  return item;
 }

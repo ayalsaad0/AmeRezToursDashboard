@@ -20,6 +20,8 @@ export const ContextProvider = ({ children }) => {
   const [activePopup, setActivePopup] = useState(false);
   const [activeEditPopup, setActiveEditPopup] = useState(false);
   const [activeAddPopup, setActiveAddPopup] = useState(false);
+  const [name, setName] = useState("");
+  const [item, setItem] = useState("");
 
   const setMode = (e) => {
     setCurrentMode(e.target.value);
@@ -68,6 +70,10 @@ export const ContextProvider = ({ children }) => {
         setActiveAddPopup,
         activeEditPopup,
         setActiveEditPopup,
+        name,
+        setName,
+        item,
+        setItem,
       }}
     >
       {children}

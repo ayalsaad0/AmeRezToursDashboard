@@ -4,17 +4,24 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 import FetchOrders, {
   ordersGrid,
-  ordersData,
   getCustomerNameById,
+  getItemById,
 } from "../data/Orders";
 import { Header } from "../components";
 
 const Orders = () => {
   const orders = FetchOrders();
-  console.log(orders);
+  const ordersData = [];
   orders.map((item) => {
-    const name = getCustomerNameById(item.cust_id);
-    console.log(name);
+    var orderObj = {
+      OrderID: item.order_id,
+      CustomerName: getCustomerNameById(item.cust_id),
+      TotalAmount: item.price,
+      OrderItems: getItemById(item.service_id),
+      Status: item.status,
+      ProductImage: "toyota_tx",
+    };
+    ordersData.push(orderObj);
   });
 
   const [pageSize, setPageSize] = React.useState(10);
@@ -28,7 +35,7 @@ const Orders = () => {
         pagination
         disableSelectionOnClick
         columns={ordersGrid}
-        rows={orders}
+        rows={ordersData}
         autoHeight
         style={{
           backgroundColor: "#fff",
@@ -37,7 +44,7 @@ const Orders = () => {
         }}
         density="comfortable"
         components={{ Toolbar: GridToolbar }}
-        getRowId={(row) => row.order_id}
+        getRowId={(row) => row.OrderID}
       />
     </div>
   );

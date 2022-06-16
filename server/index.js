@@ -121,6 +121,14 @@ app.get("/vehicles-images", (req, res) => {
     res.send(result);
   });
 });
+
+app.post("/vehicle-by-id", (req, res) => {
+  const id = req.body.id;
+  db.query("SELECT title FROM vehicles WHERE id=?", [id], (err, result) => {
+    res.send(result[0].title);
+  });
+});
+
 //#endregion
 
 //#region Activities
@@ -157,6 +165,13 @@ app.post("/add-activity", (req, res) => {
       console.log(err);
     }
   );
+});
+
+app.post("/activity-by-id", (req, res) => {
+  const id = req.body.id;
+  db.query("SELECT title FROM attraction WHERE id=?", [id], (err, result) => {
+    res.send(result[0].title);
+  });
 });
 
 // Get activities info
