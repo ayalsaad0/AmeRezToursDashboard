@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2022 at 10:47 PM
+-- Generation Time: Jun 16, 2022 at 10:44 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -97,18 +97,6 @@ CREATE TABLE `events` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`id`, `subject`, `status`, `start_time`, `end_time`, `description`) VALUES
-(10, 'Ame Rez Tours', 'New', '2022-05-31 15:00:00', '2022-05-31 15:30:00', 'Ame Rez Tours'),
-(11, 'Ame Rez Tours', 'New', '2022-05-31 12:00:00', '2022-05-31 12:30:00', 'Ame Rez Tours'),
-(12, 'Ame Rez Tours', 'New', '2022-05-31 09:00:00', '2022-05-31 09:30:00', 'Ame Rez Tours'),
-(13, 'dwdw', 'Requested', '2022-06-02 07:00:00', '2022-06-02 10:30:00', 'ghfg'),
-(14, 'Rami', 'New', '2022-06-03 08:30:00', '2022-06-03 13:00:00', 'Rami'),
-(15, 'Ame Rez Tours', 'New', '2022-05-31 09:00:00', '2022-05-31 09:30:00', 'Ame Rez Tours');
-
 -- --------------------------------------------------------
 
 --
@@ -127,7 +115,7 @@ CREATE TABLE `images` (
 
 INSERT INTO `images` (`id`, `link`, `service_id`) VALUES
 (1, './images_public/mercedes-class-e.png', 'v_1'),
-(2, './images_public/ourika-valley-1.jpeg', ''),
+(2, './images_public/ourika-valley-1.jpeg', 'a_7'),
 (3, './images_public/toyota-tx.jpg', 'v_2'),
 (4, './images_public/toyota-fortuner.png', 'v_3'),
 (5, './images_public/mercedes-vito.png', 'v_4'),
@@ -135,7 +123,13 @@ INSERT INTO `images` (`id`, `link`, `service_id`) VALUES
 (7, './images_public/mercedes-sprinter.png', 'v_6'),
 (8, './images_public/volkswagen-crafter.png', 'v_7'),
 (9, './images_public/mini-coach-bus.png', 'v_8'),
-(10, './images_public/coach-bus1.png', 'v_9');
+(10, './images_public/coach-bus1.png', 'v_9'),
+(12, './images_public/mercedes-class-e2.png', 'v_1'),
+(13, './images_public/mercedes-class-e3.png', 'v_1'),
+(14, './images_public/mercedes-vito2.jpg', 'v_4'),
+(15, './images_public/volkswagen-crafter2.png', 'v_7'),
+(20, './images_public/ourika-valley-2.jpeg', 'a_7'),
+(21, './images_public/ourika-valley-2.jpeg', 'a_7');
 
 -- --------------------------------------------------------
 
@@ -144,11 +138,23 @@ INSERT INTO `images` (`id`, `link`, `service_id`) VALUES
 --
 
 CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL,
-  `cust_id` int(11) NOT NULL,
-  `order_date` int(11) NOT NULL,
+  `order_id` int(10) UNSIGNED NOT NULL,
+  `cust_id` int(10) UNSIGNED NOT NULL,
+  `order_date` datetime NOT NULL,
+  `start_datetime` datetime NOT NULL,
+  `end_datetime` datetime NOT NULL,
+  `price` int(11) NOT NULL,
+  `status` varchar(20) NOT NULL,
   `service_id` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `cust_id`, `order_date`, `start_datetime`, `end_datetime`, `price`, `status`, `service_id`) VALUES
+(1, 1, '2022-06-11 10:20:12', '2022-06-12 11:20:12', '2022-06-13 11:20:12', 1310, 'Complete', 'v_1'),
+(2, 2, '2022-06-15 16:12:29', '2022-06-15 16:12:29', '2022-06-15 16:12:29', 3000, 'New', 'v_2');
 
 -- --------------------------------------------------------
 
@@ -272,19 +278,19 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
