@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2022 at 07:39 PM
+-- Generation Time: Aug 01, 2022 at 07:01 PM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.0
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -102,8 +102,7 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `subject`, `status`, `start_time`, `end_time`, `description`) VALUES
-(47, 'ayal', 'New', '2022-06-13 03:30:00', '2022-06-13 04:00:00', 'ayal'),
-(48, 'Yaniv', 'New', '2022-06-13 23:00:00', '2022-06-14 06:30:00', 'yaniv');
+(47, 'ayal', 'New', '2022-06-13 03:30:00', '2022-06-13 04:00:00', 'ayal');
 
 -- --------------------------------------------------------
 

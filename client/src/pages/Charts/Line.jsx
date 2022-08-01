@@ -15,12 +15,16 @@
 import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import { IncomeData } from "../../data/dummy";
+import { GetIncomeData, IncomeData } from "../../data/Earnings";
 import { ChartsHeader } from "../../components";
 import { useStateContext } from "../../contexts/ContextProvider";
+import GetEarnings from "../../data/Earnings";
 
 const LineChart = ({ chartData }) => {
+  const totals = GetIncomeData();
+
   const { currentColor } = useStateContext();
+  console.log("Totals: ", totals);
   const [totalIncomings, setTotalIncomings] = useState({
     labels: IncomeData.map((data) => data.month),
     datasets: [

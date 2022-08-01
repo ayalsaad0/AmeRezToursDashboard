@@ -310,6 +310,20 @@ app.get("/orders", (req, res) => {
 });
 //#endregion
 
+//#region Earnings
+
+app.get("/earnings", (req, res) => {
+  db.query(
+    "SELECT MONTH(order_date) month, SUM(price) earnings FROM orders WHERE status='Complete' GROUP BY MONTH(order_date)",
+    (err, result) => {
+      console.log(result);
+      res.send(result);
+    }
+  );
+});
+
+//#endregion
+
 app.listen(3001, () => {
   console.log("running on port 3001");
 });
