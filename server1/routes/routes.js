@@ -1,0 +1,73 @@
+import express from "express";
+
+import {
+  signup,
+  login,
+  updatedPassword,
+  isAuth,
+} from "../controllers/Authentication.js";
+import {
+  addAttraction,
+  deleteAttraction,
+  fetchAttractions,
+  updateAttraction,
+} from "../controllers/Attractions.js";
+import {
+  addVehicle,
+  fetchVehicles,
+  updateVehicle,
+  deleteVehicle,
+} from "../controllers/Vehicles.js";
+import { fetchAdmins } from "../controllers/Employees.js";
+import { fetchCustomers } from "../controllers/Users.js";
+import {
+  addEvent,
+  deleteEvent,
+  fetchEvents,
+  updateEvent,
+} from "../controllers/Events.js";
+
+const router = express.Router();
+
+// #region authentication
+router.post("/login", login);
+router.post("/signup", signup);
+router.post("/updatedPassword", updatedPassword);
+router.get("/private", isAuth);
+// #endregion
+
+// #region attractions
+router.post("/fetchAttractions", fetchAttractions);
+router.post("/addAttraction", addAttraction);
+router.post("/updateAttraction", updateAttraction);
+router.post("/deleteAttraction", deleteAttraction);
+// #endregion
+
+// #region vehicles
+router.post("/fetchVehicles", fetchVehicles);
+router.post("/addVehicle", addVehicle);
+router.post("/updateVehicle", updateVehicle);
+router.post("/deleteVehicle", deleteVehicle);
+// #endregion
+
+// #region events
+router.post("/fetchEvents", fetchEvents);
+router.post("/addEvent", addEvent);
+router.post("/updateEvent", updateEvent);
+router.post("/deleteEvent", deleteEvent);
+// #endregion
+
+router.post("/fetchAdmins", fetchAdmins);
+
+router.post("/fetchCustomers", fetchCustomers);
+
+router.get("/public", (req, res, next) => {
+  res.status(200).json({ message: "here is your public resource" });
+});
+
+// will match any other path
+router.use("/", (req, res, next) => {
+  res.status(404).json({ error: "page not found" });
+});
+
+export default router;

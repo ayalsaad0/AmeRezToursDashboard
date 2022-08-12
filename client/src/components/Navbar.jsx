@@ -3,7 +3,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { RiNotification3Line } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Tooltip from "@mui/material/Tooltip";
-import {BiUserCircle} from "react-icons/bi";
+import { BiUserCircle } from "react-icons/bi";
 import avatar from "../data/avatar.jpg";
 import { Notification, UserProfile } from ".";
 import { useStateContext } from "../contexts/ContextProvider";
@@ -78,16 +78,15 @@ const Navbar = () => {
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
             onClick={() => handleClick("userProfile")}
           >
-            
             <NavButton
-            className="text-3xl"
-          color={currentColor}
-          icon={<BiUserCircle />}
-        />
+              className="text-3xl"
+              color={currentColor}
+              icon={<BiUserCircle />}
+            />
             <p>
               <span className="text-gray-400 text-14">Hi,</span>{" "}
               <span className="text-gray-400 font-bold ml-1 text-14">
-                {currentUser[1]}
+                {currentUser.username}
               </span>
             </p>
             <MdKeyboardArrowDown className="text-gray-400 text-14" />

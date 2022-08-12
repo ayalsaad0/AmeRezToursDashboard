@@ -10,11 +10,10 @@ import {
   Calendar,
   Employees,
   Customers,
-  Kanban,
   Line,
   Bar,
   Vehicles,
-  Activities,
+  Attractions,
   Login,
   Register,
   ResetPassword,
@@ -33,22 +32,27 @@ const App = () => {
     themeSettings,
     setThemeSettings,
     currentUser,
+    setCurrentUser,
   } = useStateContext();
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem("colorMode");
     const currentThemeMode = localStorage.getItem("themeMode");
-    if (currentThemeColor && currentThemeMode) {
+    const currentActiveUser = localStorage.getItem("currentUser");
+    if (currentThemeColor && currentThemeMode && currentUser) {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
+      setCurrentUser(currentActiveUser);
     }
   }, []);
+
+  const loggedIn = window.localStorage.getItem("isLoggedIn");
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
-          {currentUser !== null && (
+          {loggedIn && (
             <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
               <Tooltip title="Settings" placement="top">
                 <button
@@ -64,11 +68,11 @@ const App = () => {
           )}
           {activeMenu ? (
             <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
-              {currentUser !== null && <Sidebar />}
+              {loggedIn && <Sidebar />}
             </div>
           ) : (
             <div className="w-0 dark:bg-secondary-dark-bg">
-              {currentUser !== null && <Sidebar />}
+              {loggedIn && <Sidebar />}
             </div>
           )}
           <div
@@ -79,49 +83,39 @@ const App = () => {
             }
           >
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-              {currentUser !== null && <Navbar />}
+              {loggedIn && <Navbar />}
             </div>
             <div>
-              {currentUser !== null && themeSettings && <ThemeSettings />}
+              {loggedIn && themeSettings && <ThemeSettings />}
               <Routes>
                 {/* login and register */}
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 {/* dashboard  */}
-                {currentUser !== null && (
+                {loggedIn && (
                   <Route path="/ecommerce" element={<Ecommerce />} />
                 )}
                 {/* pages  */}
-                {currentUser !== null && (
-                  <Route path="/orders" element={<Orders />} />
+                {loggedIn && <Route path="/orders" element={<Orders />} />}
+                {loggedIn && <Route path="/vehicles" element={<Vehicles />} />}
+                {loggedIn && (
+                  <Route path="/activities" element={<Attractions />} />
                 )}
-                {currentUser !== null && (
-                  <Route path="/vehicles" element={<Vehicles />} />
-                )}
-                {currentUser !== null && (
-                  <Route path="/activities" element={<Activities />} />
-                )}
-                {currentUser !== null && (
+                {loggedIn && (
                   <Route path="/employees" element={<Employees />} />
                 )}
-                {currentUser !== null && (
+                {loggedIn && (
                   <Route path="/customers" element={<Customers />} />
                 )}
                 {/* apps  */}
-                {currentUser !== null && (
-                  <Route path="/calendar" element={<Calendar />} />
-                )}
+                {loggedIn && <Route path="/calendar" element={<Calendar />} />}
                 {/* charts  */}
-                {currentUser !== null && (
-                  <Route path="/line" element={<Line />} />
-                )}
-                {currentUser !== null && (
-                  <Route path="/bar" element={<Bar />} />
-                )}
+                {loggedIn && <Route path="/line" element={<Line />} />}
+                {loggedIn && <Route path="/bar" element={<Bar />} />}
               </Routes>
             </div>
-            {currentUser !== null && <Footer />}
+            {loggedIn && <Footer />}
           </div>
         </div>
       </BrowserRouter>

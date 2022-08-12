@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const customersGrid = [
+const customersGrid = [
   { field: "first_name", headerName: "First name", width: 120 },
   { field: "last_name", headerName: "Last name", width: 120 },
   { field: "phone", headerName: "Phone", width: 120 },
@@ -10,15 +10,21 @@ export const customersGrid = [
   { field: "email", headerName: "Email", width: 200 },
 ];
 
-export default function FetchCustomers() {
+function FetchCustomers() {
   const [customers, setCustomers] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:3001/users`)
-      .then((response) => response.json())
-      .then((actualData) => {
-        setCustomers(actualData);
+    fetch(`http://localhost:3001/fetchCustomers`, {
+      method: "POST",
+    })
+      .then(async (response) => {
+        const res = await response.json();
+        if (response.status === 200) {
+          setCustomers(res.actualData);
+        }
       })
       .catch();
   }, []);
   return customers;
 }
+
+export { FetchCustomers, customersGrid };

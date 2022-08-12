@@ -7,70 +7,57 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Dialog } from "@mui/material";
-import EditVehicle from "../components/EditVehicle";
 import { DeleteVehicle } from "../data/Vehicles";
 import { AddVehicleFunc } from "../data/Vehicles";
-import AddVehicle from "../components/AddVehicle";
-import Axios from "axios";
-import FetchVehicles from "../data/Vehicles";
+import { FetchVehicles } from "../data/Vehicles";
 import { useStateContext } from "../contexts/ContextProvider";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import VehicleForm from "../components/VehicleForm";
 
 const Vehicles = () => {
-  const {
-    currentColor,
-    activeEditPopup,
-    setActiveEditPopup,
-    activeAddPopup,
-    setActiveAddPopup,
-  } = useStateContext();
+  const { currentColor, activePopup, setActivePopup, vehicles, setVehicles } =
+    useStateContext();
   const [currentVehicle, setCurrentVehicle] = useState([]);
-  const [images, setImages] = useState([]);
-  const [img, setImg] = useState();
-  const [id, setId] = useState("");
 
-  const vehicles = FetchVehicles();
-  const length = vehicles.length + 1;
+  setVehicles(FetchVehicles());
 
-  const addVehicle = () => {};
-
-  const handleClick = (id) => {
+  const onClickDelete = (id) => {
     DeleteVehicle(id);
   };
 
-  const handleClickOpenAdd = () => {
-    setId("v_" + length);
-    setActiveAddPopup(true);
+  const onClickAdd = () => {
+    setActivePopup(true);
   };
 
-  const handleCloseAdd = () => {
-    setActiveAddPopup(false);
-  };
-
-  const handleClickOpenUpdate = ({ item }) => {
+  const onClickEdit = ({ item }) => {
     setCurrentVehicle(item);
-    setActiveEditPopup(true);
+    setActivePopup(true);
   };
 
-  const handleCloseUpdate = () => {
-    setActiveEditPopup(false);
+  const onClose = () => {
+    setCurrentVehicle([]);
+    setActivePopup(false);
   };
 
   return (
     <div className="flex flex-wrap justify-center">
       <button
         type="button"
-        onClick={handleClickOpenAdd}
+        onClick={onClickAdd}
         style={{ background: currentColor, borderRadius: "50%" }}
         className="text-3xl fixed right-4 bottom-20 text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
       >
         <AiOutlinePlusCircle />
       </button>
-      <Dialog open={activeEditPopup} onClose={handleCloseUpdate}>
-        {activeEditPopup && <EditVehicle vehicle={currentVehicle} />}
+      <Dialog open={activePopup} onClose={onClose}>
+        {activePopup && (
+          <VehicleForm vehicle={currentVehicle} onClose={onClose} />
+        )}
       </Dialog>
-      <Dialog open={activeAddPopup} onClose={handleCloseAdd}>
-        {activeAddPopup && <AddVehicle vehicle_id={id} />}
+      <Dialog open={activePopup} onClose={onClose}>
+        {activePopup && (
+          <VehicleForm vehicle={currentVehicle} onClose={onClose} />
+        )}
       </Dialog>
       {vehicles.map((item) => {
         return (
@@ -95,7 +82,7 @@ const Vehicles = () => {
                 <CardMedia
                   component="img"
                   height="140"
-                  image={item.image}
+                  image={item.images[0].link}
                   alt={item.title}
                 />
                 <CardContent>
@@ -114,7 +101,7 @@ const Vehicles = () => {
                   <Button
                     size="small"
                     onClick={() => {
-                      handleClickOpenUpdate({ item });
+                      onClickEdit({ item });
                     }}
                   >
                     EDIT
@@ -123,7 +110,7 @@ const Vehicles = () => {
                     color="error"
                     size="small"
                     onClick={() => {
-                      handleClick(item.id);
+                      onClickDelete(item.id);
                     }}
                   >
                     DELETE

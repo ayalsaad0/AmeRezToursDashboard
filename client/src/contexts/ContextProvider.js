@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { FetchVehicles } from "../data/Vehicles";
 
 const StateContext = createContext();
 
@@ -16,10 +17,11 @@ export const ContextProvider = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(false);
   const [isClicked, setIsClicked] = useState(initialState);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
   const [activePopup, setActivePopup] = useState(false);
   const [activeEditPopup, setActiveEditPopup] = useState(false);
   const [activeAddPopup, setActiveAddPopup] = useState(false);
+  const [vehicles, setVehicles] = useState(FetchVehicles());
 
   const setMode = (e) => {
     setCurrentMode(e.target.value);
@@ -68,6 +70,8 @@ export const ContextProvider = ({ children }) => {
         setActiveAddPopup,
         activeEditPopup,
         setActiveEditPopup,
+        vehicles,
+        setVehicles,
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const employeesGrid = [
+const employeesGrid = [
   {
     field: "id",
     headerName: "Employee ID",
@@ -33,15 +33,21 @@ export const employeesGrid = [
   },
 ];
 
-export default function FetchEmployees() {
+function FetchEmployees() {
   const [employees, setEmployees] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:3001/admins`)
-      .then((response) => response.json())
-      .then((actualData) => {
-        setEmployees(actualData);
+    fetch(`http://localhost:3001/fetchAdmins`, {
+      method: "POST",
+    })
+      .then(async (response) => {
+        const res = await response.json();
+        if (response.status === 200) {
+          setEmployees(res.actualData);
+        }
       })
       .catch();
   }, []);
   return employees;
 }
+
+export { FetchEmployees, employeesGrid };

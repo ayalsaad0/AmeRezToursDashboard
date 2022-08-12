@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
-import { TextBoxComponent } from "@syncfusion/ej2-react-inputs";
 
 const EditorWindowTemplate = (props) => {
   const [id, setId] = useState("");

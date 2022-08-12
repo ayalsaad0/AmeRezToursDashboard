@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Axios from "axios";
 import { useStateContext } from "../contexts/ContextProvider";
 import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
@@ -10,6 +9,7 @@ const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const { setUser } = useStateContext();
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
@@ -18,23 +18,62 @@ const Login = () => {
     setPasswordShown(!passwordShown);
   };
 
+  const onLoggedIn = (token) => {
+    fetch(`http://localhost:3001/private`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.token}`,
+      },
+    })
+      .then(async (res) => {
+        try {
+          const jsonRes = await res.json();
+          if (res.status === 200) {
+            window.localStorage.setItem("isLoggedIn", true);
+            navigate("ecommerce");
+            window.localStorage.setItem("currentUser", token.dbUser);
+            setUser(token.dbUser);
+          }
+        } catch (err) {
+          console.log(err.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (username !== "" && password !== "") {
-      await Axios.post("http://localhost:3001/login", {
-        username: username,
-        password: password,
-      }).then((response) => {
-        if (response.data !== "Incorrect password!") {
-          setUser(response.data);
-          localStorage.setItem("currentUser", response.data);
-          navigate("/ecommerce");
-        } else {
-          alert("Incorrect password!");
+    const payload = {
+      email,
+      password,
+    };
+    fetch(`http://localhost:3001/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(async (res) => {
+        try {
+          const jsonRes = await res.json();
+          if (res.status !== 200) {
+            alert(jsonRes.message);
+          } else {
+            onLoggedIn(jsonRes);
+            alert(jsonRes.message);
+          }
+        } catch (err) {
+          console.log(err.message);
         }
+      })
+      .catch((err) => {
+        console.log(err.message);
       });
-    }
   };
 
   return (
@@ -48,8 +87,8 @@ const Login = () => {
             required
             placeholder="Email / username"
             type="text"
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           ></input>
           <label className="w-full mt-5">Password</label>
           <input

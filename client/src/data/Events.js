@@ -1,31 +1,34 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
 
-export default function FetchEvents() {
+function FetchEvents() {
   const [events, setEvents] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:3001/events`)
-      .then((response) => response.json())
-      .then((actualData) => {
-        setEvents(actualData);
+    fetch(`http://localhost:3001/fetchEvents`, { method: "POST" })
+      .then(async (response) => {
+        const res = await response.json();
+        if (response.status === 200) {
+          setEvents(res.actualData);
+        }
       })
+
       .catch();
   }, []);
 
   return events;
 }
 
-export function getEvents() {
+function getEvents() {
   const events = FetchEvents();
   const eventsAsAnArrayOfObjects = [];
   events.map((item) => {
     const eventAsAnObject = {
       Id: item.id,
       Subject: item.subject,
-      EventType: item.status,
       StartTime: item.start_time,
       EndTime: item.end_time,
       Description: item.description,
+      EventType: item.event_type,
     };
     eventsAsAnArrayOfObjects.push(eventAsAnObject);
   });
@@ -33,38 +36,93 @@ export function getEvents() {
   return eventsAsAnArrayOfObjects;
 }
 
-export async function addEvent(data) {
-  await Axios.post("http://localhost:3001/add-event", {
+function addEvent(data) {
+  console.log(data.data);
+  const payload = {
     Id: data.data.Id,
     Subject: data.data.Subject,
-    EventType: data.data.EventType,
     Description: data.data.Description,
     StartTime: data.data.StartTime,
     EndTime: data.data.EndTime,
-  }).then((response) => {
-    console.log(response);
-  });
+    EventType: data.data.EventType,
+  };
+
+  fetch("http://localhost:3001/addEvent", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(async (res) => {
+      try {
+        const jsonRes = await res.json();
+        if (res.status !== 200) {
+          alert(jsonRes.message);
+        } else {
+          alert(jsonRes.message);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 }
 
-export async function updateEvent(data, id) {
-  console.log("id = " + id);
-  console.log(data);
-  await Axios.post("http://localhost:3001/update-event", {
+function updateEvent(data, id) {
+  const payload = {
     Id: id,
     Subject: data.data.Subject,
-    EventType: data.data.EventType,
     Description: data.data.Description,
     StartTime: data.data.StartTime,
     EndTime: data.data.EndTime,
-  }).then((response) => {
-    console.log(response);
-  });
+    EventType: data.data.EventType,
+  };
+
+  fetch("http://localhost:3001/updateEvent", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(async (res) => {
+      try {
+        const jsonRes = await res.json();
+        if (res.status !== 200) {
+          alert(jsonRes.message);
+        } else {
+          alert(jsonRes.message);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 }
 
-export async function deleteEvent(event_id) {
-  await Axios.post("http://localhost:3001/delete-event", {
-    Id: event_id,
-  }).then((response) => {
-    console.log(response);
-  });
+function deleteEvent(event_id) {
+  const payload = {
+    event_id,
+  };
+  fetch(`http://localhost:3001/deleteEvent`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      alert(res.message);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
+
+export { deleteEvent, updateEvent, addEvent, getEvents };

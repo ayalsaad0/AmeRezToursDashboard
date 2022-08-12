@@ -14,28 +14,59 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      username !== "" &&
-      email !== "" &&
-      password !== "" &&
-      passwordConfirmation !== ""
-    ) {
-      if (password !== passwordConfirmation) {
-        alert("Your passwords don't match, try again");
-      } else {
-        await Axios.post("http://localhost:3001/register", {
-          username: username,
-          full_name: fullName,
-          phone: phone,
-          role: role,
-          email: email,
-          password: password,
-        }).then((response) => {
-          console.log(response);
-        });
-        navigate("/");
-      }
-    }
+    // if (
+    //   username !== "" &&
+    //   email !== "" &&
+    //   password !== "" &&
+    //   passwordConfirmation !== ""
+    // ) {
+    //   if (password !== passwordConfirmation) {
+    //     alert("Your passwords don't match, try again");
+    //   } else {
+    //     await Axios.post("http://localhost:3001/register", {
+    //       username: username,
+    //       full_name: fullName,
+    //       phone: phone,
+    //       role: role,
+    //       email: email,
+    //       password: password,
+    //     }).then((response) => {
+    //       console.log(response);
+    //     });
+    //     navigate("/");
+    //   }
+    // }
+    const payload = {
+      username,
+      role,
+      fullName,
+      email,
+      phone,
+      password,
+    };
+    fetch(`http://localhost:3001/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(async (res) => {
+        try {
+          const jsonRes = await res.json();
+          if (res.status !== 200) {
+            alert(jsonRes.message);
+          } else {
+            alert(jsonRes.message);
+            navigate("/");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

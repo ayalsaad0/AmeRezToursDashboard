@@ -4,7 +4,7 @@ export { default as ResetPassword } from "./ResetPassword";
 export { default as Ecommerce } from "./Ecommerce";
 export { default as Orders } from "./Orders";
 export { default as Vehicles } from "./Vehicles";
-export { default as Activities } from "./Activities";
+export { default as Attractions } from "./Attractions";
 export { default as Employees } from "./Employees";
 export { default as Customers } from "./Customers";
 export { default as Calendar } from "./Calendar";
