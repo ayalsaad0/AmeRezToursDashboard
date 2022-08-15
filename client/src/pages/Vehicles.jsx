@@ -8,7 +8,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Dialog } from "@mui/material";
 import { DeleteVehicle } from "../data/Vehicles";
-import { AddVehicleFunc } from "../data/Vehicles";
 import { FetchVehicles } from "../data/Vehicles";
 import { useStateContext } from "../contexts/ContextProvider";
 import { AiOutlinePlusCircle } from "react-icons/ai";

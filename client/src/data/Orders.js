@@ -35,7 +35,6 @@ export const ordersGrid = [
     headerName: "Status",
     textAlign: "Center",
     width: "120",
-    editable: true,
   },
   {
     field: "OrderID",
@@ -62,7 +61,7 @@ export const ordersGrid = [
     textAlign: "Center",
   },
   {
-    field: "ChangeStatus",
+    field: "ApproveOrder",
     headerName: "",
     width: "120",
     textAlign: "Center",
@@ -70,15 +69,36 @@ export const ordersGrid = [
     renderCell: (params) => {
       const onClick = (e) => {
         e.stopPropagation();
-        return changeStatus(params.id);
+        return changeStatus(params.id, "Completed");
       };
 
-      return params.row.Status === "Completed" ? (
+      return params.row.Status !== "New" ? (
         <Button disabled onClick={onClick}>
-          Done
+          Complete
         </Button>
       ) : (
-        <Button onClick={onClick}>Done</Button>
+        <Button onClick={onClick}>Complete</Button>
+      );
+    },
+  },
+  {
+    field: "CancelOrder",
+    headerName: "",
+    width: "120",
+    textAlign: "Center",
+    sortable: false,
+    renderCell: (params) => {
+      const onClick = (e) => {
+        e.stopPropagation();
+        return changeStatus(params.id, "Canceled");
+      };
+
+      return params.row.Status !== "New" ? (
+        <Button disabled onClick={onClick}>
+          Cancel
+        </Button>
+      ) : (
+        <Button onClick={onClick}>Cancel</Button>
       );
     },
   },
@@ -101,9 +121,10 @@ function FetchOrders() {
   return orders;
 }
 
-function changeStatus(order) {
+function changeStatus(order, status) {
   const payload = {
     order_id: order,
+    status: status,
   };
   fetch(`http://localhost:3001/changeOrderStatus`, {
     method: "POST",
@@ -129,4 +150,21 @@ function changeStatus(order) {
     });
 }
 
-export { FetchOrders };
+function GetCountOfNewOrders() {
+  const [count, setCount] = useState(0);
+  fetch(`http://localhost:3001/getCountOfNewOrders`, {
+    method: "POST",
+  })
+    .then(async (res) => {
+      const jsonRes = await res.json();
+      if (res.status === 200) {
+        setCount(jsonRes.count[0].orders);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  return count;
+}
+
+export { FetchOrders, GetCountOfNewOrders };

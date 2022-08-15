@@ -18,7 +18,7 @@ const addEvent = async (req, res, next) => {
     start_time: req.body.StartTime,
     end_time: req.body.EndTime,
     description: req.body.Description,
-    event_type: req.body.EventType,
+    status: req.body.EventType,
   })
     .then(() => {
       res.status(200).json({ message: "Event added successfully" });
@@ -43,7 +43,7 @@ const updateEvent = async (req, res, next) => {
       start_time: req.body.StartTime,
       end_time: req.body.EndTime,
       description: req.body.Description,
-      event_type: req.body.EventType,
+      status: req.body.EventType,
     },
     {
       where: {

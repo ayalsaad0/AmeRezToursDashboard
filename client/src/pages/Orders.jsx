@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { ordersGrid, FetchOrdersData, FetchOrders } from "../data/Orders";
+import { ordersGrid, FetchOrders } from "../data/Orders";
 import { Header } from "../components";
 
 const Orders = () => {
@@ -20,7 +20,6 @@ const Orders = () => {
     };
     ordersData.push(orderObj);
   });
-  console.log(orders);
 
   const [pageSize, setPageSize] = React.useState(10);
   return (

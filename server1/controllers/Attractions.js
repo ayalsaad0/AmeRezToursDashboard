@@ -1,4 +1,3 @@
-// import jwt from 'jsonwebtoken';
 import Attraction from "../models/attraction.js";
 import Image from "../models/image.js";
 
@@ -25,31 +24,43 @@ const addAttraction = async (req, res, next) => {
     start_Date: Date.now(),
     end_Date: Date.now(),
   })
-    .then(() => {
-      const attraction = Attraction.findOne({
+    .then(async () => {
+      const attraction = await Attraction.findOne({
         where: { title: req.body.title },
       });
-      console.log("id: ");
-      console.log(attraction.id);
-      req.body.imagesArr.map((img) => {
-        console.log(img);
-      });
-      // updateImages(req.body.images, attraction.id);
+      addImages(req.body.imagesArr, attraction.dataValues.id);
       res.status(200).json({ message: "Attraction added successfully" });
     })
     .catch((err) => {
       console.log(err);
       res.status(502).json({ message: "error while adding the attraction" });
     });
-  // const id = dbAttraction.id;
-  // updateImages(req.body.images, id);
-  // console.log(dbAttraction);
+};
+
+const addImages = async (images, attractionId) => {
+  await Image.destroy({
+    where: {
+      attractionId: attractionId,
+    },
+  });
+
+  images.map(async (image) => {
+    if (image !== "")
+      await Image.create({
+        link: image,
+        attractionId: attractionId,
+        vehicleId: null,
+      });
+  });
 };
 
 const updateAttraction = async (req, res, next) => {
   const attToUpdate = await Attraction.findOne({
     where: { title: req.body.title },
   });
+
+  addImages(req.body.imagesArr, attToUpdate.dataValues.id);
+
   await Attraction.update(
     {
       availability: req.body.availability,
@@ -68,15 +79,6 @@ const updateAttraction = async (req, res, next) => {
     }
   )
     .then(() => {
-      // const attraction = Attraction.findOne({
-      //   where: { title: req.body.title },
-      // });
-      // console.log("id: ");
-      // console.log(attraction.id);
-      // req.body.imagesArr.map((img) => {
-      //   console.log(img);
-      // });
-      // updateImages(req.body.images, attraction.id);
       res.status(200).json({ message: "Attraction updated successfully" });
     })
     .catch((err) => {

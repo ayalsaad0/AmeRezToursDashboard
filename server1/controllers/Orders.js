@@ -17,7 +17,7 @@ const fetchOrders = async (req, res, next) => {
 const changeOrderStatus = async (req, res, next) => {
   await Order.update(
     {
-      status: "Completed",
+      status: req.body.status,
     },
     {
       where: {
@@ -85,4 +85,18 @@ const getOrdersStatistics = async (req, res, next) => {
     });
 };
 
-export { fetchOrders, changeOrderStatus, getEarnings, getOrdersStatistics };
+const getCountOfNewOrders = async (req, res, next) => {
+  await sequelize
+    .query("SELECT COUNT(*) orders FROM orders WHERE status='New';")
+    .then((count) => {
+      res.status(200).json({ count: count[0] });
+    });
+};
+
+export {
+  fetchOrders,
+  changeOrderStatus,
+  getEarnings,
+  getOrdersStatistics,
+  getCountOfNewOrders,
+};

@@ -32,6 +32,7 @@ import {
   changeOrderStatus,
   getEarnings,
   getOrdersStatistics,
+  getCountOfNewOrders,
 } from "../controllers/Orders.js";
 
 const router = express.Router();
@@ -71,6 +72,7 @@ router.post("/fetchOrders", fetchOrders);
 router.post("/changeOrderStatus", changeOrderStatus);
 router.post("/getEarnings", getEarnings);
 router.post("/getOrdersStatistics", getOrdersStatistics);
+router.post("/getCountOfNewOrders", getCountOfNewOrders);
 // #endregion
 
 router.post("/fetchAdmins", fetchAdmins);

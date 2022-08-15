@@ -1,23 +1,40 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import ServiceImageList from "./ServiceImageList";
-import { useStateContext } from "../contexts/ContextProvider";
-import { FetchVehicles } from "../data/Vehicles";
 
 function VehicleForm({ vehicle, onClose }) {
-  const { setVehicles } = useStateContext();
-
+  console.log(vehicle);
   const { register, handleSubmit } = useForm({
-    defaultValues: {
-      title: vehicle.title,
-      places: vehicle.places,
-      suitcases: vehicle.suitcases,
-      price: vehicle.price,
-      available: vehicle.available,
-      driver: vehicle.driver,
-      quantity: vehicle.quantity,
-      images: [],
-    },
+    defaultValues:
+      vehicle.length === 0
+        ? {
+            title: "",
+            places: 0,
+            suitcases: 0,
+            price: 0,
+            available: 0,
+            driver: 0,
+            quantity: 0,
+            image1: "",
+            image2: "",
+            image3: "",
+            image4: "",
+            image5: "",
+          }
+        : {
+            title: vehicle.title,
+            places: vehicle.places,
+            suitcases: vehicle.suitcases,
+            price: vehicle.price,
+            available: vehicle.available,
+            driver: vehicle.driver,
+            quantity: vehicle.quantity,
+            image1: vehicle.images.length >= 1 ? vehicle.images[0].link : "",
+            image2: vehicle.images.length >= 2 ? vehicle.images[1].link : "",
+            image3: vehicle.images.length >= 3 ? vehicle.images[2].link : "",
+            image4: vehicle.images.length >= 4 ? vehicle.images[3].link : "",
+            image5: vehicle.images.length >= 5 ? vehicle.images[4].link : "",
+          },
   });
 
   const onSubmit = (data) => {
@@ -29,10 +46,14 @@ function VehicleForm({ vehicle, onClose }) {
       available,
       driver,
       quantity,
-      images,
+      image1,
+      image2,
+      image3,
+      image4,
+      image5,
     } = data;
 
-    const imagesArr = Array.from(images);
+    const imagesArr = [image1, image2, image3, image4, image5];
 
     const payload = {
       title,
@@ -65,7 +86,6 @@ function VehicleForm({ vehicle, onClose }) {
             alert(jsonRes.message);
           } else {
             alert(jsonRes.message);
-            setVehicles(FetchVehicles());
           }
         } catch (err) {
           console.log(err.message);
@@ -79,86 +99,138 @@ function VehicleForm({ vehicle, onClose }) {
 
   return (
     <form
-      className="w-5/5 max-w-screen-lg mt-0 mb-0 ml-auto mr-auto flex flex-col p-4 justify-center shadow-md"
+      className="max-w-screen-lg mt-0 mb-0 ml-auto mr-auto flex flex-col p-4 justify-center shadow-md"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <label>Title</label>
-      <input
-        className="m-4 border border-black rounded-lg p-2"
-        type="text"
-        placeholder={vehicle.title || "Title"}
-        {...register("title", { required: true })}
-      />
-      <label>Places</label>
-      <input
-        className="m-4 border border-black rounded-lg p-2"
-        type="number"
-        placeholder={vehicle.places || "Places"}
-        {...register("places", { required: true })}
-      />
-      <label>Suitcases</label>
-      <input
-        className="m-4 border border-black rounded-lg p-2"
-        type="number"
-        placeholder={vehicle.suitcases || "Suitcases"}
-        {...register("suitcases", { required: true })}
-      />
-      <label>Price</label>
-      <input
-        className="m-4 border border-black rounded-lg p-2"
-        type="number"
-        placeholder={vehicle.price || "Price"}
-        {...register("price", { required: true })}
-      />
-      <label>Available</label>
-      {vehicle.available === 1 ? (
+      <div className="flex flex-col m-4">
+        <label>Title</label>
+        <input
+          className="border border-black rounded-lg p-2"
+          type="text"
+          placeholder={vehicle.title || "Title"}
+          {...register("title", { required: true })}
+        />
+      </div>
+      <div className="flex">
+        <div className="flex flex-col m-4">
+          <label>Places</label>
+          <input
+            className="border border-black rounded-lg p-2"
+            type="number"
+            placeholder={vehicle.places || "Places"}
+            {...register("places", { required: true })}
+          />
+        </div>
+        <div className="flex flex-col m-4">
+          <label>Suitcases</label>
+          <input
+            className="border border-black rounded-lg p-2"
+            type="number"
+            placeholder={vehicle.suitcases || "Suitcases"}
+            {...register("suitcases", { required: true })}
+          />
+        </div>
+      </div>
+      <div className="flex">
+        <div className="flex flex-col m-4">
+          <label>Price</label>
+          <input
+            className="border border-black rounded-lg p-2"
+            type="number"
+            placeholder={vehicle.price || "Price"}
+            {...register("price", { required: true })}
+          />
+        </div>
+        <div className="flex flex-col m-4">
+          <label>Quantity</label>
+          <input
+            type="number"
+            className="border border-black rounded-lg p-2"
+            placeholder={vehicle.quantity || "Quantity"}
+            {...register("quantity", { required: true })}
+          />
+        </div>
+      </div>
+      <div className="flex">
+        <div className="flex flex-col m-4">
+          <label>Available</label>
+          {vehicle.available === 1 ? (
+            <input
+              className="border border-black rounded-lg p-2"
+              type="checkbox"
+              checked
+              {...register("available")}
+            />
+          ) : (
+            <input
+              className="border border-black rounded-lg p-2"
+              type="checkbox"
+              {...register("available")}
+            />
+          )}
+        </div>
+        <div className="flex flex-col m-4">
+          <label>Driver</label>
+          {vehicle.driver === 1 ? (
+            <input
+              className="border border-black rounded-lg p-2"
+              type="checkbox"
+              checked
+              {...register("driver")}
+            />
+          ) : (
+            <input
+              className="border border-black rounded-lg p-2"
+              type="checkbox"
+              {...register("driver")}
+            />
+          )}
+        </div>
+      </div>
+      <div className="flex flex-col m-4">
+        <label>Upload Images</label>
+        <input
+          className="mb-2 border border-black rounded-lg p-2"
+          type="text"
+          placeholder="Image 1"
+          {...register("image1")}
+        />
+        <input
+          className="mb-2 border border-black rounded-lg p-2"
+          type="text"
+          placeholder="Image 2"
+          {...register("image2")}
+        />
+        <input
+          className="mb-2 border border-black rounded-lg p-2"
+          type="text"
+          placeholder="Image 3"
+          {...register("image3")}
+        />
+        <input
+          className="mb-2 border border-black rounded-lg p-2"
+          type="text"
+          placeholder="Image 4"
+          {...register("image4")}
+        />
+        <input
+          className="mb-2 border border-black rounded-lg p-2"
+          type="text"
+          placeholder="Image 5"
+          {...register("image5")}
+        />
+      </div>
+      <div className="flex flex-col">
+        <ServiceImageList images={vehicle.images || []} />
+      </div>
+      <div className="flex ml-auto">
+        <button onClick={onClose}>Discard Changes</button>
         <input
           className="m-4 border border-black rounded-lg p-2"
-          type="checkbox"
-          checked
-          {...register("available")}
+          type="submit"
+          value="Save & Exit"
         />
-      ) : (
-        <input
-          className="m-4 border border-black rounded-lg p-2"
-          type="checkbox"
-          {...register("available")}
-        />
-      )}
-      <label>Driver</label>
-      {vehicle.driver === 1 ? (
-        <input
-          className="m-4 border border-black rounded-lg p-2"
-          type="checkbox"
-          checked
-          {...register("driver")}
-        />
-      ) : (
-        <input
-          className="m-4 border border-black rounded-lg p-2"
-          type="checkbox"
-          {...register("driver")}
-        />
-      )}
-      <label>Quantity</label>
-      <input
-        type="number"
-        className="m-4 border border-black rounded-lg p-2"
-        placeholder={vehicle.quantity || "Quantity"}
-        {...register("quantity", { required: true })}
-      />
-      <ServiceImageList service_id={vehicle.id} />
-      <label>Upload Images</label>
-      <input
-        className="m-4 border border-black rounded-lg p-2"
-        type="file"
-        multiple="multiple"
-        placeholder="Upload image"
-        accept="image/*"
-        {...register("images[]")}
-      />
-      <button onClick={onClose}>Discard Changes</button>
-      <input className="m-4" type="submit" value="Save & Exit" />
+      </div>
     </form>
   );
 }

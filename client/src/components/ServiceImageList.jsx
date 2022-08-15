@@ -1,10 +1,8 @@
 import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { FetchServiceImages } from "../data/Images";
 
-export default function ServiceImageList({ service_id }) {
-  const service_images = FetchServiceImages(service_id);
+export default function ServiceImageList({ images }) {
   return (
     <ImageList
       sx={{
@@ -17,7 +15,7 @@ export default function ServiceImageList({ service_id }) {
       cols={3}
       rowHeight={164}
     >
-      {service_images.map((item) => (
+      {images.map((item) => (
         <ImageListItem key={item.link}>
           <img
             src={`${item.link}?w=164&h=164&fit=crop&auto=format`}

@@ -26,7 +26,7 @@ const Event = sequelize.define(
       type: Sequelize.STRING,
       allowNull: true,
     },
-    event_type: {
+    status: {
       type: Sequelize.STRING,
       allowNull: false,
     },

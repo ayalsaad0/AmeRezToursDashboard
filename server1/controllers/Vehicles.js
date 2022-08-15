@@ -23,16 +23,11 @@ const addVehicle = async (req, res, next) => {
     driver: req.body.driver,
     quantity: req.body.quantity,
   })
-    .then(() => {
-      const vehicle = Vehicle.findOne({
+    .then(async () => {
+      const vehicle = await Vehicle.findOne({
         where: { title: req.body.title },
       });
-      console.log("id: ");
-      console.log(vehicle.id);
-      req.body.imagesArr.map((img) => {
-        console.log(img);
-      });
-      // updateImages(req.body.images, attraction.id);
+      addImages(req.body.imagesArr, vehicle.dataValues.id);
       res.status(200).json({ message: "Vehicle added successfully" });
     })
     .catch((err) => {
@@ -44,10 +39,29 @@ const addVehicle = async (req, res, next) => {
   // console.log(dbAttraction);
 };
 
+const addImages = async (images, vehicleId) => {
+  await Image.destroy({
+    where: {
+      vehicleId: vehicleId,
+    },
+  });
+
+  images.map(async (image) => {
+    if (image !== "")
+      await Image.create({
+        link: image,
+        vehicleId: vehicleId,
+        attractionId: null,
+      });
+  });
+};
+
 const updateVehicle = async (req, res, next) => {
   const vehicleToUpdate = await Vehicle.findOne({
     where: { title: req.body.title },
   });
+
+  addImages(req.body.imagesArr, vehicleToUpdate.dataValues.id);
 
   await Vehicle.update(
     {

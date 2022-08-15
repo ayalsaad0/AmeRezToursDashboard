@@ -49,14 +49,8 @@ const Vehicle = sequelize.define(
 export default Vehicle;
 
 Vehicle.hasMany(Image, { as: "images" });
-// Vehicle.hasOne(Order, { as: "orders" });
 
 Image.belongsTo(Vehicle, {
   foreignKey: "vehicleId",
   as: "vehicleImages",
 });
-
-// Order.belongsTo(Vehicle, {
-//   foreignKey: "vehicleId",
-//   as: "vehicleOrders",
-// });

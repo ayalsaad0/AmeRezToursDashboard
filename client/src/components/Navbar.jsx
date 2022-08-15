@@ -4,9 +4,10 @@ import { RiNotification3Line } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Tooltip from "@mui/material/Tooltip";
 import { BiUserCircle } from "react-icons/bi";
-import avatar from "../data/avatar.jpg";
 import { Notification, UserProfile } from ".";
+import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
+import { GetCountOfNewOrders } from "../data/Orders";
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <Tooltip title={title} position="BottomCenter">
@@ -26,6 +27,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 );
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const {
     currentColor,
     activeMenu,
@@ -36,6 +38,7 @@ const Navbar = () => {
     screenSize,
     currentUser,
   } = useStateContext();
+  const count = GetCountOfNewOrders();
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -66,13 +69,17 @@ const Navbar = () => {
         icon={<AiOutlineMenu />}
       />
       <div className="flex">
-        <NavButton
-          title="Notification"
-          dotColor="rgb(254, 201, 15)"
-          customFunc={() => handleClick("notification")}
-          color={currentColor}
-          icon={<RiNotification3Line />}
-        />
+        <div
+          onClick={() => navigate("/orders")}
+          className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
+        >
+          <span
+            className="font-bold ml-1 text-18"
+            style={{ color: currentColor }}
+          >
+            Orders ({count})
+          </span>
+        </div>
         <Tooltip title="Profile" position="BottomCenter">
           <div
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"

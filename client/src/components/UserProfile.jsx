@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Button } from ".";
 import { useStateContext } from "../contexts/ContextProvider";
-import avatar from "../data/avatar.jpg";
 
 const UserProfile = () => {
   const navigate = useNavigate();
