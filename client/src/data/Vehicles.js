@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Axios from "axios";
 
 function DeleteVehicle(id) {
   const payload = {
@@ -24,16 +23,20 @@ function DeleteVehicle(id) {
 function FetchVehicles() {
   const [vehicles, setVehicles] = useState([]);
   useEffect(() => {
+    let isMounted = true;
     fetch(`http://localhost:3001/fetchVehicles`, {
       method: "POST",
     })
       .then(async (response) => {
         const res = await response.json();
         if (response.status === 200) {
-          setVehicles(res.actualData);
+          if (isMounted) setVehicles(res.actualData);
         }
       })
       .catch();
+    return () => {
+      isMounted = false;
+    };
   }, []);
   return vehicles;
 }

@@ -336,11 +336,11 @@ export const links = [
     title: "Charts",
     links: [
       {
-        name: "line",
+        name: "earnings",
         icon: <AiOutlineStock />,
       },
       {
-        name: "bar",
+        name: "statistics",
         icon: <AiOutlineBarChart />,
       },
     ],

@@ -23,16 +23,20 @@ function DeleteAttraction(id) {
 function FetchAttractions() {
   const [attractions, setAttractions] = useState([]);
   useEffect(() => {
+    let isMounted = true;
     fetch(`http://localhost:3001/fetchAttractions`, {
       method: "POST",
     })
       .then(async (response) => {
         const res = await response.json();
         if (response.status === 200) {
-          setAttractions(res.actualData);
+          if (isMounted) setAttractions(res.actualData);
         }
       })
       .catch();
+    return () => {
+      isMounted = false;
+    };
   }, []);
   return attractions;
 }

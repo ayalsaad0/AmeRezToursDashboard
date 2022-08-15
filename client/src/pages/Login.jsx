@@ -65,7 +65,6 @@ const Login = () => {
             alert(jsonRes.message);
           } else {
             onLoggedIn(jsonRes);
-            alert(jsonRes.message);
           }
         } catch (err) {
           console.log(err.message);

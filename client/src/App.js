@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FiSettings } from "react-icons/fi";
 import Tooltip from "@mui/material/Tooltip";
@@ -44,7 +44,7 @@ const App = () => {
       setCurrentMode(currentThemeMode);
       setCurrentUser(currentActiveUser);
     }
-  }, []);
+  }, [currentUser, setCurrentColor, setCurrentMode, setCurrentUser]);
 
   const loggedIn = window.localStorage.getItem("isLoggedIn");
 
@@ -111,8 +111,8 @@ const App = () => {
                 {/* apps  */}
                 {loggedIn && <Route path="/calendar" element={<Calendar />} />}
                 {/* charts  */}
-                {loggedIn && <Route path="/line" element={<Line />} />}
-                {loggedIn && <Route path="/bar" element={<Bar />} />}
+                {loggedIn && <Route path="/earnings" element={<Line />} />}
+                {loggedIn && <Route path="/statistics" element={<Bar />} />}
               </Routes>
             </div>
             {loggedIn && <Footer />}

@@ -1,7 +1,8 @@
 import { Sequelize } from "Sequelize";
-
 import sequelize from "../utils/database.js";
 import Image from "../models/image.js";
+import Order from "./order.js";
+
 const Attraction = sequelize.define(
   "attractions",
   {
@@ -51,9 +52,13 @@ const Attraction = sequelize.define(
 
 export default Attraction;
 
-Attraction.hasMany(Image, { as: "images" });
+Attraction.hasMany(Image);
+Attraction.hasOne(Order);
 
 Image.belongsTo(Attraction, {
   foreignKey: "attractionId",
-  as: "attraction",
+});
+
+Order.belongsTo(Attraction, {
+  foreignKey: "attractionId",
 });

@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
-
 import sequelize from "../utils/database.js";
+import Order from "./order.js";
 
 const User = sequelize.define(
   "users",
@@ -54,3 +54,9 @@ const User = sequelize.define(
 );
 
 export default User;
+
+User.hasMany(Order);
+
+Order.belongsTo(User, {
+  foreignKey: "userId",
+});

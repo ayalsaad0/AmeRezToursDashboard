@@ -97,4 +97,18 @@ const deleteVehicle = async (req, res, next) => {
     });
 };
 
-export { fetchVehicles, addVehicle, updateVehicle, deleteVehicle };
+const fetchVehicleById = async (req, res, next) => {
+  await Vehicle.findByPk(req.body.id, {
+    include: [{ model: Image, as: "images" }],
+  }).then((vehicle) => {
+    res.status(200).json({ actualData: vehicle.dataValues });
+  });
+};
+
+export {
+  fetchVehicles,
+  addVehicle,
+  updateVehicle,
+  deleteVehicle,
+  fetchVehicleById,
+};

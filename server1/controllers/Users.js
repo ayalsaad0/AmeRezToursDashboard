@@ -10,4 +10,10 @@ const fetchCustomers = async (req, res, next) => {
   });
 };
 
-export { fetchCustomers };
+const fetchCustomerById = async (req, res, next) => {
+  await User.findByPk(req.body.userId).then((user) => {
+    res.status(200).json({ actualData: user.dataValues });
+  });
+};
+
+export { fetchCustomers, fetchCustomerById };

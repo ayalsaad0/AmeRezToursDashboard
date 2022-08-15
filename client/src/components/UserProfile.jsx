@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Button } from ".";
@@ -17,10 +17,6 @@ const UserProfile = () => {
     window.localStorage.clear();
     navigate("/");
   };
-
-  // const currentUser = window.localStorage.getItem("currentUser");
-
-  console.log(currentUser);
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">

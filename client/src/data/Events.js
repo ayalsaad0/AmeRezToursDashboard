@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Axios from "axios";
 
 function FetchEvents() {
   const [events, setEvents] = useState([]);

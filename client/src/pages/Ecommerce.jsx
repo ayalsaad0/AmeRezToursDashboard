@@ -2,12 +2,8 @@ import React from "react";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { GoPrimitiveDot } from "react-icons/go";
 
-import { Stacked, Pie, Button, LineChart } from "../components";
-import {
-  earningData,
-  recentTransactions,
-  ecomPieChartData,
-} from "../data/dummy";
+import { Stacked, Pie } from "../components";
+import { earningData, ecomPieChartData } from "../data/dummy";
 import { useStateContext } from "../contexts/ContextProvider";
 
 const Ecommerce = () => {
@@ -32,14 +28,6 @@ const Ecommerce = () => {
             >
               <BsCurrencyDollar />
             </button>
-          </div>
-          <div className="mt-6">
-            <Button
-              color="white"
-              bgColor={currentColor}
-              text="Download"
-              borderRadius="10px"
-            />
           </div>
         </div>
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
@@ -104,14 +92,6 @@ const Ecommerce = () => {
               </div>
 
               <div className="mt-5"></div>
-              <div className="mt-10">
-                <Button
-                  color="white"
-                  bgColor={currentColor}
-                  text="Download Report"
-                  borderRadius="10px"
-                />
-              </div>
             </div>
             <div>
               <Stacked currentMode={currentMode} width="320px" height="360px" />
@@ -151,57 +131,6 @@ const Ecommerce = () => {
                 height="160px"
               />
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex gap-10 m-4 flex-wrap justify-center">
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
-          <div className="flex justify-between items-center gap-2">
-            <p className="text-xl font-semibold">Recent Transactions</p>
-          </div>
-          <div className="mt-10 w-72 md:w-400">
-            {recentTransactions.map((item) => (
-              <div key={item.title} className="flex justify-between mt-4">
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    style={{
-                      color: item.iconColor,
-                      backgroundColor: item.iconBg,
-                    }}
-                    className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
-                  >
-                    {item.icon}
-                  </button>
-                  <div>
-                    <p className="text-md font-semibold">{item.title}</p>
-                    <p className="text-sm text-gray-400">{item.desc}</p>
-                  </div>
-                </div>
-                <p className={`text-${item.pcColor}`}>{item.amount}</p>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-between items-center mt-5 border-t-1 border-color">
-            <div className="mt-3">
-              <Button
-                color="white"
-                bgColor={currentColor}
-                text="Add"
-                borderRadius="10px"
-              />
-            </div>
-
-            <p className="text-gray-400 text-sm">36 Recent Transactions</p>
-          </div>
-        </div>
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl w-96 md:w-760">
-          <div className="flex justify-between items-center gap-2 mb-10">
-            <p className="text-xl font-semibold">Sales Overview</p>
-          </div>
-          <div className="md:w-full overflow-auto">
-            <LineChart />
           </div>
         </div>
       </div>

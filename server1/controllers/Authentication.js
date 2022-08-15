@@ -79,10 +79,16 @@ const login = (req, res, next) => {
               const token = jwt.sign({ email: req.body.email }, "secret", {
                 expiresIn: "1h",
               });
-              res.status(200).json({ message: "user logged in", "token": token, dbUser });
+              res
+                .status(200)
+                .json({ message: "user logged in", token: token, dbUser });
             } else {
               // password doesnt match
-              res.status(401).json({ message: "invalid credentials" });
+              res
+                .status(401)
+                .json({
+                  message: "The password is incorrect, try other password",
+                });
             }
           }
         );

@@ -1,13 +1,26 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-
-import { ordersGrid, FetchOrdersData } from "../data/Orders";
+import { ordersGrid, FetchOrdersData, FetchOrders } from "../data/Orders";
 import { Header } from "../components";
 
 const Orders = () => {
-  const ordersData = FetchOrdersData();
-  console.log(ordersData);
+  const orders = FetchOrders();
+  const ordersData = [];
+  orders.map((order) => {
+    let orderObj = {
+      OrderID: order.id,
+      CustomerNumber: order.phone_num,
+      TotalAmount: order.order_price,
+      OrderItems: order.item_title,
+      Status: order.status,
+      ProductImage: order.img_link,
+      OrderDate: order.createdAt,
+      EndDate: order.end_Date,
+      StartDate: order.start_Date,
+    };
+    ordersData.push(orderObj);
+  });
+  console.log(orders);
 
   const [pageSize, setPageSize] = React.useState(10);
   return (
@@ -30,6 +43,22 @@ const Orders = () => {
         density="comfortable"
         components={{ Toolbar: GridToolbar }}
         getRowId={(row) => row.OrderID}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: "OrderDate", sort: "asc" }],
+          },
+          filter: {
+            filterModel: {
+              items: [
+                {
+                  columnField: "Status",
+                  operatorValue: "equals",
+                  value: "New",
+                },
+              ],
+            },
+          },
+        }}
       />
     </div>
   );

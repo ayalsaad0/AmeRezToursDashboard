@@ -124,4 +124,18 @@ const updateImages = (images, id) => {
   });
 };
 
-export { addAttraction, updateAttraction, deleteAttraction, fetchAttractions };
+const fetchAttractionById = async (req, res, next) => {
+  await Attraction.findByPk(req.body.id, {
+    include: [{ model: Image, as: "images" }],
+  }).then((attraction) => {
+    res.status(200).json({ actualData: attraction.dataValues });
+  });
+};
+
+export {
+  addAttraction,
+  updateAttraction,
+  deleteAttraction,
+  fetchAttractions,
+  fetchAttractionById,
+};
