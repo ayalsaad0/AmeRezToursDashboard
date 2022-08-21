@@ -93,9 +93,7 @@ const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 {/* dashboard  */}
-                {loggedIn && (
-                  <Route path="/ecommerce" element={<Ecommerce />} />
-                )}
+                {loggedIn && <Route path="/home" element={<Ecommerce />} />}
                 {/* pages  */}
                 {loggedIn && <Route path="/orders" element={<Orders />} />}
                 {loggedIn && <Route path="/vehicles" element={<Vehicles />} />}
