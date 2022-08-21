@@ -11,7 +11,6 @@ import { useStateContext } from "../contexts/ContextProvider";
 import { FetchAttractions, DeleteAttraction } from "../data/Attractions";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import AttractionForm from "../components/AttractionForm";
-// import { img } from "../../public/images_public/the-three-valleys-of-the-high-atlas.jpg";
 
 const Attractions = () => {
   const { currentColor, activePopup, setActivePopup } = useStateContext();
