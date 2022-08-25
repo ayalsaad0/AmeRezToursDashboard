@@ -1,5 +1,7 @@
+// This file will use the controllers to handle the vehicles data
 import { useState, useEffect } from "react";
 
+// A function to delete a vehicle by it's id
 function DeleteVehicle(id) {
   const payload = {
     id,
@@ -20,6 +22,7 @@ function DeleteVehicle(id) {
     });
 }
 
+// A function to fetch all the vehicles from the db and returns them as an array
 function FetchVehicles() {
   const [vehicles, setVehicles] = useState([]);
   useEffect(() => {

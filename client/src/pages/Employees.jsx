@@ -3,7 +3,9 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { employeesGrid, FetchEmployees } from "../data/Employees";
 import { Header } from "../components";
 
+// This is the employees page
 const Employees = () => {
+  // Fetching all the employees/admins
   const employees = FetchEmployees();
 
   return (

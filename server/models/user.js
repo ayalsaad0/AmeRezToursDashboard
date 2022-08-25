@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 import sequelize from "../utils/database.js";
 import Order from "./order.js";
 
+// The model of the user/customer
 const User = sequelize.define(
   "users",
   {

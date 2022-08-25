@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Axios from "axios";
 
+// This is the register/signup page
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -12,30 +12,9 @@ const Register = () => {
   const [role, setRole] = useState("");
   const navigate = useNavigate();
 
+  // After submitting the register/signup form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (
-    //   username !== "" &&
-    //   email !== "" &&
-    //   password !== "" &&
-    //   passwordConfirmation !== ""
-    // ) {
-    //   if (password !== passwordConfirmation) {
-    //     alert("Your passwords don't match, try again");
-    //   } else {
-    //     await Axios.post("http://localhost:3001/register", {
-    //       username: username,
-    //       full_name: fullName,
-    //       phone: phone,
-    //       role: role,
-    //       email: email,
-    //       password: password,
-    //     }).then((response) => {
-    //       console.log(response);
-    //     });
-    //     navigate("/");
-    //   }
-    // }
     const payload = {
       username,
       role,

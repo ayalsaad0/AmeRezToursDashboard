@@ -1,12 +1,12 @@
+// This is the controller which works with the admins table in the database (for the authentication)
 import bcrypt from "bcrypt";
-
 import jwt from "jsonwebtoken";
-// import { or } from 'react-native-reanimated';
 import Admin from "../models/admin.js";
 
+// Admin signup function
 const signup = async (req, res, next) => {
   // checks if email already exists
-  const dbUser = await Admin.findOne({
+  await Admin.findOne({
     where: {
       email: req.body.email,
     },
@@ -52,6 +52,7 @@ const signup = async (req, res, next) => {
     });
 };
 
+// Admin login function
 const login = (req, res, next) => {
   // checks if email exists
   Admin.findOne({
@@ -83,12 +84,10 @@ const login = (req, res, next) => {
                 .status(200)
                 .json({ message: "user logged in", token: token, dbUser });
             } else {
-              // password doesnt match
-              res
-                .status(401)
-                .json({
-                  message: "The password is incorrect, try other password",
-                });
+              // passwords don't match
+              res.status(401).json({
+                message: "The password is incorrect, try other password",
+              });
             }
           }
         );
@@ -145,6 +144,8 @@ const updatedPassword = async (req, res, next) => {
       console.log("error", err);
     });
 };
+
+// A function which checks if the login details are correct
 const isAuth = (req, res, next) => {
   const authHeader = req.get("Authorization");
   if (!authHeader) {

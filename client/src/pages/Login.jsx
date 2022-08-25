@@ -5,6 +5,7 @@ import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { IconContext } from "react-icons";
 
+// This is the login page
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const { setUser } = useStateContext();
@@ -14,10 +15,12 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
 
+  // A function to handle the "show/hide password" button
   const handleShow = () => {
     setPasswordShown(!passwordShown);
   };
 
+  // After logging in
   const onLoggedIn = (token) => {
     fetch(`http://localhost:3001/private`, {
       method: "GET",
@@ -31,7 +34,7 @@ const Login = () => {
           const jsonRes = await res.json();
           if (res.status === 200) {
             window.localStorage.setItem("isLoggedIn", true);
-            navigate("ecommerce");
+            navigate("home");
             window.localStorage.setItem("currentUser", token.dbUser);
             setUser(token.dbUser);
           }
@@ -44,6 +47,7 @@ const Login = () => {
       });
   };
 
+  // After submitting the login form
   const handleSubmit = async (e) => {
     e.preventDefault();
 

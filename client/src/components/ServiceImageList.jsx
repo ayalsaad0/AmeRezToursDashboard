@@ -2,6 +2,7 @@ import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 
+// The service (vehicle, attraction) gallery which shown in the form
 export default function ServiceImageList({ images }) {
   return (
     <ImageList

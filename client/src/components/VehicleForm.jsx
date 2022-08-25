@@ -2,8 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import ServiceImageList from "./ServiceImageList";
 
+// The vehicle form component (add and edit form)
 function VehicleForm({ vehicle, onClose }) {
-  console.log(vehicle);
+  // if it's an edit form, then we have a default values in the form, which are the details of the vehicle that we want to edit
+  // if it's an add form, then we don't have any default values
   const { register, handleSubmit } = useForm({
     defaultValues:
       vehicle.length === 0
@@ -37,6 +39,7 @@ function VehicleForm({ vehicle, onClose }) {
           },
   });
 
+  // After submitting the form
   const onSubmit = (data) => {
     const {
       title,
@@ -102,6 +105,7 @@ function VehicleForm({ vehicle, onClose }) {
       className="max-w-screen-lg mt-0 mb-0 ml-auto mr-auto flex flex-col p-4 justify-center shadow-md"
       onSubmit={handleSubmit(onSubmit)}
     >
+      {/* Title */}
       <div className="flex flex-col m-4">
         <label>Title</label>
         <input
@@ -111,6 +115,7 @@ function VehicleForm({ vehicle, onClose }) {
           {...register("title", { required: true })}
         />
       </div>
+      {/* Number of places and suitcases */}
       <div className="flex">
         <div className="flex flex-col m-4">
           <label>Places</label>
@@ -131,6 +136,7 @@ function VehicleForm({ vehicle, onClose }) {
           />
         </div>
       </div>
+      {/* Price and quantity of the vehicle */}
       <div className="flex">
         <div className="flex flex-col m-4">
           <label>Price</label>
@@ -151,6 +157,7 @@ function VehicleForm({ vehicle, onClose }) {
           />
         </div>
       </div>
+      {/* Availability and with/out driver */}
       <div className="flex">
         <div className="flex flex-col m-4">
           <label>Available</label>
@@ -187,6 +194,7 @@ function VehicleForm({ vehicle, onClose }) {
           )}
         </div>
       </div>
+      {/* Images links */}
       <div className="flex flex-col m-4">
         <label>Upload Images</label>
         <input
@@ -220,9 +228,11 @@ function VehicleForm({ vehicle, onClose }) {
           {...register("image5")}
         />
       </div>
+      {/* Images gallery */}
       <div className="flex flex-col">
         <ServiceImageList images={vehicle.images || []} />
       </div>
+      {/* Form buttons */}
       <div className="flex ml-auto">
         <button onClick={onClose}>Discard Changes</button>
         <input

@@ -1,6 +1,9 @@
+// This is the controller which works with the attractions table in the database
 import Attraction from "../models/attraction.js";
 import Image from "../models/image.js";
+import Order from "../models/order.js";
 
+// A function which fetches all the attractions
 const fetchAttractions = async (req, res, next) => {
   await Attraction.findAll({
     include: [{ model: Image, as: "images" }],
@@ -13,6 +16,7 @@ const fetchAttractions = async (req, res, next) => {
   });
 };
 
+// A function which adds a new attraction to the table
 const addAttraction = async (req, res, next) => {
   await Attraction.create({
     availability: req.body.availability,
@@ -37,6 +41,7 @@ const addAttraction = async (req, res, next) => {
     });
 };
 
+// A function which adds or updates the images of the attraction
 const addImages = async (images, attractionId) => {
   await Image.destroy({
     where: {
@@ -54,6 +59,7 @@ const addImages = async (images, attractionId) => {
   });
 };
 
+// A function which updates the attraction info
 const updateAttraction = async (req, res, next) => {
   const attToUpdate = await Attraction.findOne({
     where: { title: req.body.title },
@@ -87,45 +93,46 @@ const updateAttraction = async (req, res, next) => {
     });
 };
 
+// A function which deletes an attraction by it's id
 const deleteAttraction = async (req, res, next) => {
-  await Image.destroy({
+  // if there is a "pending" order of this attraction, then we cannot delete it
+  await Order.findOne({
     where: {
       attractionId: req.body.id,
+      status: "Pending",
     },
-  });
-
-  await Attraction.destroy({
-    where: {
-      id: req.body.id,
-    },
-  })
-    .then(() => {
-      res.status(200).json({ message: "Attraction deleted successfully" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res
-        .status(502)
-        .json({ message: "An error occured while deleting the attraction" });
-    });
-};
-
-const updateImages = (images, id) => {
-  const imagesArr = Array.from(images);
-  imagesArr.map((image) => {
-    const img = Image.create({
-      link: image.name,
-      attractionId: id,
-    })
-      .then(() => {
-        res.status(200).json({ message: "Images added successfully" });
-      })
-      .catch((err) => {
-        console.log(err);
+  }).then(async (attractionOrder) => {
+    if (attractionOrder) {
+      return res.status(409).json({
+        message:
+          "This attraction cannot be deleted at this moment, there is an open reservation for this attraction.",
       });
+    } else {
+      await Image.destroy({
+        where: {
+          attractionId: req.body.id,
+        },
+      });
+
+      await Attraction.destroy({
+        where: {
+          id: req.body.id,
+        },
+      })
+        .then(() => {
+          res.status(200).json({ message: "Attraction deleted successfully" });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(502).json({
+            message: "An error occured while deleting the attraction",
+          });
+        });
+    }
   });
 };
 
+// A function which fetches an attraction by it's id
 const fetchAttractionById = async (req, res, next) => {
   await Attraction.findByPk(req.body.id, {
     include: [{ model: Image, as: "images" }],

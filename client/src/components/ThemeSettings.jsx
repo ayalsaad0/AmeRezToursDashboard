@@ -5,6 +5,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { themeColors } from "../data/dummy";
 import { useStateContext } from "../contexts/ContextProvider";
 
+// The theme settings component
 const ThemeSettings = () => {
   const { setColor, setMode, currentMode, currentColor, setThemeSettings } =
     useStateContext();

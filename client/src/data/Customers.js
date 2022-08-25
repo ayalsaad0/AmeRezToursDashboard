@@ -1,5 +1,7 @@
+// This file will use the controllers to handle the customers data
 import { useState, useEffect } from "react";
 
+// The structure of the customers table
 const customersGrid = [
   { field: "first_name", headerName: "First name", width: 120 },
   { field: "last_name", headerName: "Last name", width: 120 },
@@ -10,6 +12,7 @@ const customersGrid = [
   { field: "email", headerName: "Email", width: 200 },
 ];
 
+// A function which fetches all the customers data from the db
 function FetchCustomers() {
   const [customers, setCustomers] = useState([]);
   useEffect(() => {

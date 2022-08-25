@@ -1,5 +1,6 @@
 import React from "react";
 
+// The header component
 const Header = ({ category, title }) => {
   return (
     <div className="mb-10">

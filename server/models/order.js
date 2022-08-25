@@ -1,9 +1,7 @@
 import { Sequelize } from "Sequelize";
 import sequelize from "../utils/database.js";
-// import User from "./user.js";
-// import Attraction from "./attraction.js";
-// import Vehicle from "./vehicle.js";
 
+// The model of the order
 const Order = sequelize.define("orders", {
   id: {
     type: Sequelize.INTEGER,

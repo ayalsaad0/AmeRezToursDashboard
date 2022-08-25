@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import sequelize from "../utils/database.js";
 
+// The model of the admin
 const Admin = sequelize.define(
   "admins",
   {

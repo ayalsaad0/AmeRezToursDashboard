@@ -12,25 +12,31 @@ import { FetchAttractions, DeleteAttraction } from "../data/Attractions";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import AttractionForm from "../components/AttractionForm";
 
+// This is the attractions page
 const Attractions = () => {
   const { currentColor, activePopup, setActivePopup } = useStateContext();
   const [currentActivity, setCurrentActivity] = useState([]);
 
+  // Fetching all the attractions
   const attractions = FetchAttractions();
 
+  // A function to handle the delete attraction click
   const onClickDelete = (id) => {
     DeleteAttraction(id);
   };
 
+  // A function to handle the add attraction click
   const onClickAdd = () => {
     setActivePopup(true);
   };
 
+  // A function to handle the edit attraction click
   const onClickEdit = ({ item }) => {
     setCurrentActivity(item);
     setActivePopup(true);
   };
 
+  // A function to handle the form closing
   const onClose = () => {
     setCurrentActivity([]);
     setActivePopup(false);
@@ -86,6 +92,7 @@ const Attractions = () => {
             <AccordionDetails>
               <Typography
                 className="dark:text-gray-200 flex mb-4"
+                component="span"
                 variant="body2"
                 color="text.secondary"
               >

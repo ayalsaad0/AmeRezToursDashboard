@@ -1,5 +1,7 @@
+// This file will use the controllers to handle the employees data
 import { useState, useEffect } from "react";
 
+// The structure of the employees table
 const employeesGrid = [
   {
     field: "id",
@@ -33,6 +35,7 @@ const employeesGrid = [
   },
 ];
 
+// A function which fetches all the employees from the database, and returns them as an array
 function FetchEmployees() {
   const [employees, setEmployees] = useState([]);
   useEffect(() => {

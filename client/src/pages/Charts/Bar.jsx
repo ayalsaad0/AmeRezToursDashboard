@@ -7,6 +7,7 @@ import {
   GetAttractionsStatistics,
 } from "../../data/Statistics";
 
+// This is the statistics page
 function BarChart({ chartData }) {
   const labels = [
     "January",

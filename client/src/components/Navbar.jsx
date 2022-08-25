@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { RiNotification3Line } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Tooltip from "@mui/material/Tooltip";
 import { BiUserCircle } from "react-icons/bi";
-import { Notification, UserProfile } from ".";
+import { UserProfile } from ".";
 import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 import { GetCountOfNewOrders } from "../data/Orders";
+import IconButton from "@mui/material/IconButton";
 
+// A custom nav button
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <Tooltip title={title} position="BottomCenter">
     <button
@@ -26,6 +27,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   </Tooltip>
 );
 
+// The navbar component
 const Navbar = () => {
   const navigate = useNavigate();
   const {
@@ -85,11 +87,9 @@ const Navbar = () => {
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
             onClick={() => handleClick("userProfile")}
           >
-            <NavButton
-              className="text-3xl"
-              color={currentColor}
-              icon={<BiUserCircle />}
-            />
+            <IconButton style={{ color: currentColor }}>
+              <BiUserCircle />
+            </IconButton>
             <p>
               <span className="text-gray-400 text-14">Hi,</span>{" "}
               <span className="text-gray-400 font-bold ml-1 text-14">
@@ -99,8 +99,6 @@ const Navbar = () => {
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
         </Tooltip>
-
-        {isClicked.notification && <Notification />}
         {isClicked.userProfile && <UserProfile />}
       </div>
     </div>

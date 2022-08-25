@@ -2,7 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import ServiceImageList from "./ServiceImageList";
 
+// The attraction form component (add and edit form)
 function AttractionForm({ attraction, onClose }) {
+  // if it's an edit form, then we have a default values in the form, which are the details of the attraction that we want to edit
+  // if it's an add form, then we don't have any default values
   const { register, handleSubmit } = useForm({
     defaultValues:
       attraction.length === 0
@@ -37,6 +40,7 @@ function AttractionForm({ attraction, onClose }) {
           },
   });
 
+  // After submitting the form
   const onSubmit = (data) => {
     const {
       availability,
@@ -96,6 +100,7 @@ function AttractionForm({ attraction, onClose }) {
       className="max-w-screen-lg mt-0 mb-0 ml-auto mr-auto flex flex-col p-4 justify-center shadow-md"
       onSubmit={handleSubmit(onSubmit)}
     >
+      {/* Title and Location */}
       <div className="flex">
         <div className="flex flex-col m-4">
           <label>Title</label>
@@ -116,6 +121,7 @@ function AttractionForm({ attraction, onClose }) {
           />
         </div>
       </div>
+      {/* Price */}
       <div className="flex">
         <div className="flex flex-col m-4">
           <label>Price</label>
@@ -127,6 +133,7 @@ function AttractionForm({ attraction, onClose }) {
           />
         </div>
       </div>
+      {/* Availability */}
       <div className="flex">
         <div className="flex flex-col m-4">
           <label>Available</label>
@@ -146,6 +153,7 @@ function AttractionForm({ attraction, onClose }) {
           )}
         </div>
       </div>
+      {/* Description */}
       <div className="flex flex-col">
         <label>Description</label>
         <textarea
@@ -154,6 +162,7 @@ function AttractionForm({ attraction, onClose }) {
           {...register("description", { required: true })}
         />
       </div>
+      {/* Images links */}
       <div className="flex flex-col m-4">
         <label>Upload Images</label>
         <input
@@ -187,9 +196,11 @@ function AttractionForm({ attraction, onClose }) {
           {...register("image5")}
         />
       </div>
+      {/* Images gallery */}
       <div className="flex flex-col">
         <ServiceImageList images={attraction.images || []} />
       </div>
+      {/* Form buttons */}
       <div className="flex ml-auto">
         <button onClick={onClose}>Discard Changes</button>
         <input

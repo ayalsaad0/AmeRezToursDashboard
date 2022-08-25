@@ -25,4 +25,5 @@ app.use(router);
 
 sequelize.sync();
 
+// The server side port
 app.listen(3001);

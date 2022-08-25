@@ -1,5 +1,6 @@
 import React from "react";
 
+// The header of the charts as a component
 const ChartsHeader = ({ category, title }) => (
   <div className=" mb-10">
     <div>

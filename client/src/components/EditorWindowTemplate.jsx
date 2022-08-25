@@ -1,15 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
 
 const EditorWindowTemplate = (props) => {
-  const [id, setId] = useState("");
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [categoryColor, setCategoryColor] = useState("");
-  const [description, setDesciption] = useState("");
 
   return props !== undefined ? (
     <table

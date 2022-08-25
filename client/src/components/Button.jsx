@@ -1,7 +1,6 @@
 import React from "react";
 
-// import { useStateContext } from "../contexts/ContextProvider";
-
+// A custom button component
 const Button = ({
   icon,
   bgColor,
@@ -13,8 +12,6 @@ const Button = ({
   width,
   onClick,
 }) => {
-  // const { setIsClicked, initialState } = useStateContext();
-
   return (
     <button
       type="button"

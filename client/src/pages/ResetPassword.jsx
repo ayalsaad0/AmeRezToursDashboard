@@ -1,5 +1,6 @@
 import React from "react";
 
+// This is the "reset password" page
 const ResetPassword = () => {
   return (
     <div className="flex flex-col text-sm shadow-2xl rounded-2xl justify-center pt-10 pb-10 ml-auto mr-auto mt-40 align-middle w-96 border-slate-600">

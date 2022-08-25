@@ -5,6 +5,7 @@ import { GetEarnings } from "../../data/Earnings";
 import { ChartsHeader } from "../../components";
 import { useStateContext } from "../../contexts/ContextProvider";
 
+// This is the earnings page
 const LineChart = ({ chartData }) => {
   const { currentColor } = useStateContext();
   const labels = [

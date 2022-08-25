@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Button } from ".";
 import { useStateContext } from "../contexts/ContextProvider";
 
+// The user profile component
 const UserProfile = () => {
   const navigate = useNavigate();
   const { currentColor, setUser, currentUser, handleClick, setActiveMenu } =
     useStateContext();
 
+  // A function which handles the event of the logout button
   const handleLogout = (e) => {
     handleClick(e.target);
     setUser({});

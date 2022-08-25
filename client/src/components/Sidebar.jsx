@@ -7,10 +7,12 @@ import whiteLogo from "../data/logo-white.png";
 import logo from "../data/logo.png";
 import { useStateContext } from "../contexts/ContextProvider";
 
+// The sidebar component
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize, currentMode } =
     useStateContext();
 
+  // A function which handles the sidebar open and close event
   const handleCloseSideBar = () => {
     if (activeMenu !== undefined && screenSize <= 900) {
       setActiveMenu(false);

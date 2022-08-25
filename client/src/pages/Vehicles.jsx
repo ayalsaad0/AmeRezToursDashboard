@@ -13,26 +13,39 @@ import { useStateContext } from "../contexts/ContextProvider";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import VehicleForm from "../components/VehicleForm";
 
+// This is the vehicles page
 const Vehicles = () => {
-  const { currentColor, activePopup, setActivePopup, vehicles, setVehicles } =
-    useStateContext();
+  useEffect(() => {
+    console.log("availability");
+    fetch(`http://localhost:3001/unavailableVehicles`, {
+      method: "POST",
+    }).catch((err) => {
+      console.log(err.message);
+    });
+  }, []);
+  const { currentColor, activePopup, setActivePopup } = useStateContext();
   const [currentVehicle, setCurrentVehicle] = useState([]);
 
-  setVehicles(FetchVehicles());
+  // Fetching all the vehicles
+  const vehicles = FetchVehicles();
 
+  // A function to handle the delete vehicle click
   const onClickDelete = (id) => {
     DeleteVehicle(id);
   };
 
+  // A function to handle the add vehicle click
   const onClickAdd = () => {
     setActivePopup(true);
   };
 
+  // A function to handle the edit vehicle click
   const onClickEdit = ({ item }) => {
     setCurrentVehicle(item);
     setActivePopup(true);
   };
 
+  // A function to handle the form closing
   const onClose = () => {
     setCurrentVehicle([]);
     setActivePopup(false);
@@ -48,11 +61,6 @@ const Vehicles = () => {
       >
         <AiOutlinePlusCircle />
       </button>
-      <Dialog open={activePopup} onClose={onClose}>
-        {activePopup && (
-          <VehicleForm vehicle={currentVehicle} onClose={onClose} />
-        )}
-      </Dialog>
       <Dialog open={activePopup} onClose={onClose}>
         {activePopup && (
           <VehicleForm vehicle={currentVehicle} onClose={onClose} />

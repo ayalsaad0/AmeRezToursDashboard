@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { ordersGrid, FetchOrders } from "../data/Orders";
 import { Header } from "../components";
 
+// This is the orders page
 const Orders = () => {
+  useEffect(() => {
+    console.log("Completed");
+    fetch(`http://localhost:3001/completedOrders`, {
+      method: "POST",
+    }).catch((err) => {
+      console.log(err.message);
+    });
+  }, []);
+
+  // Fetching all the orders
   const orders = FetchOrders();
+
+  // Building the orders data array
   const ordersData = [];
   orders.map((order) => {
     let orderObj = {
@@ -52,7 +65,7 @@ const Orders = () => {
                 {
                   columnField: "Status",
                   operatorValue: "equals",
-                  value: "New",
+                  value: "Pending",
                 },
               ],
             },

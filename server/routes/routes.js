@@ -18,6 +18,8 @@ import {
   updateVehicle,
   deleteVehicle,
   fetchVehicleById,
+  incrementQuantity,
+  unavailableVehicles,
 } from "../controllers/Vehicles.js";
 import { fetchAdmins } from "../controllers/Employees.js";
 import { fetchCustomers, fetchCustomerById } from "../controllers/Users.js";
@@ -33,6 +35,7 @@ import {
   getEarnings,
   getOrdersStatistics,
   getCountOfNewOrders,
+  completedOrders,
 } from "../controllers/Orders.js";
 
 const router = express.Router();
@@ -58,6 +61,8 @@ router.post("/addVehicle", addVehicle);
 router.post("/updateVehicle", updateVehicle);
 router.post("/deleteVehicle", deleteVehicle);
 router.post("/fetchVehicleById", fetchVehicleById);
+router.post("/incrementQuantity", incrementQuantity);
+router.post("/unavailableVehicles", unavailableVehicles);
 // #endregion
 
 // #region events
@@ -73,6 +78,7 @@ router.post("/changeOrderStatus", changeOrderStatus);
 router.post("/getEarnings", getEarnings);
 router.post("/getOrdersStatistics", getOrdersStatistics);
 router.post("/getCountOfNewOrders", getCountOfNewOrders);
+router.post("/completedOrders", completedOrders);
 // #endregion
 
 router.post("/fetchAdmins", fetchAdmins);

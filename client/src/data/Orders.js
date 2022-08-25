@@ -1,6 +1,8 @@
+// This file will use the controllers to handle the orders data
 import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 
+// The structure of the orders table
 export const ordersGrid = [
   {
     field: "Image",
@@ -25,7 +27,7 @@ export const ordersGrid = [
   },
   {
     field: "TotalAmount",
-    headerName: "Total Amount",
+    headerName: "Total Price",
     format: "C2",
     textAlign: "Center",
     width: "150",
@@ -69,15 +71,15 @@ export const ordersGrid = [
     renderCell: (params) => {
       const onClick = (e) => {
         e.stopPropagation();
-        return changeStatus(params.id, "Completed");
+        return changeStatus(params.id, "Approved");
       };
 
-      return params.row.Status !== "New" ? (
+      return params.row.Status !== "Pending" ? (
         <Button disabled onClick={onClick}>
-          Complete
+          Approve
         </Button>
       ) : (
-        <Button onClick={onClick}>Complete</Button>
+        <Button onClick={onClick}>Approve</Button>
       );
     },
   },
@@ -90,10 +92,13 @@ export const ordersGrid = [
     renderCell: (params) => {
       const onClick = (e) => {
         e.stopPropagation();
-        return changeStatus(params.id, "Canceled");
+        console.log("first", params.row.OrderItems);
+        if (params.row.OrderItems !== null)
+          incrementQuantity(params.row.OrderItems);
+        return changeStatus(params.id, "Cancelled");
       };
 
-      return params.row.Status !== "New" ? (
+      return params.row.Status !== "Pending" ? (
         <Button disabled onClick={onClick}>
           Cancel
         </Button>
@@ -104,6 +109,7 @@ export const ordersGrid = [
   },
 ];
 
+// A function which fetches all the orders from the db and returns them as an array
 function FetchOrders() {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
@@ -121,6 +127,7 @@ function FetchOrders() {
   return orders;
 }
 
+// A function which changes the status of an order
 function changeStatus(order, status) {
   const payload = {
     order_id: order,
@@ -150,6 +157,36 @@ function changeStatus(order, status) {
     });
 }
 
+// A function which increment the quantity of a vehicle that was in an order and has been returned to the company (order completed)
+function incrementQuantity(vehicle) {
+  const payload = {
+    title: vehicle,
+  };
+  fetch(`http://localhost:3001/incrementQuantity`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(async (res) => {
+      try {
+        const jsonRes = await res.json();
+        if (res.status !== 200) {
+          alert(jsonRes.message);
+        } else {
+          alert(jsonRes.message);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+
+// A function which gets the number of the current "pending" orders
 function GetCountOfNewOrders() {
   const [count, setCount] = useState(0);
   fetch(`http://localhost:3001/getCountOfNewOrders`, {

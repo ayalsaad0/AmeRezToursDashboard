@@ -1,8 +1,8 @@
 import { Sequelize } from "Sequelize";
 import sequelize from "../utils/database.js";
 import Image from "../models/image.js";
-import Order from "./order.js";
 
+// The model of the vehicle
 const Vehicle = sequelize.define(
   "vehicles",
   {

@@ -15,6 +15,7 @@ import { getEvents, addEvent, deleteEvent, updateEvent } from "../data/Events";
 let editor = false;
 let id = 0;
 
+// A function which handles the popup open
 const onPopupOpen = (args) => {
   if (args.scheduleObj.type === "Editor") {
     if (typeof args.scheduleObj.data.Id !== "undefined") {
@@ -26,29 +27,43 @@ const onPopupOpen = (args) => {
   }
 };
 
+// A function which handles the popup close
 const onPopupClose = (args) => {
+  // The window is the editor
   if (args.scheduleObj.type === "Editor") {
+    // update event
     if (editor) {
+      // if the save button was clicked
       if (args.scheduleObj.event.target.innerHTML === "Save")
         updateEvent(args.scheduleObj, id);
       editor = false;
       id = 0;
-    } else {
+    }
+    // add event
+    else {
+      // if the save button was clicked
       if (args.scheduleObj.event.target.innerHTML === "Save")
         addEvent(args.scheduleObj);
     }
+    // if the cancel button was clicked
     if (args.scheduleObj.event.target.innerHTML === "Cancel")
       console.log("Cancel");
+    // if the delete button was clicked
     else if (args.scheduleObj.event.target.innerHTML === "Delete")
       deleteEvent(args.scheduleObj.data.Id);
-  } else if (args.scheduleObj.type === "DeleteAlert") {
+  }
+  // The window is the delete alert
+  else if (args.scheduleObj.type === "DeleteAlert") {
+    // if the cancel button was clicked
     if (args.scheduleObj.event.target.ariaLabel === "Cancel")
       console.log("Cancel");
+    // if the delete button was clicked
     else if (args.scheduleObj.event.target.ariaLabel === "Delete")
       deleteEvent(args.scheduleObj.data.Id);
   }
 };
 
+// This is the calendar page
 const Scheduler = () => {
   const events = getEvents();
 

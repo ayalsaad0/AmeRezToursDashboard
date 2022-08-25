@@ -1,10 +1,11 @@
 import React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useStateContext } from "../contexts/ContextProvider";
 import { FetchCustomers, customersGrid } from "../data/Customers";
 import { Header } from "../components";
 
+// This is the customers page
 const Customers = () => {
+  // Fetching all the customers
   const customers = FetchCustomers();
 
   return (

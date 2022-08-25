@@ -1,9 +1,8 @@
-import Attraction from "../models/attraction.js";
+// This is the controller which works with the orders table in the database
 import Order from "../models/order.js";
-import User from "../models/user.js";
-import Vehicle from "../models/vehicle.js";
 import sequelize from "../utils/database.js";
 
+// A function which fetches all the orders from the table
 const fetchOrders = async (req, res, next) => {
   await Order.findAll().then((orders) => {
     const actualData = [];
@@ -14,6 +13,7 @@ const fetchOrders = async (req, res, next) => {
   });
 };
 
+// A function which changes the status of the order
 const changeOrderStatus = async (req, res, next) => {
   await Order.update(
     {
@@ -36,6 +36,7 @@ const changeOrderStatus = async (req, res, next) => {
     });
 };
 
+// A function which calculates the earnings in the current year grouped by month
 const getEarnings = async (req, res, next) => {
   await sequelize
     .query(
@@ -59,6 +60,7 @@ const getEarnings = async (req, res, next) => {
     });
 };
 
+// A function which calculates how many vehicles orders and attraction orders were at every month of the current year
 const getOrdersStatistics = async (req, res, next) => {
   await sequelize
     .query(
@@ -85,11 +87,29 @@ const getOrdersStatistics = async (req, res, next) => {
     });
 };
 
+// A function which gets the number of the "pending" orders
 const getCountOfNewOrders = async (req, res, next) => {
   await sequelize
-    .query("SELECT COUNT(*) orders FROM orders WHERE status='New';")
+    .query("SELECT COUNT(*) orders FROM orders WHERE status='Pending';")
     .then((count) => {
       res.status(200).json({ count: count[0] });
+    });
+};
+
+// A function which updates the status of the "approved" orders to "completed" at the end date of every order
+const completedOrders = async (req, res, next) => {
+  await sequelize
+    .query(
+      "UPDATE orders o, vehicles v SET v.quantity=v.quantity+1 WHERE o.status='Approved' AND o.end_Date=DATE(NOW()) AND v.title=o.item_title;"
+    )
+    .then(async () => {
+      await sequelize.query(
+        "UPDATE orders SET status='Completed' WHERE status='Approved' AND end_Date=DATE(NOW())"
+      );
+      res.status(200).json({ message: "Orders status updated successfully " });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
@@ -99,4 +119,5 @@ export {
   getEarnings,
   getOrdersStatistics,
   getCountOfNewOrders,
+  completedOrders,
 };

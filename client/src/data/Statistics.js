@@ -1,5 +1,7 @@
+// This file will use the controllers to handle the statistics data
 import { useState, useEffect } from "react";
 
+// A function which gets the count of vehicles orders at every month at the current year
 function GetVehiclesStatistics() {
   const [statistics, setStatistics] = useState([]);
   const data = [];
@@ -25,6 +27,7 @@ function GetVehiclesStatistics() {
   return statistics;
 }
 
+// A function which gets the count of attractions orders at every month at the current year
 function GetAttractionsStatistics() {
   const [statistics, setStatistics] = useState([]);
   const data = [];

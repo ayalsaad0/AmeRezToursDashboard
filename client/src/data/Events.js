@@ -1,5 +1,7 @@
+// This file will use the controllers to handle the events data
 import { useState, useEffect } from "react";
 
+// A function which fetches all the events data and returns them as an array
 function FetchEvents() {
   const [events, setEvents] = useState([]);
   useEffect(() => {
@@ -17,6 +19,7 @@ function FetchEvents() {
   return events;
 }
 
+// A function which returns all the events data as an array of objects, to fit the calendar component
 function getEvents() {
   const events = FetchEvents();
   const eventsAsAnArrayOfObjects = [];
@@ -35,6 +38,7 @@ function getEvents() {
   return eventsAsAnArrayOfObjects;
 }
 
+// A function which add a new event to the database
 function addEvent(data) {
   console.log(data.data);
   const payload = {
@@ -70,6 +74,7 @@ function addEvent(data) {
     });
 }
 
+// A function which updated the info of an event
 function updateEvent(data, id) {
   const payload = {
     Id: id,
@@ -104,6 +109,7 @@ function updateEvent(data, id) {
     });
 }
 
+// A function which deletes and event by it's id
 function deleteEvent(event_id) {
   const payload = {
     event_id,

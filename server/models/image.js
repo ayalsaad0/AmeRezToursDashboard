@@ -1,6 +1,7 @@
 import { Sequelize } from "Sequelize";
 import sequelize from "../utils/database.js";
 
+// The model of the image
 const Image = sequelize.define(
   "images",
   {

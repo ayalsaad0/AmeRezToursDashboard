@@ -1,11 +1,11 @@
 import React from "react";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { GoPrimitiveDot } from "react-icons/go";
-
 import { Stacked, Pie } from "../components";
 import { earningData, ecomPieChartData } from "../data/dummy";
 import { useStateContext } from "../contexts/ContextProvider";
 
+// The home page
 const Ecommerce = () => {
   const { currentColor, currentMode } = useStateContext();
 

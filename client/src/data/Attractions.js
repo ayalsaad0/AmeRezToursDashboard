@@ -1,5 +1,7 @@
+// This file will use the controllers to handle the attractions data
 import { useState, useEffect } from "react";
 
+// A function to delete an attraction by it's id
 function DeleteAttraction(id) {
   const payload = {
     id,
@@ -20,6 +22,7 @@ function DeleteAttraction(id) {
     });
 }
 
+// A function which fetches all the attractions, and returns them as an array
 function FetchAttractions() {
   const [attractions, setAttractions] = useState([]);
   useEffect(() => {
