@@ -1,5 +1,6 @@
 // This is the controller which works with the events table in the database
 import Event from "../models/event.js";
+import sequelize from "../utils/database.js";
 
 // A function which fetches all the events from the database
 const fetchEvents = async (req, res, next) => {
@@ -15,14 +16,10 @@ const fetchEvents = async (req, res, next) => {
 // A function which adds a new event to the events table
 const addEvent = async (req, res, next) => {
   console.log(req.body);
-  await Event.create({
-    id: req.body.Id,
-    subject: req.body.Subject,
-    start_time: req.body.StartTime,
-    end_time: req.body.EndTime,
-    description: req.body.Description,
-    status: req.body.EventType,
-  })
+  await sequelize
+    .query(
+      `INSERT INTO events (id,subject,start_time,end_time,description,status) VALUES (DEFAULT,'${req.body.Subject}','${req.body.StartTime}','${req.body.EndTime}','${req.body.Description}','${req.body.EventType}');`
+    )
     .then(() => {
       res.status(200).json({ message: "Event added successfully" });
     })
@@ -41,20 +38,10 @@ const updateEvent = async (req, res, next) => {
       id: req.body.Id,
     },
   });
-  await Event.update(
-    {
-      subject: req.body.Subject,
-      start_time: req.body.StartTime,
-      end_time: req.body.EndTime,
-      description: req.body.Description,
-      status: req.body.EventType,
-    },
-    {
-      where: {
-        id: eventToUpdate.dataValues.id,
-      },
-    }
-  )
+  await sequelize
+    .query(
+      `UPDATE events SET subject='${req.body.Subject}',start_time='${req.body.StartTime}',end_time='${req.body.EndTime}',description='${req.body.Description}',status='${req.body.EventType}' WHERE id='${eventToUpdate.dataValues.id}';`
+    )
     .then(() => {
       res.status(200).json({ message: "Event updated successfully" });
     })

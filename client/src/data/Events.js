@@ -19,6 +19,32 @@ function FetchEvents() {
   return events;
 }
 
+const convertTimestampToDatetime = (time) => {
+  const year = time.getYear() + 1900;
+  const month =
+    time.getMonth() + 1 > 9 ? time.getMonth() + 1 : "0" + (time.getMonth() + 1);
+  const day = time.getDate() > 9 ? time.getDate() : "0" + time.getDate();
+  const hours = time.getHours() > 9 ? time.getHours() : "0" + time.getHours();
+  const minutes =
+    time.getMinutes() > 9 ? time.getMinutes() : "0" + time.getMinutes();
+  const seconds =
+    time.getSeconds() > 9 ? time.getSeconds() : "0" + time.getSeconds();
+  const datetime =
+    year +
+    "-" +
+    month +
+    "-" +
+    day +
+    " " +
+    hours +
+    ":" +
+    minutes +
+    ":" +
+    seconds;
+  console.log(datetime);
+  return datetime;
+};
+
 // A function which returns all the events data as an array of objects, to fit the calendar component
 function getEvents() {
   const events = FetchEvents();
@@ -40,13 +66,12 @@ function getEvents() {
 
 // A function which add a new event to the database
 function addEvent(data) {
-  console.log(data.data);
   const payload = {
     Id: data.data.Id,
     Subject: data.data.Subject,
     Description: data.data.Description,
-    StartTime: data.data.StartTime,
-    EndTime: data.data.EndTime,
+    StartTime: convertTimestampToDatetime(data.data.StartTime),
+    EndTime: convertTimestampToDatetime(data.data.EndTime),
     EventType: data.data.EventType,
   };
 
@@ -80,8 +105,8 @@ function updateEvent(data, id) {
     Id: id,
     Subject: data.data.Subject,
     Description: data.data.Description,
-    StartTime: data.data.StartTime,
-    EndTime: data.data.EndTime,
+    StartTime: convertTimestampToDatetime(data.data.StartTime),
+    EndTime: convertTimestampToDatetime(data.data.EndTime),
     EventType: data.data.EventType,
   };
 

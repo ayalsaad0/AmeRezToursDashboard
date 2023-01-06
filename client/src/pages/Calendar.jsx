@@ -41,6 +41,8 @@ const onPopupClose = (args) => {
     }
     // add event
     else {
+      console.log(args.scheduleObj.data.EndTime.getTime());
+      console.log(args.scheduleObj.data);
       // if the save button was clicked
       if (args.scheduleObj.event.target.innerHTML === "Save")
         addEvent(args.scheduleObj);
@@ -79,6 +81,7 @@ const Scheduler = () => {
         height="650px"
         ref={(schedule) => setScheduleObj(schedule)}
         eventSettings={{ dataSource: events }}
+        timezone="UTC"
       >
         <ViewsDirective>
           {["Day", "Week", "Month"].map((item) => (

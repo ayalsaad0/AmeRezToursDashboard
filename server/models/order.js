@@ -56,21 +56,3 @@ const Order = sequelize.define("orders", {
 });
 
 export default Order;
-
-// Order.hasOne(User, { as: "users" });
-// User.belongsTo(Order, {
-//   foreignKey: "userId",
-//   as: "user",
-// });
-
-// Order.hasOne(Vehicle, { as: "vehicles" });
-// Vehicle.belongsTo(Order, {
-//   foreignKey: "vehicleId",
-//   as: "vehicle",
-// });
-
-// Order.hasOne(Attraction, { as: "attractions" });
-// Attraction.belongsTo(Order, {
-//   foreignKey: "attractionId",
-//   as: "attraction",
-// });
